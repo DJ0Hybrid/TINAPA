@@ -1,0 +1,180 @@
+package com.tinapaproject.tinapa;
+
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+
+import com.tinapaproject.tinapa.adapters.DexCursorAdapter.DexListListener;
+import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.fragments.DexDetailFragment;
+import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
+import com.tinapaproject.tinapa.fragments.DexListFragment;
+import com.tinapaproject.tinapa.fragments.OwnedListFragment;
+
+public class MainActivity extends Activity implements DexListListener, DexDetailListener {
+
+    public static int RESULT_LOAD_DEX_LIST_ICON = 100;
+
+    private String temp_id;
+    private ImageView temp_imageView;
+    private String temp_column;
+
+    public static final String TAG = "MainActivity";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        Tab dexTab = actionBar.newTab()
+                .setText(R.string.tab_pokedex)
+                .setTabListener(new TabListener<DexListFragment>("Pokedex" /*TODO: Needs to be a field. */, new DexListFragment()));
+        actionBar.addTab(dexTab, true);
+
+        Tab ownedTab = actionBar.newTab()
+                .setText(R.string.tab_owned_pokemon)
+                .setTabListener(new TabListener<OwnedListFragment>("Owned" /*TODO: Needs to be a field. */, new OwnedListFragment()));
+        actionBar.addTab(ownedTab);
+
+        // TODO Planned Pokemon
+        // TODO Teams
+        Log.i(TAG, "All tabs have been added.");
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_DEX_LIST_ICON && resultCode == RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            BitmapFactory.Options imageOptions = new BitmapFactory.Options();
+            imageOptions.outHeight = temp_imageView.getHeight();
+            imageOptions.outWidth = temp_imageView.getWidth();
+            temp_imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath, imageOptions));
+
+            // Now store the path
+            ContentValues values = new ContentValues();
+            values.put(temp_column, picturePath);
+            getContentResolver().update(TinapaContentProvider.POKEDEX_POKEMON_IMAGE_URI, values, DexKeyValues.insertIntoImageColumnWhereCreation(temp_id), null);
+
+            temp_id = null;
+            temp_imageView = null;
+            temp_column = null;
+        }
+    }
+
+    // From DexCursorAdapter
+    @Override
+    public void onDexItemClicked(String topic, String id) {
+        // TODO: Pull information using the ID based off of the topic.
+        Cursor pokemonCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_URI, null, "pokemon.id = " + id, null, null);
+        Cursor movesCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_moves.pokemon_id = " + id, null, null);
+        if (pokemonCursor != null && pokemonCursor.moveToFirst() && movesCursor != null && movesCursor.moveToFirst()) {
+            Log.d(TAG, pokemonCursor.getString(1));
+            FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
+            if (fragmentView == null) {
+                fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
+            }
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(fragmentView.getId(), DexDetailFragment.newInstance(pokemonCursor, movesCursor), "TAG HERE");
+            ft.commit();
+        }
+    }
+
+    // From DexCursorAdapter
+    @Override
+    public void onDexImageLongClicked(String id, ImageView imageView, String column) {
+        loadImage(id, imageView, column);
+    }
+
+    // From DexDetailFragment
+    @Override
+    public void onDexDetailImageLongClicked(String id, ImageView imageView, String column) {
+        loadImage(id, imageView, column);
+    }
+
+    private void loadImage(String id, ImageView imageView, String column) {
+        temp_id = id;
+        temp_imageView = imageView;
+        temp_column = column;
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("image/*");
+        startActivityForResult(intent, RESULT_LOAD_DEX_LIST_ICON);
+    }
+
+    private static class TabListener<T extends Fragment> implements ActionBar.TabListener {
+        private Fragment mFragment;
+        private final String mTag;
+
+        public TabListener(String tag, Fragment fragment) {
+            this.mTag = tag;
+            this.mFragment = fragment;
+        }
+
+        @Override
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+            ft.replace(R.id.mainActivityFragment1, mFragment, mTag);
+        }
+
+        @Override
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            // TODO: Probably not needed.
+            ft.remove(mFragment);
+        }
+
+        @Override
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+            // Do nothing.
+        }
+    }
+}
