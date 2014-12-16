@@ -97,8 +97,18 @@ public class TinapaContentProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        // TODO: Implement this to handle requests to insert a new row.
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (values == null) {
+            throw new UnsupportedOperationException("ContentValues == null");
+        }
+        int uriType = uriMatcher.match(uri);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        switch (uriType) {
+            case OWNED_POKEMON:
+                long id = db.insertOrThrow("owned_pokemons", null, values);
+                return Uri.parse(OWNED_POKEMON_TABLE + "/" + id);
+            default:
+                throw new UnsupportedOperationException("Not yet implemented");
+        }
     }
 
     @Override
