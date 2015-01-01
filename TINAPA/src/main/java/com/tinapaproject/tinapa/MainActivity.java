@@ -20,13 +20,17 @@ import android.widget.ImageView;
 
 import com.tinapaproject.tinapa.adapters.DexCursorAdapter.DexListListener;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
+import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment;
+import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment.OwnedAddFragmentListener;
 import com.tinapaproject.tinapa.fragments.OwnedListFragment;
+import com.tinapaproject.tinapa.fragments.OwnedListFragment.OwnedListListener;
 
-public class MainActivity extends Activity implements DexListListener, DexDetailListener {
+public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener {
 
     public static int RESULT_LOAD_DEX_LIST_ICON = 100;
 
@@ -140,6 +144,54 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     @Override
     public void onDexDetailImageLongClicked(String id, ImageView imageView, String column) {
         loadImage(id, imageView, column);
+    }
+
+    // From OwnedListFragment
+    @Override
+    public void onOwnedItemClicked(String topic, String id) {
+        // TODO
+    }
+
+    // From OwnedListFragment
+    @Override
+    public void onAddOwnedClicked() {
+        Cursor speciesCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
+        OwnedAddDialogFragment dialogFragment = OwnedAddDialogFragment.newInstance(this, speciesCursor, DexKeyValues.name);
+        dialogFragment.show(getFragmentManager(), OwnedAddDialogFragment.TAG);
+    }
+
+    // From OwnedAddDialog
+    @Override
+    public void onPositiveClicked(int level, String nickname, boolean shinny, String speciesId, String abilityId, String natureId, String genderId, String move1Id, String move2Id, String move3Id, String move4Id, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, String notes, String planId) {
+        // TODO
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(OwnedKeyValues.LEVEL, level);
+        contentValues.put(OwnedKeyValues.NICKNAME, nickname);
+        contentValues.put(OwnedKeyValues.SHINNY, shinny);
+        contentValues.put(OwnedKeyValues.POKEMON_ID, speciesId);
+        contentValues.put(OwnedKeyValues.ABILITY_ID, abilityId);
+        contentValues.put(OwnedKeyValues.NATURE_ID, natureId);
+        contentValues.put(OwnedKeyValues.GENDER_ID, genderId);
+        contentValues.put(OwnedKeyValues.MOVE1_ID, move1Id);
+        contentValues.put(OwnedKeyValues.MOVE2_ID, move2Id);
+        contentValues.put(OwnedKeyValues.MOVE3_ID, move3Id);
+        contentValues.put(OwnedKeyValues.MOVE4_ID, move4Id);
+        contentValues.put(OwnedKeyValues.IV_HP, ivHP);
+        contentValues.put(OwnedKeyValues.IV_ATT, ivAtt);
+        contentValues.put(OwnedKeyValues.IV_DEF, ivDef);
+        contentValues.put(OwnedKeyValues.IV_SATT, ivSAtt);
+        contentValues.put(OwnedKeyValues.IV_SDEF, ivSDef);
+        contentValues.put(OwnedKeyValues.IV_SPD, ivSpd);
+        contentValues.put(OwnedKeyValues.EV_HP, evHP);
+        contentValues.put(OwnedKeyValues.EV_ATT, evAtt);
+        contentValues.put(OwnedKeyValues.EV_DEF, evDef);
+        contentValues.put(OwnedKeyValues.EV_SATT, evSAtt);
+        contentValues.put(OwnedKeyValues.EV_SDEF, evSDef);
+        contentValues.put(OwnedKeyValues.EV_SPD, evSpd);
+        contentValues.put(OwnedKeyValues.NOTE, notes);
+        contentValues.put(OwnedKeyValues.PLAN_ID, planId);
+        Uri uri = getContentResolver().insert(TinapaContentProvider.OWNED_POKEMON_URI, contentValues);
+        Log.d(TAG, "Added an owned Pokemon with ID of " + uri.getLastPathSegment());
     }
 
     private void loadImage(String id, ImageView imageView, String column) {

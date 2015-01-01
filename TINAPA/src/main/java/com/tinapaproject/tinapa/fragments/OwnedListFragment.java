@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -21,7 +24,7 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
 
     private OwnedCursorAdapter adapter;
 
-    private OwnedListListener listener;
+    private OwnedListListener mListener;
 
     public static final String TAG = "OwnedListFragment";
 
@@ -30,12 +33,34 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_owned_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_owned_list_add:
+                mListener.onAddOwnedClicked();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof OwnedListListener) {
-            listener = (OwnedListListener) activity;
+            mListener = (OwnedListListener) activity;
             if (adapter != null) {
-//                adapter.setListener(listener);
+//                adapter.setListener(mListener);
             }
         }
         Log.d(TAG, "Attached.");
@@ -63,7 +88,7 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onDetach() {
         super.onDetach();
-        listener = null;
+        mListener = null;
         if (adapter != null) {
 //            adapter.setListener(null);
         }
@@ -87,5 +112,6 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
 
     public interface OwnedListListener {
         public void onOwnedItemClicked(String topic, String id);
+        public void onAddOwnedClicked();
     }
 }

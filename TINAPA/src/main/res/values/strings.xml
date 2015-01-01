@@ -9,6 +9,9 @@
     <string name="tab_planned_pokemon">Plans</string>
     <string name="tab_teams">Teams</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save">Save</string>
+    <string name="owned_list_add_owned">Add</string>
+    <string name="cancel">Cancel</string>
     <integer name="database_version">1</integer>
 
 </resources>
