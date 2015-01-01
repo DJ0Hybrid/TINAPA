@@ -14,6 +14,8 @@ import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 
+import org.w3c.dom.Text;
+
 // http://www.techotopia.com/index.php/An_Android_Content_Provider_Tutorial
 public class TinapaContentProvider extends ContentProvider {
     private TinapaDatabaseHelper dbHelper;
@@ -35,9 +37,12 @@ public class TinapaContentProvider extends ContentProvider {
     public static final String POKEDEX_POKEMON_MOVES_TABLE = POKEDEX_TABLE + "/pokemon/moves";
     public static final Uri POKEDEX_POKEMON_MOVES_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_MOVES_TABLE);
     public static final int POKEDEX_POKEMON_MOVES = 103;    // Pass id.
+    public static final String POKEDEX_POKEMON_ABILITIES_TABLE = POKEDEX_TABLE + "/pokemon/abilities";
+    public static final Uri POKEDEX_POKEMON_ABILITIES_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_ABILITIES_TABLE);
+    public static final int POKEDEX_POKEMON_ABILITIES = 104;    // Pass id.
     public static final String POKEDEX_POKEMON_IMAGE_TABLE = POKEDEX_TABLE + "/pokemon/image";
     public static final Uri POKEDEX_POKEMON_IMAGE_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_IMAGE_TABLE);
-    public static final int POKEDEX_POKEMON_IMAGE = 104;
+    public static final int POKEDEX_POKEMON_IMAGE = 105;
 
     private static final String PLANNED_POKEMON_TABLE = "plannedPokemon";
     public static final Uri PLANNED_POKEMON_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_POKEMON_TABLE);
@@ -65,6 +70,7 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, POKEDEX_ALL_SHORT_TABLE, POKEDEX_ALL_SHORT);
         uriMatcher.addURI(AUTHORITY, POKEDEX_SEARCH_SPECIES_TABLE + "/search/species/*", POKEDEX_SEARCH_SPECIES);
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_MOVES_TABLE, POKEDEX_POKEMON_MOVES);
+        uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_ABILITIES_TABLE, POKEDEX_POKEMON_ABILITIES);
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_IMAGE_TABLE, POKEDEX_POKEMON_IMAGE);
 
         uriMatcher.addURI(AUTHORITY, PLANNED_POKEMON_TABLE, PLANNED_POKEMON);
@@ -117,6 +123,7 @@ public class TinapaContentProvider extends ContentProvider {
             String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         String[] selectionArray = null;
+        String orderBy = null;
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -145,6 +152,15 @@ public class TinapaContentProvider extends ContentProvider {
                 }
                 selectionArray = new String[]{"moves.id AS _id", "name", "flavor_text", "pokemon_move_methods.identifier AS identifier"};
                 break;
+            case POKEDEX_POKEMON_ABILITIES:
+                queryBuilder.setTables("pokemon_abilities, abilities, ability_names");
+                queryBuilder.appendWhere("local_language_id = 9 AND pokemon_abilities.ability_id = abilities.id AND pokemon_abilities.ability_id = ability_names.ability_id AND pokemon_abilities.pokemon_id = 1");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere(" AND " + selection);
+                }
+                selectionArray = new String[]{"id AS _id", "name AS name", "pokemon_id AS pokemon_id", "slot AS slot", "is_hidden AS is_hidden"};
+                orderBy = "slot ASC";
+                break;
             case PLANNED_POKEMON:
 
                 break;
@@ -171,7 +187,7 @@ public class TinapaContentProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unsupported URI.");
         }
-        Cursor cursor = queryBuilder.query(db, selectionArray, null, null, null, null, null);
+        Cursor cursor = queryBuilder.query(db, selectionArray, null, null, null, null, orderBy);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }

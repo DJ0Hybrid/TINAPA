@@ -167,12 +167,17 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 // Load up all the other spinners.
                 // It is assumed that this will go off automatically.
                 Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id, null, null);
-                Cursor abilitiesCursor;
+                Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + id, null, null);
 
                 loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor);
                 loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor);
                 loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor);
                 loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor);
+
+                String[] from = {"name"};
+                int[] to = {R.id.simple_cell_name};
+                CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
+                mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
             }
 
             @Override
