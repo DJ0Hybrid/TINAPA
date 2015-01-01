@@ -18,6 +18,7 @@ import android.widget.GridView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.adapters.OwnedCursorAdapter;
+import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class OwnedListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -70,7 +71,7 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_owned_list, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.ownedGridView);
+        GridView gridView = (GridView) view.findViewById(R.id.owned_grid_view);
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_SEARCH_GENERAL_URI, null, null, null, null);
         if (c == null) {
             Log.w(TAG, "Initial cursor is null!");
@@ -78,7 +79,7 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
             Log.d(TAG, "Cursor is set.");
         }
         // TODO: The column names are probably not correct.
-        adapter = new OwnedCursorAdapter(getActivity(), c, "name", "nickname", "image");
+        adapter = new OwnedCursorAdapter(getActivity(), c, "name", OwnedKeyValues.NICKNAME, "image");
         gridView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
 

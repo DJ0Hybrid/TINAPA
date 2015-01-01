@@ -2,6 +2,7 @@ package com.tinapaproject.tinapa.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
+import com.tinapaproject.tinapa.utils.ImageUtils;
 
 public class OwnedCursorAdapter extends CursorAdapter {
     private String imageColumn;
@@ -36,12 +38,12 @@ public class OwnedCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ImageView imageView = (ImageView) view.findViewById(R.id.cellOwnedImageView);
         String imageUri = cursor.getString(cursor.getColumnIndex(imageColumn));
-//        loadImage(imageUri, imageView);   // TODO: Thinking of just having a util method to do this.
+        ImageUtils.loadImage(imageView, imageUri, true);
 
         TextView textView = (TextView) view.findViewById(R.id.cellOwnedTextView);
         String nickname = cursor.getString(cursor.getColumnIndex(nicknameColumn));
         if (textView != null) {
-            if (nickname != null) {
+            if (!TextUtils.isEmpty(nickname)) {
                 textView.setText(nickname);
             } else {
                 String name = cursor.getString(cursor.getColumnIndex(nameColumn));

@@ -6,7 +6,7 @@
     <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ownedGridView"
+        android:id="@+id/owned_grid_view"
         android:columnWidth="90dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="10dp"

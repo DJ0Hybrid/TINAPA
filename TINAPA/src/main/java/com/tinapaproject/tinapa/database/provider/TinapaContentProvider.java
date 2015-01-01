@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 
 // http://www.techotopia.com/index.php/An_Android_Content_Provider_Tutorial
 public class TinapaContentProvider extends ContentProvider {
@@ -162,7 +163,7 @@ public class TinapaContentProvider extends ContentProvider {
                 queryBuilder.setTables("owned_pokemons LEFT OUTER JOIN pokemon ON (pokemon.species_id = owned_pokemons.pokemon_id) LEFT OUTER JOIN pokemon_species_names ON (pokemon.species_id = pokemon_species_names.pokemon_species_id AND pokemon_species_names.local_language_id = 9) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 1) AS type1 ON (pokemon.id = type1.pokemon_id) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 2) AS type2 ON (pokemon.id = type2.pokemon_id) LEFT OUTER JOIN (SELECT ability_names.ability_id AS id, name, effect FROM ability_names, ability_prose WHERE ability_names.ability_id = ability_prose.ability_id AND ability_names.local_language_id = 9 AND ability_prose.local_language_id = 9) AS ability ON (owned_pokemons.ability_id = ability.id) LEFT OUTER JOIN nature_names ON (owned_pokemons.nature_id = nature_names.nature_id AND nature_names.local_language_id = 9) LEFT OUTER JOIN genders ON (genders.id = owned_pokemons.gender_id) LEFT OUTER JOIN move_names AS move1 ON (move1.move_id = owned_pokemons.move1_id AND move1.local_language_id = 9) LEFT OUTER JOIN move_names AS move2 ON (move2.move_id = owned_pokemons.move2_id AND move2.local_language_id = 9) LEFT OUTER JOIN move_names AS move3 ON (move3.move_id = owned_pokemons.move3_id AND move3.local_language_id = 9) LEFT OUTER JOIN move_names AS move4 ON (move4.move_id = owned_pokemons.move4_id AND move4.local_language_id = 9)");
 
                 // TODO Select array
-                selectionArray = new String[]{"pokemon.id AS _id", "owned_pokemons.nickname AS nickname", "pokemon_species_names.name AS name", "icon_image AS image"};
+                selectionArray = new String[]{"pokemon.id AS _id", "owned_pokemons.nickname AS " + OwnedKeyValues.NICKNAME, "pokemon_species_names.name AS name", "icon_image AS image"};
                 break;
             case PLANNED_TEAM:
 
