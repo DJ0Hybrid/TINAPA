@@ -18,9 +18,12 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 
 import com.tinapaproject.tinapa.R;
+import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class OwnedAddDialogFragment extends DialogFragment {
 
@@ -49,19 +52,10 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mEvSpdEditText;
     private EditText mNotesText;
 
-    private CursorAdapter mSpeciesCursorAdapter;
-//    private CursorAdapter mMove1CursorAdapter;
-//    private CursorAdapter mMove2CursorAdapter;
-//    private CursorAdapter mMove3CursorAdapter;
-//    private CursorAdapter mMove4CursorAdapter;
-
     public static final String TAG = "OwnedAddDialogFragment";
 
-    public static OwnedAddDialogFragment newInstance(Activity activity, Cursor speciesCursor, String speciesColumn) {
+    public static OwnedAddDialogFragment newInstance() {
         OwnedAddDialogFragment fragment = new OwnedAddDialogFragment();
-        String[] from = {speciesColumn};
-        int[] to = {R.id.simple_cell_name};
-        fragment.mSpeciesCursorAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, speciesCursor, from, to, 0);
         return fragment;
     }
 
@@ -162,21 +156,38 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
         mShinnySwitch.setChecked(false);
 
-        if (savedInstanceState == null) {
-            mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
-            mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
+        String[] from = {DexKeyValues.name};
+        int[] to = {R.id.simple_cell_name};
+        final CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
+        mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
+        mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Load up all the other spinners.
+                // It is assumed that this will go off automatically.
+                Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id, null, null);
+                Cursor abilitiesCursor;
 
-                }
+                loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor);
+                loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor);
+                loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor);
+                loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor);
+            }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    // Do nothing!
-                }
-            });
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing!
+            }
+        });
         return view;
+    }
+
+    private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor) {
+        String[] from = {"name"};
+        int[] to = {R.id.simple_cell_name};
+        CursorAdapter spinnerAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, movesCursor, from, to, 0);
+        moveSpinner.setAdapter(spinnerAdapter);
     }
 
     public interface OwnedAddFragmentListener {

@@ -155,8 +155,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     // From OwnedListFragment
     @Override
     public void onAddOwnedClicked() {
-        Cursor speciesCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
-        OwnedAddDialogFragment dialogFragment = OwnedAddDialogFragment.newInstance(this, speciesCursor, DexKeyValues.name);
+        OwnedAddDialogFragment dialogFragment = OwnedAddDialogFragment.newInstance();
         dialogFragment.show(getFragmentManager(), OwnedAddDialogFragment.TAG);
     }
 
