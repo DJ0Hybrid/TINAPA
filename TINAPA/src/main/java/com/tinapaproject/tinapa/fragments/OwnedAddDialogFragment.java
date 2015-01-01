@@ -29,10 +29,12 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mNicknameEditText;
     private Spinner mSpeciesSpinner;
     private Switch mShinnySwitch;
+    private Spinner mAbilitySpinner;
     private Spinner mMove1Spinner;
     private Spinner mMove2Spinner;
     private Spinner mMove3Spinner;
     private Spinner mMove4Spinner;
+    private EditText mLevelEditText;
     private EditText mIvHpEditText;
     private EditText mIvAttEditText;
     private EditText mIvDefEditText;
@@ -90,11 +92,11 @@ public class OwnedAddDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int level = /* TODO */ 50;
+                int level = TextUtils.isEmpty(mLevelEditText.getText().toString()) ? 50 : Integer.parseInt(mLevelEditText.getText().toString());
                 String nickname = mNicknameEditText.getText().toString();
                 String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
                 boolean shinny = mShinnySwitch.isChecked();
-                String abilityId = /* TODO */ "0";
+                String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
                 String natureId = /* TODO */ "0";
                 String genderId = /* TODO */ "0";
                 String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
@@ -138,10 +140,12 @@ public class OwnedAddDialogFragment extends DialogFragment {
         mNicknameEditText = (EditText) view.findViewById(R.id.owned_add_nickname);
         mShinnySwitch = (Switch) view.findViewById(R.id.owned_add_shinny_switch);
         mSpeciesSpinner = (Spinner) view.findViewById(R.id.owned_add_species_spinner);
+        mAbilitySpinner = (Spinner) view.findViewById(R.id.owned_add_ability_spinner);
         mMove1Spinner = (Spinner) view.findViewById(R.id.owned_add_move1_spinner);
         mMove2Spinner = (Spinner) view.findViewById(R.id.owned_add_move2_spinner);
         mMove3Spinner = (Spinner) view.findViewById(R.id.owned_add_move3_spinner);
         mMove4Spinner = (Spinner) view.findViewById(R.id.owned_add_move4_spinner);
+        mLevelEditText = (EditText) view.findViewById(R.id.owned_add_level_edit_text);
         mIvHpEditText = (EditText) view.findViewById(R.id.owned_add_iv_hp_edit_text);
         mIvAttEditText = (EditText) view.findViewById(R.id.owned_add_iv_att_edit_text);
         mIvDefEditText = (EditText) view.findViewById(R.id.owned_add_iv_def_edit_text);
