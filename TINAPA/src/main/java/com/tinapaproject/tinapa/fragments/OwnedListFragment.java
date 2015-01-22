@@ -112,7 +112,7 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
     }
 
     public interface OwnedListListener {
-        public void onOwnedItemClicked(String topic, String id);
+        public void onOwnedItemClicked(String id);
         public void onAddOwnedClicked();
     }
 }

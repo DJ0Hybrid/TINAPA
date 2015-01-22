@@ -12,6 +12,7 @@
     <string name="save">Save</string>
     <string name="owned_list_add_owned">Add</string>
     <string name="cancel">Cancel</string>
+    <string name="search">Search</string>
     <integer name="database_version">1</integer>
 
 </resources>

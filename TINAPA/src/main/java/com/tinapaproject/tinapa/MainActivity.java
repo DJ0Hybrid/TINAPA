@@ -148,7 +148,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     // From OwnedListFragment
     @Override
-    public void onOwnedItemClicked(String topic, String id) {
+    public void onOwnedItemClicked(String id) {
         // TODO
     }
 

@@ -10,11 +10,14 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -68,6 +71,24 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
         adapter = new DexCursorAdapter(getActivity(), listener, c, DexKeyValues.name, DexKeyValues.iconImage);
         gridView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
+
+        EditText searchField = (EditText) view.findViewById(R.id.dexSearch);
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing.
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Nothing.
+            }
+        });
 
         return view;
     }
