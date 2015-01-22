@@ -29,8 +29,10 @@ import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment.OwnedAddFragmentListener;
 import com.tinapaproject.tinapa.fragments.OwnedListFragment;
 import com.tinapaproject.tinapa.fragments.OwnedListFragment.OwnedListListener;
+import com.tinapaproject.tinapa.fragments.PlannedListFragment;
+import com.tinapaproject.tinapa.fragments.PlannedListFragment.PlannedListListener;
 
-public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener {
+public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener, PlannedListListener {
 
     public static int RESULT_LOAD_DEX_LIST_ICON = 100;
 
@@ -59,7 +61,11 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
                 .setTabListener(new TabListener<OwnedListFragment>("Owned" /*TODO: Needs to be a field. */, new OwnedListFragment()));
         actionBar.addTab(ownedTab);
 
-        // TODO Planned Pokemon
+        Tab plannedTab = actionBar.newTab()
+                .setText(R.string.tab_planned_pokemon)
+                .setTabListener(new TabListener<PlannedListFragment>("Planned" /*TODO: Needs to be a field. */, new PlannedListFragment()));
+        actionBar.addTab(plannedTab);
+
         // TODO Teams
         Log.i(TAG, "All tabs have been added.");
 
@@ -201,6 +207,16 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //        intent.setType("image/*");
         startActivityForResult(intent, RESULT_LOAD_DEX_LIST_ICON);
+    }
+
+    @Override
+    public void plannedItemClicked(String id) {
+        // TODO
+    }
+
+    @Override
+    public void plannedItemLongClicked(String id) {
+        // TODO
     }
 
     private static class TabListener<T extends Fragment> implements ActionBar.TabListener {
