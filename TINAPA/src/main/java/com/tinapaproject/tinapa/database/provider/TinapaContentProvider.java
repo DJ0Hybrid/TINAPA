@@ -158,7 +158,7 @@ public class TinapaContentProvider extends ContentProvider {
                 break;
             case POKEDEX_POKEMON_ABILITIES:
                 queryBuilder.setTables("pokemon_abilities, abilities, ability_names");
-                queryBuilder.appendWhere("local_language_id = 9 AND pokemon_abilities.ability_id = abilities.id AND pokemon_abilities.ability_id = ability_names.ability_id AND pokemon_abilities.pokemon_id = 1");
+                queryBuilder.appendWhere("local_language_id = 9 AND pokemon_abilities.ability_id = abilities.id AND pokemon_abilities.ability_id = ability_names.ability_id");
                 if (!TextUtils.isEmpty(selection)) {
                     queryBuilder.appendWhere(" AND " + selection);
                 }
