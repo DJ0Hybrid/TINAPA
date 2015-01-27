@@ -2,6 +2,8 @@ package com.tinapaproject.tinapa.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,28 +13,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
-import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.ImageUtils;
 
-public class PlannedCursorAdapter extends CursorAdapter {
+public class IndividualCursorAdapter extends CursorAdapter {
     private String imageColumn;
-    private String nameColumn;
+    private String mainNameColumn;
+    private String secondNameColumn;
     private Context mContext;
 
     private static final int FLAGS = 0;
 
-    public static final String TAG = "PlannedCursorAdapter";
+    public static final String TAG = "IndividualCursorAdapter";
 
-    public PlannedCursorAdapter(Context context, Cursor c, String name, String imageColumn) {
+    public IndividualCursorAdapter(Context context, Cursor c, String mainNameColumn, String secondNameColumn, String imageColumn, final Uri uri) {
         super(context, c, FLAGS);
-        this.nameColumn = name;
+        this.mainNameColumn = mainNameColumn;
+        this.secondNameColumn = secondNameColumn;
         this.imageColumn = imageColumn;
         this.mContext = context;
 
         this.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
-                return mContext.getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_SEARCH_GENERAL_URI, null, String.valueOf(constraint), null, null);
+                return mContext.getContentResolver().query(uri, null, String.valueOf(constraint), null, null);
             }
         });
     }
@@ -49,9 +52,17 @@ public class PlannedCursorAdapter extends CursorAdapter {
         ImageUtils.loadImage(imageView, imageUri, true);
 
         TextView textView = (TextView) view.findViewById(R.id.cell_individual_name);
-        String name = cursor.getString(cursor.getColumnIndex(nameColumn));
-        if (textView != null) {
+        if (!TextUtils.isEmpty(mainNameColumn)) {
+            String name = cursor.getString(cursor.getColumnIndex(mainNameColumn));
+
             textView.setText(name);
+        } else if (!TextUtils.isEmpty(secondNameColumn)) {
+            String name = cursor.getString(cursor.getColumnIndex(secondNameColumn));
+            if (name != null) {
+                textView.setText(name);
+            }
         }
+
     }
+
 }

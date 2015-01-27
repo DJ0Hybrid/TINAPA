@@ -13,12 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.tinapaproject.tinapa.R;
-import com.tinapaproject.tinapa.adapters.DexCursorAdapter;
+import com.tinapaproject.tinapa.adapters.IndividualCursorAdapter;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
@@ -27,9 +28,9 @@ import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
  */
 public class DexListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private DexCursorAdapter adapter;
+    private IndividualCursorAdapter adapter;
 
-    private DexListListener listener;
+    private DexListListener mListener;
 
     public static final String TAG = "DexListFragment";
 
@@ -41,10 +42,7 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (activity instanceof DexListListener) {
-            listener = (DexListListener) activity;
-            if (adapter != null) {
-                adapter.setListener(listener);
-            }
+            mListener = (DexListListener) activity;
         }
         Log.d(TAG, "Attached.");
     }
@@ -55,15 +53,32 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
         // Inflate the layout for this fragment
         Log.d(TAG, "Inflating view.");
         View view = inflater.inflate(R.layout.fragment_individual_list, container, false);
+
         GridView gridView = (GridView) view.findViewById(R.id.individual_list_grid);
+
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
         if (c == null) {
             Log.w(TAG, "Initial cursor is null!");
         } else {
-            Log.d(TAG, "Cursor is set.");
+            Log.v(TAG, "Cursor is set.");
         }
-        adapter = new DexCursorAdapter(getActivity(), listener, c, DexKeyValues.name, DexKeyValues.iconImage);
+        adapter = new IndividualCursorAdapter(getActivity(), c, DexKeyValues.name, null, DexKeyValues.iconImage, TinapaContentProvider.POKEDEX_ALL_SHORT_URI);
         gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.onDexItemClicked(String.valueOf(id));
+            }
+        });
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.onDexImageLongClicked(String.valueOf(id), (ImageView) view.findViewById(R.id.cell_individual_image), DexKeyValues.iconImage);
+                return true;
+            }
+        });
+
         getLoaderManager().initLoader(0, null, this);
 
         EditText searchField = (EditText) view.findViewById(R.id.individual_list_search);
@@ -90,10 +105,7 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onDetach() {
         super.onDetach();
-        listener = null;
-        if (adapter != null) {
-            adapter.setListener(null);
-        }
+        mListener = null;
         Log.d(TAG, "Detached.");
     }
 
@@ -116,7 +128,7 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
     }
 
     public interface DexListListener {
-        public void onDexItemClicked(String topic, String id);
+        public void onDexItemClicked(String id);
 
         public void onDexImageLongClicked(String id, ImageView imageView, String column);
     }

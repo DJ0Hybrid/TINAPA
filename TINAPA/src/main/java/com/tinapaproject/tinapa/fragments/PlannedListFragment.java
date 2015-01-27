@@ -15,13 +15,13 @@ import android.widget.EditText;
 import android.widget.GridView;
 
 import com.tinapaproject.tinapa.R;
-import com.tinapaproject.tinapa.adapters.PlannedCursorAdapter;
+import com.tinapaproject.tinapa.adapters.IndividualCursorAdapter;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class PlannedListFragment extends Fragment {
 
-    private PlannedCursorAdapter mAdapter;
+    private IndividualCursorAdapter mAdapter;
 
     private PlannedListListener mListener;
 
@@ -45,8 +45,9 @@ public class PlannedListFragment extends Fragment {
         GridView gridView = (GridView) view.findViewById(R.id.individual_list_grid);
 
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_SEARCH_GENERAL_URI, null, null, null, null);
-        mAdapter = new PlannedCursorAdapter(getActivity(), c, PlannedKeyValues.NAME, PlannedKeyValues.ICON_IMAGE);
+        mAdapter = new IndividualCursorAdapter(getActivity(), c, PlannedKeyValues.NAME, null, PlannedKeyValues.ICON_IMAGE, TinapaContentProvider.PLANNED_POKEMON_SEARCH_GENERAL_URI);
         gridView.setAdapter(mAdapter);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

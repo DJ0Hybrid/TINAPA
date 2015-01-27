@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     // From DexCursorAdapter
     @Override
-    public void onDexItemClicked(String topic, String id) {
+    public void onDexItemClicked(String id) {
         // TODO: Pull information using the ID based off of the topic.
         Cursor pokemonCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_URI, null, "pokemon.id = " + id, null, null);
         Cursor movesCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_moves.pokemon_id = " + id, null, null);

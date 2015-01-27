@@ -14,16 +14,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.tinapaproject.tinapa.R;
-import com.tinapaproject.tinapa.adapters.OwnedCursorAdapter;
+import com.tinapaproject.tinapa.adapters.IndividualCursorAdapter;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class OwnedListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private OwnedCursorAdapter adapter;
+    private IndividualCursorAdapter adapter;
 
     private OwnedListListener mListener;
 
@@ -60,9 +61,6 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
         super.onAttach(activity);
         if (activity instanceof OwnedListListener) {
             mListener = (OwnedListListener) activity;
-            if (adapter != null) {
-//                adapter.setListener(mListener);
-            }
         }
         Log.d(TAG, "Attached.");
     }
@@ -72,6 +70,7 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_individual_list, container, false);
         GridView gridView = (GridView) view.findViewById(R.id.individual_list_grid);
+
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_SEARCH_GENERAL_URI, null, null, null, null);
         if (c == null) {
             Log.w(TAG, "Initial cursor is null!");
@@ -79,8 +78,16 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
             Log.d(TAG, "Cursor is set.");
         }
         // TODO: The column names are probably not correct.
-        adapter = new OwnedCursorAdapter(getActivity(), c, "name", OwnedKeyValues.NICKNAME, "image");
+        adapter = new IndividualCursorAdapter(getActivity(), c, OwnedKeyValues.NICKNAME, "name", "image", TinapaContentProvider.OWNED_POKEMON_SEARCH_GENERAL_URI);
         gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mListener.onOwnedItemClicked(String.valueOf(id));
+            }
+        });
+
         getLoaderManager().initLoader(0, null, this);
 
         return view;
@@ -90,9 +97,6 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        if (adapter != null) {
-//            adapter.setListener(null);
-        }
         Log.d(TAG, "Detached.");
     }
 
