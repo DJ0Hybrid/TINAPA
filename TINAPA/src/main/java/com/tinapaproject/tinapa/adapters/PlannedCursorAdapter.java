@@ -44,11 +44,11 @@ public class PlannedCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ImageView imageView = (ImageView) view.findViewById(R.id.cellImage);
+        ImageView imageView = (ImageView) view.findViewById(R.id.cell_individual_image);
         String imageUri = cursor.getString(cursor.getColumnIndex(imageColumn));
         ImageUtils.loadImage(imageView, imageUri, true);
 
-        TextView textView = (TextView) view.findViewById(R.id.cellName);
+        TextView textView = (TextView) view.findViewById(R.id.cell_individual_name);
         String name = cursor.getString(cursor.getColumnIndex(nameColumn));
         if (textView != null) {
             textView.setText(name);

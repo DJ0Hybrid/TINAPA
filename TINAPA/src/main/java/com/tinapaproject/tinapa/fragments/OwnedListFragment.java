@@ -70,8 +70,8 @@ public class OwnedListFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_owned_list, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.owned_grid_view);
+        View view = inflater.inflate(R.layout.fragment_individual_list, container, false);
+        GridView gridView = (GridView) view.findViewById(R.id.individual_list_grid);
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_SEARCH_GENERAL_URI, null, null, null, null);
         if (c == null) {
             Log.w(TAG, "Initial cursor is null!");

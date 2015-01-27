@@ -41,8 +41,8 @@ public class PlannedListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_planned_list, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.plannedGridList);
+        View view = inflater.inflate(R.layout.fragment_individual_list, container, false);
+        GridView gridView = (GridView) view.findViewById(R.id.individual_list_grid);
 
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_SEARCH_GENERAL_URI, null, null, null, null);
         mAdapter = new PlannedCursorAdapter(getActivity(), c, PlannedKeyValues.NAME, PlannedKeyValues.ICON_IMAGE);
@@ -61,7 +61,7 @@ public class PlannedListFragment extends Fragment {
             }
         });
 
-        EditText searchField = (EditText) view.findViewById(R.id.plannedSearch);
+        EditText searchField = (EditText) view.findViewById(R.id.individual_list_search);
         searchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

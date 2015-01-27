@@ -31,16 +31,16 @@ public class OwnedCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.cell_owned, parent, false);
+        return ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.cell_individual, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ImageView imageView = (ImageView) view.findViewById(R.id.cellOwnedImageView);
+        ImageView imageView = (ImageView) view.findViewById(R.id.cell_individual_image);
         String imageUri = cursor.getString(cursor.getColumnIndex(imageColumn));
         ImageUtils.loadImage(imageView, imageUri, true);
 
-        TextView textView = (TextView) view.findViewById(R.id.cellOwnedTextView);
+        TextView textView = (TextView) view.findViewById(R.id.cell_individual_name);
         String nickname = cursor.getString(cursor.getColumnIndex(nicknameColumn));
         if (textView != null) {
             if (!TextUtils.isEmpty(nickname)) {

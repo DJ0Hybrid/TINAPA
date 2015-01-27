@@ -60,8 +60,8 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "Inflating view.");
-        View view = inflater.inflate(R.layout.fragment_dex_list, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.dexGridView);
+        View view = inflater.inflate(R.layout.fragment_individual_list, container, false);
+        GridView gridView = (GridView) view.findViewById(R.id.individual_list_grid);
         Cursor c = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
         if (c == null) {
             Log.w(TAG, "Initial cursor is null!");
@@ -72,7 +72,7 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
         gridView.setAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
 
-        EditText searchField = (EditText) view.findViewById(R.id.dexSearch);
+        EditText searchField = (EditText) view.findViewById(R.id.individual_list_search);
         searchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

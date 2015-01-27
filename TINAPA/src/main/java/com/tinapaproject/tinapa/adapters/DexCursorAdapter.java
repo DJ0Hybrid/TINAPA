@@ -46,18 +46,18 @@ public class DexCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.cell_dex, parent, false);
+        return ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.cell_individual, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         final String id = cursor.getString(cursor.getColumnIndex("_id"));
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.cellDexImageView);
+        ImageView imageView = (ImageView) view.findViewById(R.id.cell_individual_image);
         String imagePath = cursor.getString(cursor.getColumnIndex(imageColumn));
         ImageUtils.loadImage(imageView, imagePath, true);
 
-        TextView textView = (TextView) view.findViewById(R.id.cellDexTextView);
+        TextView textView = (TextView) view.findViewById(R.id.cell_individual_name);
         String name = cursor.getString(cursor.getColumnIndex(nameColumn));
         if (textView != null) {
             if (name != null) {
@@ -79,7 +79,7 @@ public class DexCursorAdapter extends CursorAdapter {
             @Override
             public boolean onLongClick(View v) {
                 if (listener != null) {
-                    ImageView image = (ImageView) v.findViewById(R.id.cellDexImageView);
+                    ImageView image = (ImageView) v.findViewById(R.id.cell_individual_image);
                     if (image != null) {
                         listener.onDexImageLongClicked(id, image, imageColumn);
                         return true;
