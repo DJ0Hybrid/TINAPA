@@ -136,6 +136,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             }
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(fragmentView.getId(), DexDetailFragment.newInstance(pokemonCursor, movesCursor), "TAG HERE");
+            ft.addToBackStack("DexDetail");
             ft.commit();
         }
     }
