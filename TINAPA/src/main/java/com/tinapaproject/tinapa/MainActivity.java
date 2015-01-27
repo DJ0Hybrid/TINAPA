@@ -18,13 +18,13 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.tinapaproject.tinapa.adapters.DexCursorAdapter.DexListListener;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
+import com.tinapaproject.tinapa.fragments.DexListFragment.DexListListener;
 import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment.OwnedAddFragmentListener;
 import com.tinapaproject.tinapa.fragments.OwnedListFragment;

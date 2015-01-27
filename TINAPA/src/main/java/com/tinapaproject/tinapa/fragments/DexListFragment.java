@@ -1,14 +1,11 @@
 package com.tinapaproject.tinapa.fragments;
 
 
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,21 +13,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.adapters.DexCursorAdapter;
-import com.tinapaproject.tinapa.adapters.DexCursorAdapter.DexListListener;
-import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 /**
-* List Fragment for handling all of the dex entries.
-**/
+ * List Fragment for handling all of the dex entries.
+ */
 public class DexListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private DexCursorAdapter adapter;
@@ -119,5 +113,11 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
+    }
+
+    public interface DexListListener {
+        public void onDexItemClicked(String topic, String id);
+
+        public void onDexImageLongClicked(String id, ImageView imageView, String column);
     }
 }

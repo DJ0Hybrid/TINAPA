@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.fragments.DexListFragment.DexListListener;
 import com.tinapaproject.tinapa.utils.ImageUtils;
 
 /**
@@ -95,9 +96,5 @@ public class DexCursorAdapter extends CursorAdapter {
         this.listener = listener;
     }
 
-    public interface DexListListener {
-        public void onDexItemClicked(String topic, String id);
 
-        public void onDexImageLongClicked(String id, ImageView imageView, String column);
-    }
 }
