@@ -5,10 +5,8 @@
 
 package com.tinapaproject.tinapa.database;
 
-import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,7 +16,6 @@ import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,94 +61,8 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getPokedexShortList() {
-        return contentResolver.query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
-    }
-
-    @Deprecated
-    public Cursor getPokedexGridCursor() {
-        return getPokedexGridCursor("");
-    }
-
-    @Deprecated
-    public Cursor getPokedexGridCursor(String where) {
-        Map<String, String> selectAs = new HashMap<String, String>();
-        selectAs.put("id", "_id");
-        selectAs.put("name", "name");
-        selectAs.put("image", "image");
-        return getPokedexGridCursor(selectAs, where);
-    }
-
-    @Deprecated
-    public Cursor getPokedexGridCursor(Map<String, String> selectAs, String where) {
-        StringBuilder query = new StringBuilder("SELECT");
-        if (selectAs.size() > 0) {
-            for (String selection : selectAs.keySet()) {
-                query.append(" ");
-                query.append(selection);
-                String as = selectAs.get(selection);
-                if (as != null && !as.isEmpty()) {
-                    query.append(" AS ");
-                    query.append(as);
-                }
-                query.append(",");
-            }
-            query.replace(query.length()-1, query.length(), "");    // Remove the last comma.
-        } else {
-            query.append(" *");
-        }
-        query.append("\n");
-
-        query.append("FROM pokemon JOIN pokemon_species_names\n");
-
-        query.append("WHERE pokemon.id == pokemon_species_id");
-        query.append(" AND local_language_id == 9");    // TODO: Do more than just English.
-
-        if (where != null && !where.isEmpty()) {
-            query.append(" AND ");
-            query.append(where);
-        }
-
-        query.append("\n");
-        query.append("ORDER BY \"order\";");
-
-        return getReadableDatabase().rawQuery(query.toString(), null);
-    }
-
-//    private void executeSQLScript(SQLiteDatabase db, int rawScript, String scriptName) {
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        byte buff[] = new byte[1024];
-//        int len;
-//        InputStream inputStream = null;
-//        db.beginTransaction();
-//        try {
-//            inputStream = context.getResources().openRawResource(rawScript);
-//            while ((len = inputStream.read(buff)) != -1) {
-//                outputStream.write(buff, 0, len);
-//            }
-//            outputStream.close();
-//            inputStream.close();
-//
-//            String[] script = outputStream.toString().split(";");
-//            for (int i = 0; i < script.length; i++) {
-//                String scriptLine = script[i].trim();
-//                if (scriptLine.length() > 0) {
-//                    db.execSQL(scriptLine + ";");
-//                }
-//            }
-//            db.setTransactionSuccessful();
-//            Log.d(TAG, "Completed running the script " + scriptName);
-//        } catch (IOException e) {
-//            // Script failed to load
-//            e.printStackTrace();
-//            Log.e(TAG, e.getMessage());
-//        } finally {
-//            db.endTransaction();
-//        }
-//    }
-
     private void executeSQLScript(SQLiteDatabase db, int rawScript, String scriptName) {
-       InputStream inputStream = null;
+        InputStream inputStream = null;
         db.beginTransaction();
         try {
             inputStream = context.getResources().openRawResource(rawScript);
