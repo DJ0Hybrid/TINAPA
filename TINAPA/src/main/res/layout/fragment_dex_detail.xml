@@ -13,6 +13,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/dexDetailCursorDump"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/hello_blank_fragment" />
+
             <!-- Images -->
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -100,14 +106,77 @@
             </TableLayout>
 
             <!-- Base Stats -->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*">
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hp_short" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/attack_short" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/defense_short" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/special_attack_short" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/special_defense_short" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/speed_short" />
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/dex_detail_base_hp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/dex_detail_base_att"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/dex_detail_base_def"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/dex_detail_base_satt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/dex_detail_base_sdef"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/dex_detail_base_spd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </TableRow>
+                </TableLayout>
 
             <!-- TODO: Moves as a drop down -->
 
-            <TextView
-                android:id="@+id/dexDetailCursorDump"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/hello_blank_fragment" />
+
             </LinearLayout>
 
 

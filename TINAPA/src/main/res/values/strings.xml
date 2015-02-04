@@ -15,4 +15,14 @@
     <string name="search">Search</string>
     <integer name="database_version">1</integer>
 
+    <!-- Base Stat Names -->
+    <string name="hp_short">HP</string>
+    <string name="attack_short">Att</string>
+    <string name="defense_short">Def</string>
+    <string name="special_attack_short">SAtk</string>
+    <string name="special_defense_short">SDef</string>
+    <string name="speed_short">Spd</string>
+
+    <!-- Generated stuff that has not been sorted (you lazy bum.) Don't put anything past here. -->
+
 </resources>

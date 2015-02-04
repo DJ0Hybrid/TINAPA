@@ -133,6 +133,21 @@ public class DexDetailFragment extends Fragment {
             ability3NameView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.ability3Name)));
             // TODO
             TextView ability3DescView = (TextView) view.findViewById(R.id.dexDetailAbilityDescription3);
+
+            // Stats
+            TextView hpView = (TextView) view.findViewById(R.id.dex_detail_base_hp);
+            TextView attView = (TextView) view.findViewById(R.id.dex_detail_base_att);
+            TextView defView = (TextView) view.findViewById(R.id.dex_detail_base_def);
+            TextView sattView = (TextView) view.findViewById(R.id.dex_detail_base_satt);
+            TextView sdefView = (TextView) view.findViewById(R.id.dex_detail_base_sdef);
+            TextView spdView = (TextView) view.findViewById(R.id.dex_detail_base_spd);
+
+            hpView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseHP)));
+            attView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseAttack)));
+            defView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseDefense)));
+            sattView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpecialAttack)));
+            sdefView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpecialDefense)));
+            spdView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpeed)));
         }
 
         return view;
