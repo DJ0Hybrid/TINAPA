@@ -131,19 +131,18 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     @Override
     public void onDexItemClicked(String id) {
         // TODO: Pull information using the ID based off of the topic.
-        Cursor pokemonCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_URI, null, "pokemon.id = " + id, null, null);
-        Cursor movesCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_moves.pokemon_id = " + id, null, null);
-        if (pokemonCursor != null && pokemonCursor.moveToFirst() && movesCursor != null && movesCursor.moveToFirst()) {
-            Log.d(TAG, pokemonCursor.getString(1));
-            FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
-            if (fragmentView == null) {
-                fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
-            }
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(fragmentView.getId(), DexDetailFragment.newInstance(pokemonCursor, movesCursor), "TAG HERE");
-            ft.addToBackStack("DexDetail");
-            ft.commit();
+//        Cursor pokemonCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_URI, null, "pokemon.id = " + id, null, null);
+//        Cursor movesCursor = getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_moves.pokemon_id = " + id, null, null);
+
+        FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
+        if (fragmentView == null) {
+            fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
         }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(fragmentView.getId(), DexDetailFragment.newInstance(id), "TAG HERE");
+        ft.addToBackStack("DexDetail");
+        ft.commit();
+
     }
 
     // From DexCursorAdapter

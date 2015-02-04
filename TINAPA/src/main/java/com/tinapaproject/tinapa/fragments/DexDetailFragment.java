@@ -16,22 +16,24 @@ import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.ImageUtils;
 
 import org.w3c.dom.Text;
 
 
 public class DexDetailFragment extends Fragment {
-    private Cursor pokemonCursor;
-    private Cursor movesCursor;
     private DexDetailListener listener;
+
+    private static final String ARG_POKEMON_ID = "ARG_POKEMON_ID";
 
     public static final String TAG = "DexDetailFragment";
 
-    public static DexDetailFragment newInstance(Cursor pokemonCursor, Cursor movesCursor) {
+    public static DexDetailFragment newInstance(String id) {
         DexDetailFragment fragment = new DexDetailFragment();
-        fragment.pokemonCursor = pokemonCursor;
-        fragment.movesCursor = movesCursor;
+        Bundle arg = new Bundle();
+        arg.putString(ARG_POKEMON_ID, id);
+        fragment.setArguments(arg);
         return fragment;
     }
 
@@ -52,8 +54,9 @@ public class DexDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dex_detail, container, false);
 
+        final String id = getArguments().getString(ARG_POKEMON_ID);
+        Cursor pokemonCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_URI, null, "pokemon.id = " + id, null, null);
         if (pokemonCursor != null && pokemonCursor.moveToFirst()) {
-            final String id = pokemonCursor.getString(pokemonCursor.getColumnIndex("_id"));
             // TODO: Cursor dump needs to be removed eventually.
             TextView cursorDump = (TextView) view.findViewById(R.id.dexDetailCursorDump);
             if (cursorDump != null) {
