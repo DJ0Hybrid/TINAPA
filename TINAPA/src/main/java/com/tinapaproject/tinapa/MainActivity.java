@@ -34,11 +34,13 @@ import com.tinapaproject.tinapa.fragments.PlannedListFragment.PlannedListListene
 
 public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener, PlannedListListener {
 
-    public static int RESULT_LOAD_DEX_LIST_ICON = 100;
-
     private String temp_id;
     private ImageView temp_imageView;
     private String temp_column;
+
+    public static int RESULT_LOAD_DEX_LIST_ICON = 100;
+
+    public static final String SAVE_STATE_SELECTED_TAB_INDEX = "SAVE_STATE_SELECTED_TAB_INDEX";
 
     public static final String TAG = "MainActivity";
 
@@ -69,6 +71,9 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         // TODO Teams
         Log.i(TAG, "All tabs have been added.");
 
+        if (savedInstanceState != null) {
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt(SAVE_STATE_SELECTED_TAB_INDEX, 0));
+        }
     }
 
 
@@ -218,6 +223,17 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     @Override
     public void plannedItemLongClicked(String id) {
         // TODO
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            outState.putInt(SAVE_STATE_SELECTED_TAB_INDEX, actionBar.getSelectedNavigationIndex());
+        } else {
+            Log.e(TAG, "ActionBar is null for some reason.");
+        }
     }
 
     private static class TabListener<T extends Fragment> implements ActionBar.TabListener {
