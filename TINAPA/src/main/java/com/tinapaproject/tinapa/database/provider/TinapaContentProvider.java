@@ -154,6 +154,7 @@ public class TinapaContentProvider extends ContentProvider {
                 if (selection != null && !selection.isEmpty()) {
                     queryBuilder.appendWhere(selection);
                 }
+                orderBy = "level ASC, \"order\" ASC";
                 selectionArray = new String[]{"moves.id AS _id", "name", "flavor_text", "pokemon_move_methods.identifier AS identifier"};
                 break;
             case POKEDEX_POKEMON_ABILITIES:
