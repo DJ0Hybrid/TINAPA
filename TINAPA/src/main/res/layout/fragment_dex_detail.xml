@@ -8,100 +8,115 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/dexDetailCursorDump"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/hello_blank_fragment" />
 
             <!-- Images -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/dexDetailNormalImage"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:maxWidth="100dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:maxWidth="100dp" />
+
                 <ImageView
                     android:id="@+id/dexDetailShinnyImage"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    android:maxWidth="100dp"
-                    android:layout_weight="1"/>
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:maxWidth="100dp" />
+            </LinearLayout>
 
             <!-- Basic information -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:id="@+id/dexDetailNumber" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:id="@+id/dexDetailName" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:id="@+id/dexDetailType1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:id="@+id/dexDetailType2" />
 
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/dexDetailNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left" />
+
+                <TextView
+                    android:id="@+id/dexDetailName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/dexDetailType1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" />
+
+                <TextView
+                    android:id="@+id/dexDetailType2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right" />
+
+            </LinearLayout>
 
             <!-- Abilities -->
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TableRow>
+
                     <TextView
+                        android:id="@+id/dexDetailAbilityName1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dexDetailAbilityName1"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
+                        android:id="@+id/dexDetailAbilityDescription1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dexDetailAbilityDescription1"/>
+                        android:layout_height="wrap_content" />
                 </TableRow>
-                <TableRow
-                    android:id="@+id/dexDetailAbility2TableRow">
+
+                <TableRow android:id="@+id/dexDetailAbility2TableRow">
+
                     <TextView
+                        android:id="@+id/dexDetailAbilityName2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dexDetailAbilityName2"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
+                        android:id="@+id/dexDetailAbilityDescription2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dexDetailAbilityDescription2"/>
+                        android:layout_height="wrap_content" />
                 </TableRow>
+
                 <TableRow>
+
                     <TextView
+                        android:id="@+id/dexDetailAbilityName3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dexDetailAbilityName3"/>
+                        android:layout_height="wrap_content" />
+
                     <TextView
+                        android:id="@+id/dexDetailAbilityDescription3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dexDetailAbilityDescription3"/>
+                        android:layout_height="wrap_content" />
                 </TableRow>
             </TableLayout>
 
@@ -110,7 +125,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:stretchColumns="*">
+
                 <TableRow>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -141,43 +158,66 @@
                         android:layout_height="wrap_content"
                         android:text="@string/speed_short" />
                 </TableRow>
+
                 <TableRow>
+
                     <TextView
                         android:id="@+id/dex_detail_base_hp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/dex_detail_base_att"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/dex_detail_base_def"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/dex_detail_base_satt"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/dex_detail_base_sdef"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/dex_detail_base_spd"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </TableRow>
-                </TableLayout>
+            </TableLayout>
 
             <!-- TODO: Moves as a drop down -->
+            <LinearLayout
+                android:id="@+id/dex_detail_moves_level_up_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/dex_detail_moves_level_up_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Level-Up Moves" />
+
+
+                <LinearLayout
+                    android:id="@+id/dex_detail_moves_level_up_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
 
             </LinearLayout>
+
+
+        </LinearLayout>
 
 
     </ScrollView>

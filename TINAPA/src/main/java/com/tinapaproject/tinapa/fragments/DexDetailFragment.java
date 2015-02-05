@@ -1,11 +1,9 @@
 package com.tinapaproject.tinapa.fragments;
 
 
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.database.Cursor;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,8 +16,6 @@ import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.ImageUtils;
-
-import org.w3c.dom.Text;
 
 
 public class DexDetailFragment extends Fragment {
@@ -151,9 +147,49 @@ public class DexDetailFragment extends Fragment {
             sattView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpecialAttack)));
             sdefView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpecialDefense)));
             spdView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpeed)));
+
+            // Level-up Moves
+            Cursor levelUpMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id + " AND pokemon_move_methods.id = 1", null, null);
+            if (levelUpMoves != null && levelUpMoves.moveToFirst() && levelUpMoves.getCount() > 0) {
+                final ViewGroup levelUpList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_level_up_list);
+
+                loadLevelUpMovesIntoTableLayout(levelUpMoves, levelUpList);
+
+                View levelUpToggle = view.findViewById(R.id.dex_detail_moves_level_up_switch);
+                levelUpToggle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (View.VISIBLE == levelUpList.getVisibility()) {
+                            levelUpList.setVisibility(View.GONE);
+                        } else if (View.GONE == levelUpList.getVisibility()) {
+                            levelUpList.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            } else {
+                view.findViewById(R.id.dex_detail_moves_level_up_body).setVisibility(View.GONE);
+            }
         }
 
         return view;
+    }
+
+    private static void loadLevelUpMovesIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+        while (!movesCursor.isAfterLast()) {
+            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+            nameView.setText(name);
+
+            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+            flavorTextView.setText(flavorText);
+
+            // TODO: Can still provide more information on the moves.
+
+            table.addView(moveView);
+            movesCursor.moveToNext();
+        }
     }
 
     public interface DexDetailListener {
