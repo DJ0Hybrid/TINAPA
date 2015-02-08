@@ -237,6 +237,27 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/dex_detail_moves_egg_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dex_detail_moves_egg_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Egg Moves" />
+
+
+                <LinearLayout
+                    android:id="@+id/dex_detail_moves_egg_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

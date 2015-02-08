@@ -191,6 +191,28 @@ public class DexDetailFragment extends Fragment {
             } else {
                 view.findViewById(R.id.dex_detail_moves_machine_body).setVisibility(View.GONE);
             }
+
+            // Egg Moves
+            Cursor eggMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id + " AND pokemon_move_methods.id = 2", null, null);
+            if (eggMoves != null && eggMoves.moveToFirst() && eggMoves.getCount() > 0) {
+                final ViewGroup eggList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_egg_list);
+
+                loadEggMovesIntoTableLayout(eggMoves, eggList);
+
+                View machineToggle = view.findViewById(R.id.dex_detail_moves_egg_switch);
+                machineToggle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (View.VISIBLE == eggList.getVisibility()) {
+                            eggList.setVisibility(View.GONE);
+                        } else if (View.GONE == eggList.getVisibility()) {
+                            eggList.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+            } else {
+                view.findViewById(R.id.dex_detail_moves_egg_body).setVisibility(View.GONE);
+            }
         }
 
         return view;
@@ -215,6 +237,24 @@ public class DexDetailFragment extends Fragment {
     }
 
     private static void loadMachineMovesIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+        while (!movesCursor.isAfterLast()) {
+            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+            nameView.setText(name);
+
+            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+            flavorTextView.setText(flavorText);
+
+            // TODO: Can still provide more information on the moves.
+
+            table.addView(moveView);
+            movesCursor.moveToNext();
+        }
+    }
+
+    private static void loadEggMovesIntoTableLayout(Cursor movesCursor, ViewGroup table) {
         while (!movesCursor.isAfterLast()) {
             View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
             String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
