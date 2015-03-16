@@ -160,7 +160,14 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     // From OwnedListFragment
     @Override
     public void onOwnedItemClicked(String id) {
-        // TODO
+        FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
+        if (fragmentView == null) {
+            fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
+        }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(fragmentView.getId(), OwnedAddDialogFragment.newInstance(id), "TAG HERE");
+        ft.addToBackStack("OwnedDetail");
+        ft.commit();
     }
 
     // From OwnedListFragment

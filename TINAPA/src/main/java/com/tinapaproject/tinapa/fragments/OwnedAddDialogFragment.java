@@ -52,10 +52,19 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mEvSpdEditText;
     private EditText mNotesText;
 
+    private static final String ID_ARG = "ID_ARG";
+
     public static final String TAG = "OwnedAddDialogFragment";
 
     public static OwnedAddDialogFragment newInstance() {
+        return new OwnedAddDialogFragment();
+    }
+
+    public static OwnedAddDialogFragment newInstance(String id) {
         OwnedAddDialogFragment fragment = new OwnedAddDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(ID_ARG, id);
+        fragment.setArguments(args);
         return fragment;
     }
 
