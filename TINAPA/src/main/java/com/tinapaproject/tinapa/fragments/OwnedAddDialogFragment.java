@@ -192,16 +192,13 @@ public class OwnedAddDialogFragment extends DialogFragment {
             }
         }
 
-        // TODO: Need to complete the Search Species so that it excepts different search options.
-//        String speciesSelection = (speciesId >= 0 ? "pokemon.id = " + speciesId : null);
-//        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_SEARCH_SPECIES_URI, null, speciesSelection, null, null);
-        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null); // TODO This pulls up everything.
+        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
         String[] from = {DexKeyValues.name};
         int[] to = {R.id.simple_cell_name};
         CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
         if (speciesId >= 0) {
-            mSpeciesSpinner.setSelection(speciesId, false);
+            mSpeciesSpinner.setSelection(speciesId -1, false);  // ID from SQLite starts with 1, the spinner starts with 0.
         }
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
