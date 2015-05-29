@@ -5,3 +5,4 @@
 .idea/gradle.xml
 build/intermediates/model_data.bin
 .idea/libraries/otto_1_3_5.xml
+build/intermediates/dex-cache/cache.xml

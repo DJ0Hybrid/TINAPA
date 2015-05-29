@@ -23,6 +23,7 @@ import android.widget.Switch;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class OwnedAddDialogFragment extends DialogFragment {
@@ -52,7 +53,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mEvSpdEditText;
     private EditText mNotesText;
 
-    private static final String ID_ARG = "ID_ARG";
+    private static final String ARG_POKEMON_ID = "ARG_POKEMON_ID";
 
     public static final String TAG = "OwnedAddDialogFragment";
 
@@ -62,9 +63,12 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
     public static OwnedAddDialogFragment newInstance(String id) {
         OwnedAddDialogFragment fragment = new OwnedAddDialogFragment();
+
         Bundle args = new Bundle();
-        args.putString(ID_ARG, id);
+        args.putString(ARG_POKEMON_ID, id);
+
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -165,11 +169,40 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
         mShinnySwitch.setChecked(false);
 
-        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
+        String ownedPokemonId = "";
+        if (getArguments() != null) {
+            ownedPokemonId = getArguments().getString(ARG_POKEMON_ID);
+        }
+        int speciesId = -1;
+        int abilityId = -1;
+//        int move1Id = -1;
+//        int move2Id = -1;
+//        int move3Id = -1;
+//        int move4Id = -1;
+        if (!TextUtils.isEmpty(ownedPokemonId)) {
+            Cursor ownedCursor = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_URI, null, "owned_pokemons.id = " + ownedPokemonId, null, null);
+            if (ownedCursor.moveToFirst()) {
+                speciesId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.POKEMON_ID));
+                abilityId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.ABILITY_ID));
+//                move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
+//                move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
+//                move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
+//                move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
+                mNicknameEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NICKNAME)));
+            }
+        }
+
+        // TODO: Need to complete the Search Species so that it excepts different search options.
+//        String speciesSelection = (speciesId >= 0 ? "pokemon.id = " + speciesId : null);
+//        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_SEARCH_SPECIES_URI, null, speciesSelection, null, null);
+        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null); // TODO This pulls up everything.
         String[] from = {DexKeyValues.name};
         int[] to = {R.id.simple_cell_name};
-        final CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
+        CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
+        if (speciesId >= 0) {
+            mSpeciesSpinner.setSelection(speciesId, false);
+        }
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
