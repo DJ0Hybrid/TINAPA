@@ -209,6 +209,7 @@ public class TinapaContentProvider extends ContentProvider {
             String[] selectionArgs) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        String table;
         int rowsUpdated = 0;
         int uriType = uriMatcher.match(uri);
         switch (uriType) {
@@ -216,7 +217,17 @@ public class TinapaContentProvider extends ContentProvider {
                 if (TextUtils.isEmpty(selection)) {
                     throw new UnsupportedOperationException("Selection cannot be empty!");
                 }
-                String table = "pokemon";
+                table = "pokemon";
+                rowsUpdated = db.update(table, values, selection, null);
+                if (rowsUpdated != 1) {
+                    Log.w(TAG, "There was " + rowsUpdated + " rows updated, which is not 1!");
+                }
+                break;
+            case OWNED_POKEMON:
+                if (TextUtils.isEmpty(selection)) {
+                    throw new UnsupportedOperationException("Selection cannot be empty!");
+                }
+                table = "owned_pokemons";
                 rowsUpdated = db.update(table, values, selection, null);
                 if (rowsUpdated != 1) {
                     Log.w(TAG, "There was " + rowsUpdated + " rows updated, which is not 1!");
