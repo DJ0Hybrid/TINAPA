@@ -179,10 +179,10 @@ public class OwnedAddDialogFragment extends DialogFragment {
         }
         int speciesId = -1;
         int abilityId = -1;
-//        int move1Id = -1;
-//        int move2Id = -1;
-//        int move3Id = -1;
-//        int move4Id = -1;
+        int move1Id = -1;
+        int move2Id = -1;
+        int move3Id = -1;
+        int move4Id = -1;
         if (!TextUtils.isEmpty(ownedPokemonId)) {
             Cursor ownedCursor = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_URI, null, "owned_pokemons.id = " + ownedPokemonId, null, null);
             if (ownedCursor.moveToFirst()) {
@@ -207,20 +207,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Load up all the other spinners.
-                // It is assumed that this will go off automatically.
-                Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id, null, null);
-                Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + id, null, null);
-
-                loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor);
-                loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor);
-                loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor);
-                loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor);
-
-                String[] from = {"name"};
-                int[] to = {R.id.simple_cell_name};
-                CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
-                mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
+                loadAbilityAndMovesCursorAdapters(id, -1, -1, -1, -1, -1);
             }
 
             @Override
@@ -228,6 +215,8 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 // Do nothing!
             }
         });
+
+        loadAbilityAndMovesCursorAdapters(speciesId, abilityId, move1Id, move2Id, move3Id, move4Id);
 
         if (getShowsDialog()) {
             mSaveButton.setVisibility(View.GONE);
@@ -269,11 +258,44 @@ public class OwnedAddDialogFragment extends DialogFragment {
         return view;
     }
 
+    private void loadAbilityAndMovesCursorAdapters(long pokemonId, long abilityId, long move1Id, long move2Id, long move3Id, long move4Id) {
+        // Load up all the other spinners.
+        // It is assumed that this will go off automatically.
+        Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
+        Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + pokemonId, null, null);
+
+        loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor);
+        loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor);
+        loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor);
+        loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor);
+
+        String[] from = {"name"};
+        int[] to = {R.id.simple_cell_name};
+        CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
+        mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
+        if (abilityId >= 0) {
+            int abilityPosition = getPositionOfRowById(abilityId, mAbilitySpinner);
+            if (abilityPosition >= 0) {
+                mAbilitySpinner.setSelection(abilityPosition);
+            }
+        }
+    }
+
     private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor) {
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
         CursorAdapter spinnerAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, movesCursor, from, to, 0);
         moveSpinner.setAdapter(spinnerAdapter);
+    }
+
+    private static int getPositionOfRowById(long id, Spinner spinner) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            long rowId = spinner.getItemIdAtPosition(i);
+            if (id == rowId) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public interface OwnedAddFragmentListener {
