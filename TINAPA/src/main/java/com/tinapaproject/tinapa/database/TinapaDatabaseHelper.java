@@ -5,6 +5,7 @@
 
 package com.tinapaproject.tinapa.database;
 
+import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,8 +13,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.DatabaseCreationUpdateEvent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -32,6 +35,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tinapa.db";
     protected Context context;
     protected ContentResolver contentResolver;
+    protected Bus bus;
 
     public static final String TAG = "TinapaDatabaseHelper";
 
@@ -40,18 +44,30 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         this.context = context;
         this.contentResolver = context.getContentResolver();
         getWritableDatabase();
+
+        createBus();
+
         Log.d(TAG, "Constructor is done.");
+    }
+
+    private void createBus() {
+        if (bus == null) {
+            bus = new Bus();
+            bus.register(this);
+        }
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "OnCreate called.");
+        createBus();
         executeSQLScript(db, R.raw.database_creation, "database_creation.sql");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "OnUpgrade called.");
+        createBus();
         if (newVersion > oldVersion) {
             switch (oldVersion) {
                 case 1:
@@ -65,6 +81,8 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         InputStream inputStream = null;
         db.beginTransaction();
         try {
+            bus.post(new DatabaseCreationUpdateEvent());
+
             inputStream = context.getResources().openRawResource(rawScript);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -79,6 +97,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
                 } else {
                     sqlLine.append(line + '\n');
                 }
+                bus.post(new DatabaseCreationUpdateEvent());
             }
             db.setTransactionSuccessful();
             bufferedReader.close();

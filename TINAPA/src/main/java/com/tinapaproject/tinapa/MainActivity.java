@@ -17,10 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.DatabaseCreationUpdateEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -38,6 +42,8 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     private ImageView temp_imageView;
     private String temp_column;
 
+    private Bus bus;
+
     public static int RESULT_LOAD_DEX_LIST_ICON = 100;
 
     public static final String SAVE_STATE_SELECTED_TAB_INDEX = "SAVE_STATE_SELECTED_TAB_INDEX";
@@ -48,6 +54,8 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bus = new Bus();
 
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -76,7 +84,6 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -95,6 +102,18 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bus.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bus.unregister(this);
     }
 
     @Override
@@ -266,5 +285,10 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
             // Do nothing.
         }
+    }
+
+    @Subscribe
+    public void onDatabaseCreationUpdated(DatabaseCreationUpdateEvent event) {
+        Toast.makeText(this, "Just updated.", Toast.LENGTH_SHORT).show();
     }
 }
