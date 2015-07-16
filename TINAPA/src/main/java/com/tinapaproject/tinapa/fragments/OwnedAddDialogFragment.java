@@ -197,6 +197,8 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 mNicknameEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NICKNAME)));
                 mLevelEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.LEVEL)));
 
+                mShinnySwitch.setChecked(ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.SHINNY)) != 0);
+
                 mEvHpEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_HP)));
                 mEvAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_ATT)));
                 mEvDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_DEF)));
