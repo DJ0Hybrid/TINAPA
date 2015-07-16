@@ -188,10 +188,10 @@ public class OwnedAddDialogFragment extends DialogFragment {
             if (ownedCursor.moveToFirst()) {
                 speciesId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.POKEMON_ID));
                 abilityId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.ABILITY_ID));
-//                move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
-//                move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
-//                move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
-//                move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
+                move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
+                move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
+                move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
+                move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
                 mNicknameEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NICKNAME)));
             }
         }
@@ -264,10 +264,10 @@ public class OwnedAddDialogFragment extends DialogFragment {
         Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
         Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + pokemonId, null, null);
 
-        loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor);
-        loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor);
-        loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor);
-        loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor);
+        loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor, move1Id);
+        loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor, move2Id);
+        loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor, move3Id);
+        loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor, move4Id);
 
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
@@ -281,11 +281,17 @@ public class OwnedAddDialogFragment extends DialogFragment {
         }
     }
 
-    private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor) {
+    private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor, long selectionId) {
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
         CursorAdapter spinnerAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, movesCursor, from, to, 0);
         moveSpinner.setAdapter(spinnerAdapter);
+        if (selectionId >= 0) {
+            int selectionPosition = getPositionOfRowById(selectionId, moveSpinner);
+            if (selectionPosition >= 0) {
+                moveSpinner.setSelection(selectionPosition);
+            }
+        }
     }
 
     private static int getPositionOfRowById(long id, Spinner spinner) {
