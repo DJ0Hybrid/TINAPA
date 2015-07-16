@@ -230,6 +230,41 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         Log.d(TAG, "Added an owned Pokemon with ID of " + uri.getLastPathSegment());
     }
 
+    // From OwnedAddDialog
+    @Override
+    public void onUpdateClicked(String ownedId, int level, String nickname, boolean shinny, String speciesId, String abilityId, String natureId, String genderId, String move1Id, String move2Id, String move3Id, String move4Id, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, String notes, String planId) {
+        // TODO
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(OwnedKeyValues.LEVEL, level);
+        contentValues.put(OwnedKeyValues.NICKNAME, nickname);
+        contentValues.put(OwnedKeyValues.SHINNY, shinny);
+        contentValues.put(OwnedKeyValues.POKEMON_ID, speciesId);
+        contentValues.put(OwnedKeyValues.ABILITY_ID, abilityId);
+        contentValues.put(OwnedKeyValues.NATURE_ID, natureId);
+        contentValues.put(OwnedKeyValues.GENDER_ID, genderId);
+        contentValues.put(OwnedKeyValues.MOVE1_ID, move1Id);
+        contentValues.put(OwnedKeyValues.MOVE2_ID, move2Id);
+        contentValues.put(OwnedKeyValues.MOVE3_ID, move3Id);
+        contentValues.put(OwnedKeyValues.MOVE4_ID, move4Id);
+        contentValues.put(OwnedKeyValues.IV_HP, ivHP);
+        contentValues.put(OwnedKeyValues.IV_ATT, ivAtt);
+        contentValues.put(OwnedKeyValues.IV_DEF, ivDef);
+        contentValues.put(OwnedKeyValues.IV_SATT, ivSAtt);
+        contentValues.put(OwnedKeyValues.IV_SDEF, ivSDef);
+        contentValues.put(OwnedKeyValues.IV_SPD, ivSpd);
+        contentValues.put(OwnedKeyValues.EV_HP, evHP);
+        contentValues.put(OwnedKeyValues.EV_ATT, evAtt);
+        contentValues.put(OwnedKeyValues.EV_DEF, evDef);
+        contentValues.put(OwnedKeyValues.EV_SATT, evSAtt);
+        contentValues.put(OwnedKeyValues.EV_SDEF, evSDef);
+        contentValues.put(OwnedKeyValues.EV_SPD, evSpd);
+        contentValues.put(OwnedKeyValues.NOTE, notes);
+        contentValues.put(OwnedKeyValues.PLAN_ID, planId);
+        getContentResolver().update(TinapaContentProvider.OWNED_POKEMON_URI, contentValues, "owned_pokemons.id == " + ownedId, null);
+        Log.d(TAG, "Update an owned Pokemon with ID of " + ownedId);
+        onBackPressed();
+    }
+
     private void loadImage(String id, ImageView imageView, String column) {
         temp_id = id;
         temp_imageView = imageView;

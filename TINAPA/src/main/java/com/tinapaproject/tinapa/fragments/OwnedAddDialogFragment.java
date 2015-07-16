@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
@@ -23,6 +24,7 @@ import android.widget.Switch;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class OwnedAddDialogFragment extends DialogFragment {
@@ -51,8 +53,9 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mEvSDefEditText;
     private EditText mEvSpdEditText;
     private EditText mNotesText;
+    private Button mSaveButton;
 
-    private static final String ID_ARG = "ID_ARG";
+    private static final String ARG_POKEMON_ID = "ARG_POKEMON_ID";
 
     public static final String TAG = "OwnedAddDialogFragment";
 
@@ -62,9 +65,12 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
     public static OwnedAddDialogFragment newInstance(String id) {
         OwnedAddDialogFragment fragment = new OwnedAddDialogFragment();
+
         Bundle args = new Bundle();
-        args.putString(ID_ARG, id);
+        args.putString(ARG_POKEMON_ID, id);
+
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -163,13 +169,41 @@ public class OwnedAddDialogFragment extends DialogFragment {
         mEvSpdEditText = (EditText) view.findViewById(R.id.owned_add_ev_spd_edit_text);
         mNotesText = (EditText) view.findViewById(R.id.owned_add_notes);
 
+        mSaveButton = (Button) view.findViewById(R.id.owned_saved_button);
+
         mShinnySwitch.setChecked(false);
+
+        String ownedPokemonId = "";
+        if (getArguments() != null) {
+            ownedPokemonId = getArguments().getString(ARG_POKEMON_ID);
+        }
+        int speciesId = -1;
+        int abilityId = -1;
+//        int move1Id = -1;
+//        int move2Id = -1;
+//        int move3Id = -1;
+//        int move4Id = -1;
+        if (!TextUtils.isEmpty(ownedPokemonId)) {
+            Cursor ownedCursor = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_URI, null, "owned_pokemons.id = " + ownedPokemonId, null, null);
+            if (ownedCursor.moveToFirst()) {
+                speciesId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.POKEMON_ID));
+                abilityId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.ABILITY_ID));
+//                move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
+//                move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
+//                move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
+//                move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
+                mNicknameEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NICKNAME)));
+            }
+        }
 
         Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
         String[] from = {DexKeyValues.name};
         int[] to = {R.id.simple_cell_name};
-        final CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
+        CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
+        if (speciesId >= 0) {
+            mSpeciesSpinner.setSelection(speciesId -1, false);  // ID from SQLite starts with 1, the spinner starts with 0.
+        }
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -194,6 +228,44 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 // Do nothing!
             }
         });
+
+        if (getShowsDialog()) {
+            mSaveButton.setVisibility(View.GONE);
+        } else {
+            mSaveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int level = TextUtils.isEmpty(mLevelEditText.getText().toString()) ? 50 : Integer.parseInt(mLevelEditText.getText().toString());
+                    String nickname = mNicknameEditText.getText().toString();
+                    String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
+                    boolean shinny = mShinnySwitch.isChecked();
+                    String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
+                    String natureId = /* TODO */ "0";
+                    String genderId = /* TODO */ "0";
+                    String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
+                    String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());
+                    String move3Id = String.valueOf(mMove3Spinner.getSelectedItemId());
+                    String move4Id = String.valueOf(mMove4Spinner.getSelectedItemId());
+                    int ivHp = TextUtils.isEmpty(mIvHpEditText.getText().toString()) ? 0 : Integer.parseInt(mIvHpEditText.getText().toString());
+                    int ivAtt = TextUtils.isEmpty(mIvAttEditText.getText().toString()) ? 0 : Integer.parseInt(mIvAttEditText.getText().toString());
+                    int ivDef = TextUtils.isEmpty(mIvDefEditText.getText().toString()) ? 0 : Integer.parseInt(mIvDefEditText.getText().toString());
+                    int ivSAtt = TextUtils.isEmpty(mIvSAttEditText.getText().toString()) ? 0 : Integer.parseInt(mIvSAttEditText.getText().toString());
+                    int ivSDef = TextUtils.isEmpty(mIvSDefEditText.getText().toString()) ? 0 : Integer.parseInt(mIvSDefEditText.getText().toString());
+                    int ivSpd = TextUtils.isEmpty(mIvSpdEditText.getText().toString()) ? 0 : Integer.parseInt(mIvSpdEditText.getText().toString());
+                    int evHp = TextUtils.isEmpty(mEvHpEditText.getText().toString()) ? 0 : Integer.parseInt(mEvHpEditText.getText().toString());
+                    int evAtt = TextUtils.isEmpty(mEvAttEditText.getText().toString()) ? 0 : Integer.parseInt(mEvAttEditText.getText().toString());
+                    int evDef = TextUtils.isEmpty(mEvDefEditText.getText().toString()) ? 0 : Integer.parseInt(mEvDefEditText.getText().toString());
+                    int evSAtt = TextUtils.isEmpty(mEvSAttEditText.getText().toString()) ? 0 : Integer.parseInt(mEvSAttEditText.getText().toString());
+                    int evSDef = TextUtils.isEmpty(mEvSDefEditText.getText().toString()) ? 0 : Integer.parseInt(mEvSDefEditText.getText().toString());
+                    int evSpd = TextUtils.isEmpty(mEvSpdEditText.getText().toString()) ? 0 : Integer.parseInt(mEvSpdEditText.getText().toString());
+                    String notes = mNotesText.getText().toString();
+                    String planId /* TODO */ = "";
+
+                    mListener.onUpdateClicked(getArguments().getString(ARG_POKEMON_ID, ""), level, nickname, shinny, speciesId, abilityId, natureId, genderId, move1Id, move2Id, move3Id, move4Id, ivHp, ivAtt, ivDef, ivSAtt, ivSDef, ivSpd, evHp, evAtt, evDef, evSAtt, evSDef, evSpd, notes, planId);
+                }
+            });
+        }
+
         return view;
     }
 
@@ -206,6 +278,6 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
     public interface OwnedAddFragmentListener {
         public void onPositiveClicked(int level, String nickname, boolean shinny, String speciesId, String abilityId, String natureId, String genderId, String move1Id, String move2Id, String move3Id, String move4Id, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, String notes, String planId);
-
+        public void onUpdateClicked(String ownedId, int level, String nickname, boolean shinny, String speciesId, String abilityId, String natureId, String genderId, String move1Id, String move2Id, String move3Id, String move4Id, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, String notes, String planId);
     }
 }
