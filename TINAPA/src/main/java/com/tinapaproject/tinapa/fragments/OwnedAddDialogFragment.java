@@ -24,6 +24,7 @@ import android.widget.Switch;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
@@ -39,6 +40,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private Spinner mMove2Spinner;
     private Spinner mMove3Spinner;
     private Spinner mMove4Spinner;
+    private Spinner mNatureSpinner;
     private EditText mLevelEditText;
     private EditText mIvHpEditText;
     private EditText mIvAttEditText;
@@ -106,7 +108,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
                 boolean shinny = mShinnySwitch.isChecked();
                 String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
-                String natureId = /* TODO */ "0";
+                String natureId = String.valueOf(mNatureSpinner.getSelectedItemId());
                 String genderId = /* TODO */ "0";
                 String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
                 String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());
@@ -154,6 +156,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         mMove2Spinner = (Spinner) view.findViewById(R.id.owned_add_move2_spinner);
         mMove3Spinner = (Spinner) view.findViewById(R.id.owned_add_move3_spinner);
         mMove4Spinner = (Spinner) view.findViewById(R.id.owned_add_move4_spinner);
+        mNatureSpinner = (Spinner) view.findViewById(R.id.owned_add_nature_spinner);
         mLevelEditText = (EditText) view.findViewById(R.id.owned_add_level_edit_text);
         mIvHpEditText = (EditText) view.findViewById(R.id.owned_add_iv_hp_edit_text);
         mIvAttEditText = (EditText) view.findViewById(R.id.owned_add_iv_att_edit_text);
@@ -183,11 +186,13 @@ public class OwnedAddDialogFragment extends DialogFragment {
         int move2Id = -1;
         int move3Id = -1;
         int move4Id = -1;
+        int natureId = -1;
         if (!TextUtils.isEmpty(ownedPokemonId)) {
             Cursor ownedCursor = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_URI, null, "owned_pokemons.id = " + ownedPokemonId, null, null);
             if (ownedCursor.moveToFirst()) {
                 speciesId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.POKEMON_ID));
                 abilityId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.ABILITY_ID));
+                natureId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.NATURE_ID));
 
                 move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
                 move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
@@ -237,6 +242,15 @@ public class OwnedAddDialogFragment extends DialogFragment {
             }
         });
 
+        Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
+        String[] natureFrom = {NatureKeyValues.NATURE_NAME};
+        int[] natureTo = {R.id.simple_cell_name};
+        CursorAdapter mNatureCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, natureCursor, natureFrom, natureTo, 0);
+        mNatureSpinner.setAdapter(mNatureCursorAdapter);
+        if (natureId >= 0) {
+            mNatureSpinner.setSelection(natureId -1, false);
+        }
+
         loadAbilityAndMovesCursorAdapters(speciesId, abilityId, move1Id, move2Id, move3Id, move4Id);
 
         if (getShowsDialog()) {
@@ -250,7 +264,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
                     String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
                     boolean shinny = mShinnySwitch.isChecked();
                     String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
-                    String natureId = /* TODO */ "0";
+                    String natureId = String.valueOf(mNatureSpinner.getSelectedItemId());
                     String genderId = /* TODO */ "0";
                     String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
                     String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());

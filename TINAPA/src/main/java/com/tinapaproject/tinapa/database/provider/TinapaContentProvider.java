@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 
@@ -64,6 +65,10 @@ public class TinapaContentProvider extends ContentProvider {
     public static final Uri PLANNED_TEAM_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_TEAM_TABLE);
     public static final int PLANNED_TEAM = 400; // Everything.
 
+    private static final String NATURE_TABLE = "nature";
+    public static final Uri NATURE_URI = Uri.parse("content://" + AUTHORITY + "/" + NATURE_TABLE);
+    public static final int NATURE = 500;
+
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -82,6 +87,8 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, OWNED_POKEMON_SEARCH_GENERAL_TABLE, OWNED_POKEMON_SEARCH_GENERAL);
 
         uriMatcher.addURI(AUTHORITY, PLANNED_TEAM_TABLE, PLANNED_TEAM);
+
+        uriMatcher.addURI(AUTHORITY, NATURE_TABLE, NATURE);
         // TODO: Add more URIs to the matcher.
     }
 
@@ -195,6 +202,13 @@ public class TinapaContentProvider extends ContentProvider {
                 break;
             case PLANNED_TEAM:
 
+                break;
+            case NATURE:
+                queryBuilder.setTables("nature_names");
+
+                selectionArray = new String[]{"nature_id AS _id", "name AS " + NatureKeyValues.NATURE_NAME, "nature_id AS " + NatureKeyValues.NATURE_ID};
+
+                queryBuilder.appendWhere("local_language_id = 9");
                 break;
             default:
                 throw new UnsupportedOperationException("Unsupported URI.");
