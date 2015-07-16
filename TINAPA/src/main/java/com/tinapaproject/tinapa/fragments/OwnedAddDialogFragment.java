@@ -188,11 +188,30 @@ public class OwnedAddDialogFragment extends DialogFragment {
             if (ownedCursor.moveToFirst()) {
                 speciesId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.POKEMON_ID));
                 abilityId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.ABILITY_ID));
+
                 move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
                 move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
                 move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
                 move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
+
                 mNicknameEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NICKNAME)));
+                mLevelEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.LEVEL)));
+
+                mEvHpEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_HP)));
+                mEvAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_ATT)));
+                mEvDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_DEF)));
+                mEvSAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_SATT)));
+                mEvSDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_SDEF)));
+                mEvSpdEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_SPD)));
+
+                mIvHpEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_HP)));
+                mIvAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_ATT)));
+                mIvDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_DEF)));
+                mIvSAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_SATT)));
+                mIvSDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_SDEF)));
+                mIvSpdEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_SPD)));
+
+                mNotesText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NOTE)));
             }
         }
 
