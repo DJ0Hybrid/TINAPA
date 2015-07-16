@@ -8,3 +8,4 @@ build/intermediates/model_data.bin
 build/intermediates/dex-cache/cache.xml
 TINAPA/src/main/java/com/tinapaproject/tinapa/events/DatabaseCreationUpdateEvent.java
 .idea/runConfigurations.xml
+build/intermediates/gradle_project_sync_data.bin
