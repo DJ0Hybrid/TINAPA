@@ -45,6 +45,12 @@ public class TinapaContentProvider extends ContentProvider {
     public static final String POKEDEX_POKEMON_IMAGE_TABLE = POKEDEX_TABLE + "/pokemon/image";
     public static final Uri POKEDEX_POKEMON_IMAGE_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_IMAGE_TABLE);
     public static final int POKEDEX_POKEMON_IMAGE = 105;
+    public static final String POKEDEX_POKEMON_EVOLUTION_BASE_LINK_TABLE = POKEDEX_TABLE + "/pokemon/evolution/base";
+    public static final Uri POKEDEX_POKEMON_EVOLUTION_BASE_LINK_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_EVOLUTION_BASE_LINK_TABLE);
+    public static final int POKEDEX_POKEMON_EVOLUTION_BASE_LINK = 106;
+    public static final String POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_TABLE = POKEDEX_TABLE + "/pokemon/evolution/result";
+    public static final Uri POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_TABLE);
+    public static final int POKEDEX_POKEMON_EVOLUTION_RESULT_LINK = 107;
 
     private static final String PLANNED_POKEMON_TABLE = "plannedPokemon";
     public static final Uri PLANNED_POKEMON_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_POKEMON_TABLE);
@@ -74,6 +80,8 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_MOVES_TABLE, POKEDEX_POKEMON_MOVES);
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_ABILITIES_TABLE, POKEDEX_POKEMON_ABILITIES);
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_IMAGE_TABLE, POKEDEX_POKEMON_IMAGE);
+        uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_EVOLUTION_BASE_LINK_TABLE, POKEDEX_POKEMON_EVOLUTION_BASE_LINK);
+        uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_TABLE, POKEDEX_POKEMON_EVOLUTION_RESULT_LINK);
 
         uriMatcher.addURI(AUTHORITY, PLANNED_POKEMON_TABLE, PLANNED_POKEMON);
         uriMatcher.addURI(AUTHORITY, PLANNED_POKEMON_SEARCH_GENERAL_TABLE, PLANNED_POKEMON_SEARCH_GENERAL);
@@ -167,6 +175,20 @@ public class TinapaContentProvider extends ContentProvider {
                 }
                 selectionArray = new String[]{"id AS _id", "name AS name", "pokemon_id AS pokemon_id", "slot AS slot", "is_hidden AS is_hidden"};
                 orderBy = "slot ASC";
+                break;
+            case POKEDEX_POKEMON_EVOLUTION_BASE_LINK:
+                // TODO Selection array.
+                queryBuilder.setTables("pokemon_evolution JOIN pokemon_species AS evolved_species ON pokemon_evolution.evolved_species_id = evolved_species.id JOIN pokemon_species AS base_species ON base_species.id = evolved_species.evolves_from_species_id JOIN evolution_trigger_prose ON (pokemon_evolution.evolution_trigger_id = evolution_trigger_prose.evolution_trigger_id AND evolution_trigger_prose.local_language_id = 9)");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere("base_species.id = " + selection);
+                }
+                break;
+            case POKEDEX_POKEMON_EVOLUTION_RESULT_LINK:
+                // TODO Selection array.
+                queryBuilder.setTables("pokemon_evolution JOIN pokemon_species AS evolved_species ON pokemon_evolution.evolved_species_id = evolved_species.id JOIN pokemon_species AS base_species ON base_species.id = evolved_species.evolves_from_species_id JOIN evolution_trigger_prose ON (pokemon_evolution.evolution_trigger_id = evolution_trigger_prose.evolution_trigger_id AND evolution_trigger_prose.local_language_id = 9)");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere("evolved_species.id = " + selection);
+                }
                 break;
             case PLANNED_POKEMON:
 
