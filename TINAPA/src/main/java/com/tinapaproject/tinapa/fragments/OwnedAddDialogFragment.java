@@ -24,6 +24,7 @@ import android.widget.Switch;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
@@ -39,6 +40,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private Spinner mMove2Spinner;
     private Spinner mMove3Spinner;
     private Spinner mMove4Spinner;
+    private Spinner mNatureSpinner;
     private EditText mLevelEditText;
     private EditText mIvHpEditText;
     private EditText mIvAttEditText;
@@ -106,7 +108,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
                 boolean shinny = mShinnySwitch.isChecked();
                 String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
-                String natureId = /* TODO */ "0";
+                String natureId = String.valueOf(mNatureSpinner.getSelectedItemId());
                 String genderId = /* TODO */ "0";
                 String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
                 String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());
@@ -154,6 +156,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         mMove2Spinner = (Spinner) view.findViewById(R.id.owned_add_move2_spinner);
         mMove3Spinner = (Spinner) view.findViewById(R.id.owned_add_move3_spinner);
         mMove4Spinner = (Spinner) view.findViewById(R.id.owned_add_move4_spinner);
+        mNatureSpinner = (Spinner) view.findViewById(R.id.owned_add_nature_spinner);
         mLevelEditText = (EditText) view.findViewById(R.id.owned_add_level_edit_text);
         mIvHpEditText = (EditText) view.findViewById(R.id.owned_add_iv_hp_edit_text);
         mIvAttEditText = (EditText) view.findViewById(R.id.owned_add_iv_att_edit_text);
@@ -179,20 +182,43 @@ public class OwnedAddDialogFragment extends DialogFragment {
         }
         int speciesId = -1;
         int abilityId = -1;
-//        int move1Id = -1;
-//        int move2Id = -1;
-//        int move3Id = -1;
-//        int move4Id = -1;
+        int move1Id = -1;
+        int move2Id = -1;
+        int move3Id = -1;
+        int move4Id = -1;
+        int natureId = -1;
         if (!TextUtils.isEmpty(ownedPokemonId)) {
             Cursor ownedCursor = getActivity().getContentResolver().query(TinapaContentProvider.OWNED_POKEMON_URI, null, "owned_pokemons.id = " + ownedPokemonId, null, null);
             if (ownedCursor.moveToFirst()) {
                 speciesId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.POKEMON_ID));
                 abilityId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.ABILITY_ID));
-//                move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
-//                move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
-//                move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
-//                move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
+                natureId = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.NATURE_ID));
+
+                move1Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE1_ID));
+                move2Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE2_ID));
+                move3Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE3_ID));
+                move4Id = ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.MOVE4_ID));
+
                 mNicknameEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NICKNAME)));
+                mLevelEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.LEVEL)));
+
+                mShinnySwitch.setChecked(ownedCursor.getInt(ownedCursor.getColumnIndex(OwnedKeyValues.SHINNY)) != 0);
+
+                mEvHpEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_HP)));
+                mEvAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_ATT)));
+                mEvDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_DEF)));
+                mEvSAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_SATT)));
+                mEvSDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_SDEF)));
+                mEvSpdEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.EV_SPD)));
+
+                mIvHpEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_HP)));
+                mIvAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_ATT)));
+                mIvDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_DEF)));
+                mIvSAttEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_SATT)));
+                mIvSDefEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_SDEF)));
+                mIvSpdEditText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.IV_SPD)));
+
+                mNotesText.setText(ownedCursor.getString(ownedCursor.getColumnIndex(OwnedKeyValues.NOTE)));
             }
         }
 
@@ -207,20 +233,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Load up all the other spinners.
-                // It is assumed that this will go off automatically.
-                Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id, null, null);
-                Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + id, null, null);
-
-                loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor);
-                loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor);
-                loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor);
-                loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor);
-
-                String[] from = {"name"};
-                int[] to = {R.id.simple_cell_name};
-                CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
-                mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
+                loadAbilityAndMovesCursorAdapters(id, -1, -1, -1, -1, -1);
             }
 
             @Override
@@ -228,6 +241,17 @@ public class OwnedAddDialogFragment extends DialogFragment {
                 // Do nothing!
             }
         });
+
+        Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
+        String[] natureFrom = {NatureKeyValues.NATURE_NAME};
+        int[] natureTo = {R.id.simple_cell_name};
+        CursorAdapter mNatureCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, natureCursor, natureFrom, natureTo, 0);
+        mNatureSpinner.setAdapter(mNatureCursorAdapter);
+        if (natureId >= 0) {
+            mNatureSpinner.setSelection(natureId -1, false);
+        }
+
+        loadAbilityAndMovesCursorAdapters(speciesId, abilityId, move1Id, move2Id, move3Id, move4Id);
 
         if (getShowsDialog()) {
             mSaveButton.setVisibility(View.GONE);
@@ -240,7 +264,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
                     String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
                     boolean shinny = mShinnySwitch.isChecked();
                     String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
-                    String natureId = /* TODO */ "0";
+                    String natureId = String.valueOf(mNatureSpinner.getSelectedItemId());
                     String genderId = /* TODO */ "0";
                     String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
                     String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());
@@ -269,11 +293,50 @@ public class OwnedAddDialogFragment extends DialogFragment {
         return view;
     }
 
-    private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor) {
+    private void loadAbilityAndMovesCursorAdapters(long pokemonId, long abilityId, long move1Id, long move2Id, long move3Id, long move4Id) {
+        // Load up all the other spinners.
+        // It is assumed that this will go off automatically.
+        Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
+        Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + pokemonId, null, null);
+
+        loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor, move1Id);
+        loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor, move2Id);
+        loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor, move3Id);
+        loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor, move4Id);
+
+        String[] from = {"name"};
+        int[] to = {R.id.simple_cell_name};
+        CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
+        mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
+        if (abilityId >= 0) {
+            int abilityPosition = getPositionOfRowById(abilityId, mAbilitySpinner);
+            if (abilityPosition >= 0) {
+                mAbilitySpinner.setSelection(abilityPosition);
+            }
+        }
+    }
+
+    private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor, long selectionId) {
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
         CursorAdapter spinnerAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, movesCursor, from, to, 0);
         moveSpinner.setAdapter(spinnerAdapter);
+        if (selectionId >= 0) {
+            int selectionPosition = getPositionOfRowById(selectionId, moveSpinner);
+            if (selectionPosition >= 0) {
+                moveSpinner.setSelection(selectionPosition);
+            }
+        }
+    }
+
+    private static int getPositionOfRowById(long id, Spinner spinner) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            long rowId = spinner.getItemIdAtPosition(i);
+            if (id == rowId) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public interface OwnedAddFragmentListener {

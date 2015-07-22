@@ -52,15 +52,12 @@ public class IndividualCursorAdapter extends CursorAdapter {
         ImageUtils.loadImage(imageView, imageUri, true);
 
         TextView textView = (TextView) view.findViewById(R.id.cell_individual_name);
-        if (!TextUtils.isEmpty(mainNameColumn)) {
-            String name = cursor.getString(cursor.getColumnIndex(mainNameColumn));
-
+        String name;
+        if (!TextUtils.isEmpty(mainNameColumn) && !TextUtils.isEmpty(name = cursor.getString(cursor.getColumnIndex(mainNameColumn)))) {
             textView.setText(name);
         } else if (!TextUtils.isEmpty(secondNameColumn)) {
-            String name = cursor.getString(cursor.getColumnIndex(secondNameColumn));
-            if (name != null) {
-                textView.setText(name);
-            }
+            name = cursor.getString(cursor.getColumnIndex(secondNameColumn));
+            textView.setText(name);
         }
 
     }

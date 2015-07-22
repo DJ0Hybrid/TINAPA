@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 
@@ -70,6 +71,10 @@ public class TinapaContentProvider extends ContentProvider {
     public static final Uri PLANNED_TEAM_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_TEAM_TABLE);
     public static final int PLANNED_TEAM = 400; // Everything.
 
+    private static final String NATURE_TABLE = "nature";
+    public static final Uri NATURE_URI = Uri.parse("content://" + AUTHORITY + "/" + NATURE_TABLE);
+    public static final int NATURE = 500;
+
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -90,6 +95,8 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, OWNED_POKEMON_SEARCH_GENERAL_TABLE, OWNED_POKEMON_SEARCH_GENERAL);
 
         uriMatcher.addURI(AUTHORITY, PLANNED_TEAM_TABLE, PLANNED_TEAM);
+
+        uriMatcher.addURI(AUTHORITY, NATURE_TABLE, NATURE);
         // TODO: Add more URIs to the matcher.
     }
 
@@ -207,7 +214,7 @@ public class TinapaContentProvider extends ContentProvider {
                     queryBuilder.appendWhere(selection);
                 }
                 // TODO Select array
-                selectionArray = new String[]{"owned_pokemons.id AS _id", "owned_pokemons.nickname AS nickname", "pokemon_species_names.name AS name", "pokemon.species_id AS " + OwnedKeyValues.POKEMON_ID, "owned_pokemons.ability_id AS " + OwnedKeyValues.ABILITY_ID, "icon_image", "image", "shinny_image", "iv_hp", "iv_att", "iv_def", "iv_satt", "iv_sdef", "iv_spd", "ev_hp", "ev_att", "ev_def", "ev_satt", "ev_sdef", "ev_spd", "level", "shinny", "note", "nature_names.name AS nature_name", "nature_names.nature_id AS " + OwnedKeyValues.NATURE_ID};
+                selectionArray = new String[]{"owned_pokemons.id AS _id", "owned_pokemons.nickname AS nickname", "pokemon_species_names.name AS name", "pokemon.species_id AS " + OwnedKeyValues.POKEMON_ID, "owned_pokemons.ability_id AS " + OwnedKeyValues.ABILITY_ID, "icon_image", "image", "shinny_image", "iv_hp AS " + OwnedKeyValues.IV_HP, "iv_att AS " + OwnedKeyValues.IV_ATT, "iv_def AS " + OwnedKeyValues.IV_DEF, "iv_satt AS " + OwnedKeyValues.IV_SATT, "iv_sdef AS " + OwnedKeyValues.IV_SDEF, "iv_spd AS " + OwnedKeyValues.IV_SPD, "ev_hp AS " + OwnedKeyValues.EV_HP, "ev_att AS " + OwnedKeyValues.EV_ATT, "ev_def AS " + OwnedKeyValues.EV_DEF, "ev_satt AS " + OwnedKeyValues.EV_SATT, "ev_sdef AS " + OwnedKeyValues.EV_SDEF, "ev_spd AS " + OwnedKeyValues.EV_SPD, "level AS " + OwnedKeyValues.LEVEL, "shinny AS " + OwnedKeyValues.SHINNY, "note AS " + OwnedKeyValues.NOTE, "nature_names.name AS nature_name", "nature_names.nature_id AS " + OwnedKeyValues.NATURE_ID, "owned_pokemons.move1_id AS " + OwnedKeyValues.MOVE1_ID, "owned_pokemons.move2_id AS " + OwnedKeyValues.MOVE2_ID, "owned_pokemons.move3_id AS " + OwnedKeyValues.MOVE3_ID, "owned_pokemons.move4_id AS " + OwnedKeyValues.MOVE4_ID};
                 break;
             case OWNED_POKEMON_SEARCH_GENERAL:
                 queryBuilder.setTables("owned_pokemons LEFT OUTER JOIN pokemon ON (pokemon.species_id = owned_pokemons.pokemon_id) LEFT OUTER JOIN pokemon_species_names ON (pokemon.species_id = pokemon_species_names.pokemon_species_id AND pokemon_species_names.local_language_id = 9) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 1) AS type1 ON (pokemon.id = type1.pokemon_id) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 2) AS type2 ON (pokemon.id = type2.pokemon_id) LEFT OUTER JOIN (SELECT ability_names.ability_id AS id, name, effect FROM ability_names, ability_prose WHERE ability_names.ability_id = ability_prose.ability_id AND ability_names.local_language_id = 9 AND ability_prose.local_language_id = 9) AS ability ON (owned_pokemons.ability_id = ability.id) LEFT OUTER JOIN nature_names ON (owned_pokemons.nature_id = nature_names.nature_id AND nature_names.local_language_id = 9) LEFT OUTER JOIN genders ON (genders.id = owned_pokemons.gender_id) LEFT OUTER JOIN move_names AS move1 ON (move1.move_id = owned_pokemons.move1_id AND move1.local_language_id = 9) LEFT OUTER JOIN move_names AS move2 ON (move2.move_id = owned_pokemons.move2_id AND move2.local_language_id = 9) LEFT OUTER JOIN move_names AS move3 ON (move3.move_id = owned_pokemons.move3_id AND move3.local_language_id = 9) LEFT OUTER JOIN move_names AS move4 ON (move4.move_id = owned_pokemons.move4_id AND move4.local_language_id = 9)");
@@ -217,6 +224,13 @@ public class TinapaContentProvider extends ContentProvider {
                 break;
             case PLANNED_TEAM:
 
+                break;
+            case NATURE:
+                queryBuilder.setTables("nature_names");
+
+                selectionArray = new String[]{"nature_id AS _id", "name AS " + NatureKeyValues.NATURE_NAME, "nature_id AS " + NatureKeyValues.NATURE_ID};
+
+                queryBuilder.appendWhere("local_language_id = 9");
                 break;
             default:
                 throw new UnsupportedOperationException("Unsupported URI.");
