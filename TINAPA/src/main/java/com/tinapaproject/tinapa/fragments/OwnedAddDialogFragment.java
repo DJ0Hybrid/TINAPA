@@ -21,6 +21,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
@@ -245,7 +246,32 @@ public class OwnedAddDialogFragment extends DialogFragment {
         Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
         String[] natureFrom = {NatureKeyValues.NATURE_NAME};
         int[] natureTo = {R.id.simple_cell_name};
-        CursorAdapter mNatureCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, natureCursor, natureFrom, natureTo, 0);
+        CursorAdapter mNatureCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, natureCursor, natureFrom, natureTo, 0) {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getActivity()).inflate(R.layout.cell_simple_name, parent, false);
+                }
+                this.getCursor().moveToPosition(position);
+                String natureName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.NATURE_NAME));
+                String increasedStatName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.INCREASED_STAT_NAME));
+                String decreasedStatName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.DECREASED_STAT_NAME));
+
+                StringBuilder builder = new StringBuilder(natureName);
+
+                if (!TextUtils.isEmpty(increasedStatName) && !TextUtils.isEmpty(decreasedStatName) && !increasedStatName.equalsIgnoreCase(decreasedStatName)) {
+                    builder.append(" / + " + increasedStatName);
+                    builder.append(" / - " + decreasedStatName);
+                } else {
+                    builder.append(" / = / =");
+                }
+
+                TextView textView = (TextView) convertView.findViewById(R.id.simple_cell_name);
+                textView.setText(builder.toString());
+
+                return convertView;
+            }
+        };
         mNatureSpinner.setAdapter(mNatureCursorAdapter);
         if (natureId >= 0) {
             mNatureSpinner.setSelection(natureId -1, false);

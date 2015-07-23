@@ -226,11 +226,11 @@ public class TinapaContentProvider extends ContentProvider {
 
                 break;
             case NATURE:
-                queryBuilder.setTables("nature_names");
+                queryBuilder.setTables("nature_names LEFT OUTER JOIN natures ON (nature_names.nature_id = natures.id) LEFT OUTER JOIN stat_names AS increased_stat ON (natures.increased_stat_id = increased_stat.stat_id AND increased_stat.local_language_id = 9) LEFT OUTER JOIN stat_names AS decreased_stat ON (natures.decreased_stat_id = decreased_stat.stat_id AND decreased_stat.local_language_id = 9)");
 
-                selectionArray = new String[]{"nature_id AS _id", "name AS " + NatureKeyValues.NATURE_NAME, "nature_id AS " + NatureKeyValues.NATURE_ID};
+                selectionArray = new String[]{"nature_names.nature_id AS _id", "nature_names.name AS " + NatureKeyValues.NATURE_NAME, "nature_names.nature_id AS " + NatureKeyValues.NATURE_ID, "increased_stat.name AS " + NatureKeyValues.INCREASED_STAT_NAME, "decreased_stat.name AS " + NatureKeyValues.DECREASED_STAT_NAME};
 
-                queryBuilder.appendWhere("local_language_id = 9");
+                queryBuilder.appendWhere("nature_names.local_language_id = 9");
                 break;
             default:
                 throw new UnsupportedOperationException("Unsupported URI.");
