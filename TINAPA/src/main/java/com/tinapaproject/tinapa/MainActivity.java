@@ -276,6 +276,11 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     }
 
     @Override
+    public void plannedItemAddClicked() {
+        // TODO
+    }
+
+    @Override
     public void plannedItemClicked(String id) {
         // TODO
     }
