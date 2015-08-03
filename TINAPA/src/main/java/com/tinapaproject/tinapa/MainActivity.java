@@ -33,6 +33,7 @@ import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.OwnedAddDialogFragment.OwnedAddFragmentListener;
 import com.tinapaproject.tinapa.fragments.OwnedListFragment;
 import com.tinapaproject.tinapa.fragments.OwnedListFragment.OwnedListListener;
+import com.tinapaproject.tinapa.fragments.PlannedAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment.PlannedListListener;
 
@@ -277,7 +278,8 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     @Override
     public void plannedItemAddClicked() {
-        // TODO
+        PlannedAddDialogFragment dialogFragment = PlannedAddDialogFragment.newInstance();
+        dialogFragment.show(getFragmentManager(), PlannedAddDialogFragment.TAG);
     }
 
     @Override
