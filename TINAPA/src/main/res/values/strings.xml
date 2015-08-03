@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">TINAPA</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="tab_pokedex">Dex</string>
     <string name="tab_owned_pokemon">Owned</string>
@@ -22,9 +21,15 @@
     <string name="special_attack_short">SAtk</string>
     <string name="special_defense_short">SDef</string>
     <string name="speed_short">Spd</string>
+
     <string name="notes">Notes</string>
     <string name="save_changes">Save Changes</string>
 
+    <string name="planned_iv_max">Max</string>
+    <string name="planned_iv_random">\?</string>
+    <string name="planned_iv_min">Min</string>
+
     <!-- Generated stuff that has not been sorted (you lazy bum.) Don't put anything past here. -->
+    <string name="hello_world">Hello world!</string>
 
 </resources>

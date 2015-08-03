@@ -1,10 +1,359 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tinapaproject.tinapa.fragments.PlannedAddDialogFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <Spinner
+            android:id="@+id/planned_add_species_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+
+        <Spinner
+            android:id="@+id/planned_add_ability_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/planned_add_species_spinner" />
+
+        <Spinner
+            android:id="@+id/planned_add_move1_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/planned_add_ability_spinner" />
+
+        <Spinner
+            android:id="@+id/planned_add_move2_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/planned_add_move1_spinner" />
+
+        <Spinner
+            android:id="@+id/planned_add_move3_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/planned_add_move2_spinner" />
+
+        <Spinner
+            android:id="@+id/planned_add_move4_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/planned_add_move3_spinner" />
+
+        <Spinner
+            android:id="@+id/planned_add_nature_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/planned_add_move4_spinner"/>
+
+        <TableLayout
+            android:id="@+id/planned_add_ev_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/planned_add_nature_spinner"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV HP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV Att" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV Def" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV SAtt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV SDef" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EV Spd" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/planned_add_ev_hp_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/planned_add_ev_att_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1"/>
+
+                <EditText
+                    android:id="@+id/planned_add_ev_def_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/planned_add_ev_satt_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/planned_add_ev_sdef_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/planned_add_ev_spd_edit_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:maxLines="1" />
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/planned_add_iv_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/planned_add_ev_table"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IV HP" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IV Att" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IV Def" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IV SAtt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IV SDef" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IV Spd" />
+            </TableRow>
+
+            <TableRow>
+
+                <RadioGroup
+                    android:id="@+id/planned_add_iv_hp_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/planned_iv_hp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/planned_iv_max"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_hp_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_random"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_hp_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_min"/>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/planned_add_iv_att_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/planned_iv_att_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/planned_iv_max"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_att_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_random"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_att_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_min"/>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/planned_add_iv_def_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/planned_iv_def_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/planned_iv_max"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_def_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_random"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_def_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_min"/>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/planned_add_iv_satt_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/planned_iv_satt_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/planned_iv_max"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_satt_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_random"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_satt_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_min"/>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/planned_add_iv_sdef_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/planned_iv_sdef_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/planned_iv_max"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_sdef_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_random"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_sdef_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_min"/>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/planned_add_iv_spd_group"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/planned_iv_spd_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/planned_iv_max"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_spd_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_random"/>
+                    <RadioButton
+                        android:id="@+id/planned_iv_spd_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planned_iv_min"/>
+                </RadioGroup>
+            </TableRow>
+        </TableLayout>
+
+        <EditText
+            android:id="@+id/planned_add_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/planned_add_iv_table"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:hint="@string/notes"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/planned_saved_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/planned_add_notes"
+            android:text="@string/save_changes" />
+    </RelativeLayout>
+
+</ScrollView>
