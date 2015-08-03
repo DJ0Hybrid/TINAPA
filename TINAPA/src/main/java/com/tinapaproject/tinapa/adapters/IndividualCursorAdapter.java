@@ -55,9 +55,10 @@ public class IndividualCursorAdapter extends CursorAdapter {
         String name;
         if (!TextUtils.isEmpty(mainNameColumn) && !TextUtils.isEmpty(name = cursor.getString(cursor.getColumnIndex(mainNameColumn)))) {
             textView.setText(name);
-        } else if (!TextUtils.isEmpty(secondNameColumn)) {
-            name = cursor.getString(cursor.getColumnIndex(secondNameColumn));
+        } else if (!TextUtils.isEmpty(secondNameColumn)&& !TextUtils.isEmpty(name = cursor.getString(cursor.getColumnIndex(secondNameColumn)))) {
             textView.setText(name);
+        } else {
+            textView.setText("");
         }
 
     }
