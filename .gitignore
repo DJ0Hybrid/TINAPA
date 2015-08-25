@@ -6,7 +6,6 @@
 build/intermediates/model_data.bin
 .idea/libraries/otto_1_3_5.xml
 build/intermediates/dex-cache/cache.xml
-TINAPA/src/main/java/com/tinapaproject/tinapa/events/DatabaseCreationUpdateEvent.java
 .idea/runConfigurations.xml
 build/intermediates/gradle_project_sync_data.bin
 .idea/misc.xml
