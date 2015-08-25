@@ -10,3 +10,5 @@ TINAPA/src/main/java/com/tinapaproject/tinapa/events/DatabaseCreationUpdateEvent
 .idea/runConfigurations.xml
 build/intermediates/gradle_project_sync_data.bin
 .idea/misc.xml
+.idea/
+TINAPA/TINAPA-TINAPA.iml
