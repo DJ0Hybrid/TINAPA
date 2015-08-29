@@ -25,12 +25,20 @@
             android:layout_below="@+id/planned_add_species_spinner" />
 
         <Spinner
+            android:id="@+id/planned_add_item_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/planned_add_ability_spinner" />
+
+        <Spinner
             android:id="@+id/planned_add_move1_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/planned_add_ability_spinner" />
+            android:layout_below="@id/planned_add_item_spinner" />
 
         <Spinner
             android:id="@+id/planned_add_move2_spinner"
