@@ -17,14 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
-import com.tinapaproject.tinapa.events.DatabaseCreationUpdateEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -327,10 +324,5 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
             // Do nothing.
         }
-    }
-
-    @Subscribe
-    public void onDatabaseCreationUpdated(DatabaseCreationUpdateEvent event) {
-        Toast.makeText(this, "Just updated.", Toast.LENGTH_SHORT).show();
     }
 }
