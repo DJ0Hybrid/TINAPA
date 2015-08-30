@@ -12,11 +12,13 @@ import android.widget.Spinner;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.ItemKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 
 public class PlannedAddDialogFragment extends DialogFragment {
 
     private Spinner mSpeciesSpinner;
+    private Spinner mItemSpinner;
 
     public static final String TAG = "PlannedAddDialogFragment";
 
@@ -42,6 +44,14 @@ public class PlannedAddDialogFragment extends DialogFragment {
         int[] to = {R.id.simple_cell_name};
         CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
+
+
+        Cursor itemCursor = getActivity().getContentResolver().query(TinapaContentProvider.ITEM_BATTLE_URI, null, null, null, null);
+        mItemSpinner = (Spinner) view.findViewById(R.id.planned_add_item_spinner);
+        String[] itemFrom = {ItemKeyValues.name};
+        int[] itemTo = {R.id.simple_cell_name};
+        CursorAdapter mItemCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, itemCursor, itemFrom, itemTo, 0);
+        mItemSpinner.setAdapter(mItemCursorAdapter);
 
         return view;
     }

@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -13,11 +12,10 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.ItemKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
-
-import org.w3c.dom.Text;
 
 // http://www.techotopia.com/index.php/An_Android_Content_Provider_Tutorial
 public class TinapaContentProvider extends ContentProvider {
@@ -75,6 +73,14 @@ public class TinapaContentProvider extends ContentProvider {
     public static final Uri NATURE_URI = Uri.parse("content://" + AUTHORITY + "/" + NATURE_TABLE);
     public static final int NATURE = 500;
 
+    private static final String ITEM_TABLE = "item";
+    public static final Uri ITEM_URI = Uri.parse("content://" + AUTHORITY + "/" + ITEM_TABLE);
+    public static final int ITEM = 600;
+    private static final String ITEM_BATTLE_TABLE = "itemBattle";
+    public static final Uri ITEM_BATTLE_URI = Uri.parse("content://" + AUTHORITY + "/" + ITEM_BATTLE_TABLE);
+    public static final int ITEM_BATTLE = 601;
+
+
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -97,6 +103,9 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, PLANNED_TEAM_TABLE, PLANNED_TEAM);
 
         uriMatcher.addURI(AUTHORITY, NATURE_TABLE, NATURE);
+
+        uriMatcher.addURI(AUTHORITY, ITEM_TABLE, ITEM);
+        uriMatcher.addURI(AUTHORITY, ITEM_BATTLE_TABLE, ITEM_BATTLE);
         // TODO: Add more URIs to the matcher.
     }
 
@@ -137,7 +146,7 @@ public class TinapaContentProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
-            String[] selectionArgs, String sortOrder) {
+                        String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         String[] selectionArray = null;
         String orderBy = null;
@@ -232,6 +241,20 @@ public class TinapaContentProvider extends ContentProvider {
 
                 queryBuilder.appendWhere("nature_names.local_language_id = 9");
                 break;
+            case ITEM:
+
+                break;
+            case ITEM_BATTLE:
+                queryBuilder.setTables("items\n" +
+                        "LEFT OUTER JOIN item_names ON (items.id = item_names.item_id AND item_names.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN item_prose ON (items.id = item_prose.item_id AND item_prose.local_language_id = 9)");
+
+                selectionArray = new String[]{"items.id AS _id", "item_names.name AS " + ItemKeyValues.name, "item_prose.short_effect AS " + ItemKeyValues.shortProse};
+
+                orderBy = "items.category_id ASC";
+
+                queryBuilder.appendWhere("items.category_id = 3 OR items.category_id = 4 OR items.category_id = 5 OR items.category_id = 6 OR items.category_id = 12 OR items.category_id = 13 OR items.category_id = 14 OR items.category_id = 15 OR items.category_id = 17 OR items.category_id = 18 OR items.category_id = 19 OR items.category_id = 36 OR items.category_id = 42 OR items.category_id = 44");
+                break;
             default:
                 throw new UnsupportedOperationException("Unsupported URI.");
         }
@@ -242,7 +265,7 @@ public class TinapaContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs) {
+                      String[] selectionArgs) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         String table;
