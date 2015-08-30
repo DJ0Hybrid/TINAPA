@@ -5,26 +5,20 @@
 
 package com.tinapaproject.tinapa.database;
 
-import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
-import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
-import com.tinapaproject.tinapa.events.DatabaseCreationUpdateEvent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Ethan on 8/20/2014.
@@ -81,7 +75,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         InputStream inputStream = null;
         db.beginTransaction();
         try {
-            bus.post(new DatabaseCreationUpdateEvent());
+//            bus.post(new DatabaseCreationUpdateEvent());
 
             inputStream = context.getResources().openRawResource(rawScript);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -97,7 +91,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
                 } else {
                     sqlLine.append(line + '\n');
                 }
-                bus.post(new DatabaseCreationUpdateEvent());
+//                bus.post(new DatabaseCreationUpdateEvent());
             }
             db.setTransactionSuccessful();
             bufferedReader.close();
