@@ -28,6 +28,7 @@ import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.utils.CursorUtils;
 
 public class OwnedAddDialogFragment extends DialogFragment {
 
@@ -335,7 +336,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
         mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
         if (abilityId >= 0) {
-            int abilityPosition = getPositionOfRowById(abilityId, mAbilitySpinner);
+            int abilityPosition = CursorUtils.getPositionOfRowById(abilityId, mAbilitySpinner);
             if (abilityPosition >= 0) {
                 mAbilitySpinner.setSelection(abilityPosition);
             }
@@ -348,21 +349,11 @@ public class OwnedAddDialogFragment extends DialogFragment {
         CursorAdapter spinnerAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, movesCursor, from, to, 0);
         moveSpinner.setAdapter(spinnerAdapter);
         if (selectionId >= 0) {
-            int selectionPosition = getPositionOfRowById(selectionId, moveSpinner);
+            int selectionPosition = CursorUtils.getPositionOfRowById(selectionId, moveSpinner);
             if (selectionPosition >= 0) {
                 moveSpinner.setSelection(selectionPosition);
             }
         }
-    }
-
-    private static int getPositionOfRowById(long id, Spinner spinner) {
-        for (int i = 0; i < spinner.getCount(); i++) {
-            long rowId = spinner.getItemIdAtPosition(i);
-            if (id == rowId) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public interface OwnedAddFragmentListener {
