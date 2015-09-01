@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,12 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.ItemKeyValues;
+import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.CursorUtils;
 
@@ -26,6 +29,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
     private Spinner mMove2Spinner;
     private Spinner mMove3Spinner;
     private Spinner mMove4Spinner;
+    private Spinner mNatureSpinner;
     private Spinner mItemSpinner;
 
     public static final String TAG = "PlannedAddDialogFragment";
@@ -51,6 +55,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
         mMove2Spinner = (Spinner) view.findViewById(R.id.planned_add_move2_spinner);
         mMove3Spinner = (Spinner) view.findViewById(R.id.planned_add_move3_spinner);
         mMove4Spinner = (Spinner) view.findViewById(R.id.planned_add_move4_spinner);
+        mNatureSpinner = (Spinner) view.findViewById(R.id.planned_add_nature_spinner);
         mItemSpinner = (Spinner) view.findViewById(R.id.planned_add_item_spinner);
 
         Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
@@ -71,12 +76,42 @@ public class PlannedAddDialogFragment extends DialogFragment {
             }
         });
 
-
         Cursor itemCursor = getActivity().getContentResolver().query(TinapaContentProvider.ITEM_BATTLE_URI, null, null, null, null);
         String[] itemFrom = {ItemKeyValues.name};
         int[] itemTo = {R.id.simple_cell_name};
         CursorAdapter mItemCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, itemCursor, itemFrom, itemTo, 0);
         mItemSpinner.setAdapter(mItemCursorAdapter);
+
+        Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
+        String[] natureFrom = {NatureKeyValues.NATURE_NAME};
+        int[] natureTo = {R.id.simple_cell_name};
+        CursorAdapter mNatureCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, natureCursor, natureFrom, natureTo, 0) {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getActivity()).inflate(R.layout.cell_simple_name, parent, false);
+                }
+                this.getCursor().moveToPosition(position);
+                String natureName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.NATURE_NAME));
+                String increasedStatName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.INCREASED_STAT_NAME));
+                String decreasedStatName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.DECREASED_STAT_NAME));
+
+                StringBuilder builder = new StringBuilder(natureName);
+
+                if (!TextUtils.isEmpty(increasedStatName) && !TextUtils.isEmpty(decreasedStatName) && !increasedStatName.equalsIgnoreCase(decreasedStatName)) {
+                    builder.append(" / + " + increasedStatName);
+                    builder.append(" / - " + decreasedStatName);
+                } else {
+                    builder.append(" / = / =");
+                }
+
+                TextView textView = (TextView) convertView.findViewById(R.id.simple_cell_name);
+                textView.setText(builder.toString());
+
+                return convertView;
+            }
+        };
+        mNatureSpinner.setAdapter(mNatureCursorAdapter);
 
         return view;
     }
