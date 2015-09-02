@@ -19,9 +19,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
+import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -53,7 +56,8 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bus = new Bus();
+        bus = TinapaApplication.bus;
+        bus.register(this);
 
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -287,6 +291,33 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     @Override
     public void plannedItemLongClicked(String id) {
         // TODO
+    }
+
+    @Subscribe
+    public void onPlannedPokemonAdded(CreatePlannedPokemonEvent event) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PlannedKeyValues.POKEMON_ID, event.getSpeciesId());
+        contentValues.put(PlannedKeyValues.ABILITY_ID, event.getAbilityId());
+        contentValues.put(PlannedKeyValues.NATURE_ID, event.getNatureId());
+        contentValues.put(PlannedKeyValues.MOVE1_ID, event.getMove1Id());
+        contentValues.put(PlannedKeyValues.MOVE2_ID, event.getMove2Id());
+        contentValues.put(PlannedKeyValues.MOVE3_ID, event.getMove3Id());
+        contentValues.put(PlannedKeyValues.MOVE4_ID, event.getMove4Id());
+        contentValues.put(PlannedKeyValues.IV_HP, event.getIvHP());
+        contentValues.put(PlannedKeyValues.IV_ATT, event.getIvAtt());
+        contentValues.put(PlannedKeyValues.IV_DEF, event.getIvDef());
+        contentValues.put(PlannedKeyValues.IV_SATT, event.getIvSAtt());
+        contentValues.put(PlannedKeyValues.IV_SDEF, event.getIvSDef());
+        contentValues.put(PlannedKeyValues.IV_SPD, event.getIvSpd());
+        contentValues.put(PlannedKeyValues.EV_HP, event.getEvHP());
+        contentValues.put(PlannedKeyValues.EV_ATT, event.getEvAtt());
+        contentValues.put(PlannedKeyValues.EV_DEF, event.getEvDef());
+        contentValues.put(PlannedKeyValues.EV_SATT, event.getEvSAtt());
+        contentValues.put(PlannedKeyValues.EV_SDEF, event.getEvSDef());
+        contentValues.put(PlannedKeyValues.EV_SPD, event.getEvSpd());
+        contentValues.put(PlannedKeyValues.NOTE, event.getNotes());
+        Uri uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues);
+        Log.d(TAG, "Added a planned Pokemon with ID of " + uri.getLastPathSegment());
     }
 
     @Override

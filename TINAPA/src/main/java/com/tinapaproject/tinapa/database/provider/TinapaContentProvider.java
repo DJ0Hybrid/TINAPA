@@ -135,10 +135,14 @@ public class TinapaContentProvider extends ContentProvider {
         }
         int uriType = uriMatcher.match(uri);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long id;
         switch (uriType) {
             case OWNED_POKEMON:
-                long id = db.insertOrThrow("owned_pokemons", null, values);
+                id = db.insertOrThrow("owned_pokemons", null, values);
                 return Uri.parse(OWNED_POKEMON_TABLE + "/" + id);
+            case PLANNED_POKEMON:
+                id = db.insertOrThrow("planned_pokemons", null, values);
+                return Uri.parse(PLANNED_POKEMON_TABLE + "/" + id);
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }
