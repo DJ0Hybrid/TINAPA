@@ -169,10 +169,17 @@ public class TinapaContentProvider extends ContentProvider {
                 selectionArray = new String[]{"pokemon.id AS _id", "pokemon_species_names.name AS " + DexKeyValues.name, "pokemon.species_id AS " + DexKeyValues.number, "type1.name AS " + DexKeyValues.type1, "type2.name AS " + DexKeyValues.type2, "ability1.name AS " + DexKeyValues.ability1Name, "ability1.id AS " + DexKeyValues.ability1ID, "ability2.name AS " + DexKeyValues.ability2Name, "ability2.id AS " + DexKeyValues.ability2ID, "ability3.name AS " + DexKeyValues.ability3Name, "ability3.id AS " + DexKeyValues.ability3ID, "hp.base_stat AS " + DexKeyValues.baseHP, "att.base_stat AS " + DexKeyValues.baseAttack, "def.base_stat AS " + DexKeyValues.baseDefense, "satt.base_stat AS " + DexKeyValues.baseSpecialAttack, "sdef.base_stat AS " + DexKeyValues.baseSpecialDefense, "spd.base_stat AS " + DexKeyValues.baseSpeed, "image AS " + DexKeyValues.image, "shinny_image AS " + DexKeyValues.shinnyImage, "icon_image AS " + DexKeyValues.iconImage};
                 break;
             case POKEDEX_ALL_SHORT:
-                queryBuilder.setTables("pokemon LEFT OUTER JOIN pokemon_species_names ON (pokemon.species_id = pokemon_species_names.pokemon_species_id AND pokemon_species_names.local_language_id = 9) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 1) AS type1 ON (pokemon.id = type1.pokemon_id) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 2) AS type2 ON (pokemon.id = type2.pokemon_id)");
+                queryBuilder.setTables("pokemon\n" +
+                        "LEFT OUTER JOIN pokemon_species_names ON (pokemon.species_id = pokemon_species_names.pokemon_species_id AND pokemon_species_names.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 1) AS type1 ON (pokemon.id = type1.pokemon_id) LEFT OUTER JOIN (SELECT name, pokemon_id FROM pokemon_types, type_names WHERE local_language_id = 9 AND pokemon_types.type_id = type_names.type_id AND slot = 2) AS type2 ON (pokemon.id = type2.pokemon_id)\n" +
+                        "LEFT OUTER JOIN pokemon_forms ON (pokemon.id = pokemon_forms.pokemon_id)");
+
+                queryBuilder.appendWhere("pokemon_forms.form_order == 1");
                 if (!TextUtils.isEmpty(selection)) {
-                    queryBuilder.appendWhere("pokemon_species_names.name LIKE '%" + selection + "%'");
+                    queryBuilder.appendWhere(" AND pokemon_species_names.name LIKE '%" + selection + "%'");
                 }
+
+                orderBy = "pokemon_forms.\"order\" ASC";
                 selectionArray = new String[]{"pokemon.id AS _id", "pokemon_species_names.name AS " + DexKeyValues.name, "pokemon.species_id AS " + DexKeyValues.number, "type1.name AS " + DexKeyValues.type1, "type2.name AS " + DexKeyValues.type2, "icon_image AS " + DexKeyValues.iconImage};
                 break;
             case POKEDEX_SEARCH_SPECIES:
