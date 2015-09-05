@@ -50,6 +50,9 @@ public class TinapaContentProvider extends ContentProvider {
     public static final String POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_TABLE = POKEDEX_TABLE + "/pokemon/evolution/result";
     public static final Uri POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_TABLE);
     public static final int POKEDEX_POKEMON_EVOLUTION_RESULT_LINK = 107;
+    public static final String POKEDEX_POKEMON_EVOLUTION_TABLE = POKEDEX_TABLE + "/pokemon/evolution";
+    public static final Uri POKEDEX_POKEMON_EVOLUTION_URI = Uri.parse("content://" + AUTHORITY + "/" + POKEDEX_POKEMON_EVOLUTION_TABLE);
+    public static final int POKEDEX_POKEMON_EVOLUTION = 108;
 
     private static final String PLANNED_POKEMON_TABLE = "plannedPokemon";
     public static final Uri PLANNED_POKEMON_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_POKEMON_TABLE);
@@ -93,6 +96,7 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_IMAGE_TABLE, POKEDEX_POKEMON_IMAGE);
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_EVOLUTION_BASE_LINK_TABLE, POKEDEX_POKEMON_EVOLUTION_BASE_LINK);
         uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_EVOLUTION_RESULT_LINK_TABLE, POKEDEX_POKEMON_EVOLUTION_RESULT_LINK);
+        uriMatcher.addURI(AUTHORITY, POKEDEX_POKEMON_EVOLUTION_TABLE, POKEDEX_POKEMON_EVOLUTION);
 
         uriMatcher.addURI(AUTHORITY, PLANNED_POKEMON_TABLE, PLANNED_POKEMON);
         uriMatcher.addURI(AUTHORITY, PLANNED_POKEMON_SEARCH_GENERAL_TABLE, PLANNED_POKEMON_SEARCH_GENERAL);
@@ -216,6 +220,11 @@ public class TinapaContentProvider extends ContentProvider {
                 if (!TextUtils.isEmpty(selection)) {
                     queryBuilder.appendWhere("evolved_species.id = " + selection);
                 }
+                break;
+            case POKEDEX_POKEMON_EVOLUTION:
+                // TODO Needs to be expanded.
+                queryBuilder.setTables("pokemon_species");
+                queryBuilder.appendWhere("pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
                 break;
             case PLANNED_POKEMON:
 
