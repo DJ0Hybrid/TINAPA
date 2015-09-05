@@ -259,6 +259,12 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/dex_detail_evolution_chain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
         </LinearLayout>
 
 

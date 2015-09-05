@@ -213,6 +213,18 @@ public class DexDetailFragment extends Fragment {
             } else {
                 view.findViewById(R.id.dex_detail_moves_egg_body).setVisibility(View.GONE);
             }
+
+            // TODO: Tutor Moves
+
+            // Evolution Chain
+            ViewGroup evolutionView = (ViewGroup) view.findViewById(R.id.dex_detail_evolution_chain);
+            Cursor evolutionChainCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_EVOLUTION_URI, null, id, null, null);
+            if (evolutionChainCursor != null && evolutionChainCursor.moveToFirst() && evolutionChainCursor.getCount() > 0) {
+
+            } else {
+                evolutionView.setVisibility(View.GONE);
+            }
+
         }
 
         return view;
