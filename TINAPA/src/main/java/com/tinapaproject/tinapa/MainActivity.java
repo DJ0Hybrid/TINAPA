@@ -285,7 +285,14 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     @Override
     public void plannedItemClicked(String id) {
-        // TODO
+        FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
+        if (fragmentView == null) {
+            fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
+        }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(fragmentView.getId(), PlannedAddDialogFragment.newInstance(id), "TAG HERE");
+        ft.addToBackStack("PlannedDetail");
+        ft.commit();
     }
 
     @Override

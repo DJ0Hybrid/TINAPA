@@ -58,10 +58,21 @@ public class PlannedAddDialogFragment extends DialogFragment {
 
     private Bus bus;
 
+    public static final String ARG_ID = "ARG_ID";
     public static final String TAG = "PlannedAddDialogFragment";
 
     public static PlannedAddDialogFragment newInstance() {
         PlannedAddDialogFragment fragment = new PlannedAddDialogFragment();
+
+        return fragment;
+    }
+
+    public static PlannedAddDialogFragment newInstance(String id) {
+        PlannedAddDialogFragment fragment = new PlannedAddDialogFragment();
+
+        Bundle args = new Bundle();
+        args.putString(ARG_ID, id);
+        fragment.setArguments(args);
 
         return fragment;
     }
@@ -107,6 +118,15 @@ public class PlannedAddDialogFragment extends DialogFragment {
                 .setNegativeButton(R.string.cancel, null)
                 .setView(fillView(LayoutInflater.from(getActivity()), null));
         return builder.create();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (getShowsDialog()) {
+            return super.onCreateView(inflater, container, savedInstanceState);
+        } else {
+            return fillView(inflater, container);
+        }
     }
 
     private View fillView(LayoutInflater inflater, ViewGroup container) {
