@@ -155,19 +155,21 @@ public class PlannedAddDialogFragment extends DialogFragment {
         mNote = (EditText) view.findViewById(R.id.planned_add_notes);
         Button saveButton = (Button) view.findViewById(R.id.planned_saved_button);
 
-        String species_id = "";
-        String ability_id = "";
-        String item_id = "";
-        String nature_id = "";
-        String move1_id = "";
-        String move2_id = "";
-        String move3_id = "";
-        String move4_id = "";
+        int species_id = -1;
+        int ability_id = -1;
+        int item_id = -1;
+        int nature_id = -1;
+        int move1_id = -1;
+        int move2_id = -1;
+        int move3_id = -1;
+        int move4_id = -1;
         if (getArguments() != null) {
             String planned_id = getArguments().getString(ARG_ID);
             if (!TextUtils.isEmpty(planned_id)) {
                 Cursor plannedCursor = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_URI, null, planned_id, null, null);
                 if (plannedCursor != null && plannedCursor.moveToFirst()) {
+                    species_id = plannedCursor.getInt(plannedCursor.getColumnIndex("pokemon_id"));
+
                     mEVHP.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_hp")));
                     mEVAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_att")));
                     mEVDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_def")));
@@ -187,6 +189,9 @@ public class PlannedAddDialogFragment extends DialogFragment {
         int[] to = {R.id.simple_cell_name};
         CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
+        if (species_id > 0) {
+            mSpeciesSpinner.setSelection(species_id -1, false);
+        }
 
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
