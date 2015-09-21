@@ -155,6 +155,33 @@ public class PlannedAddDialogFragment extends DialogFragment {
         mNote = (EditText) view.findViewById(R.id.planned_add_notes);
         Button saveButton = (Button) view.findViewById(R.id.planned_saved_button);
 
+        String species_id = "";
+        String ability_id = "";
+        String item_id = "";
+        String nature_id = "";
+        String move1_id = "";
+        String move2_id = "";
+        String move3_id = "";
+        String move4_id = "";
+        if (getArguments() != null) {
+            String planned_id = getArguments().getString(ARG_ID);
+            if (!TextUtils.isEmpty(planned_id)) {
+                Cursor plannedCursor = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_URI, null, planned_id, null, null);
+                if (plannedCursor != null && plannedCursor.moveToFirst()) {
+                    mEVHP.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_hp")));
+                    mEVAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_att")));
+                    mEVDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_def")));
+                    mEVSAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_satk")));
+                    mEVSDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_sdef")));
+                    mEVSpd.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_spd")));
+
+                    // TODO Still need to fill in the rest of the stuff.
+
+                    mNote.setText(plannedCursor.getString(plannedCursor.getColumnIndex("note")));
+                }
+            }
+        }
+
         Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
         String[] from = {DexKeyValues.name};
         int[] to = {R.id.simple_cell_name};

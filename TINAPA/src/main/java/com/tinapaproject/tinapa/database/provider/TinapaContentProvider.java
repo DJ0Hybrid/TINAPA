@@ -227,7 +227,14 @@ public class TinapaContentProvider extends ContentProvider {
                 queryBuilder.appendWhere("pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
                 break;
             case PLANNED_POKEMON:
+                // TODO Needs possible work.
+                queryBuilder.setTables("planned_pokemons");
 
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere("id == " + selection);
+                }
+
+                selectionArray = new String[]{"id AS _id", "pokemon_id", "nature_id", "move1_id", "move2_id", "move3_id", "move4_id", "item_id", "ability_id", "ev_hp", "ev_att", "ev_def", "ev_satk", "ev_sdef", "ev_spd", "iv_hp", "iv_att", "iv_def", "iv_satt", "iv_sdef", "iv_spd", "note"};
                 break;
             case PLANNED_POKEMON_SEARCH_GENERAL:
                 queryBuilder.setTables("planned_pokemons LEFT OUTER JOIN pokemon ON (planned_pokemons.pokemon_id = pokemon.id) LEFT OUTER JOIN pokemon_species_names ON (planned_pokemons.pokemon_id = pokemon_species_names.pokemon_species_id AND pokemon_species_names.local_language_id = 9)");
