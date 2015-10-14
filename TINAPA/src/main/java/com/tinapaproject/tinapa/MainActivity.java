@@ -305,6 +305,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         ContentValues contentValues = new ContentValues();
         contentValues.put(PlannedKeyValues.POKEMON_ID, event.getSpeciesId());
         contentValues.put(PlannedKeyValues.ABILITY_ID, event.getAbilityId());
+        contentValues.put(PlannedKeyValues.ITEM_ID, event.getItemId());
         contentValues.put(PlannedKeyValues.NATURE_ID, event.getNatureId());
         contentValues.put(PlannedKeyValues.MOVE1_ID, event.getMove1Id());
         contentValues.put(PlannedKeyValues.MOVE2_ID, event.getMove2Id());

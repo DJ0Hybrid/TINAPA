@@ -170,6 +170,8 @@ public class PlannedAddDialogFragment extends DialogFragment {
                 if (plannedCursor != null && plannedCursor.moveToFirst()) {
                     species_id = plannedCursor.getInt(plannedCursor.getColumnIndex("pokemon_id"));
 
+                    item_id = plannedCursor.getInt(plannedCursor.getColumnIndex("item_id"));
+
                     mEVHP.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_hp")));
                     mEVAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_att")));
                     mEVDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_def")));
@@ -210,6 +212,9 @@ public class PlannedAddDialogFragment extends DialogFragment {
         int[] itemTo = {R.id.simple_cell_name};
         CursorAdapter mItemCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, itemCursor, itemFrom, itemTo, 0);
         mItemSpinner.setAdapter(mItemCursorAdapter);
+        if (item_id > 0) {
+            mItemSpinner.setSelection(item_id -1, false);
+        }
 
         Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
         String[] natureFrom = {NatureKeyValues.NATURE_NAME};
