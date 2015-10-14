@@ -28,6 +28,7 @@ import com.tinapaproject.tinapa.TinapaApplication;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.ItemKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
+import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
@@ -172,6 +173,8 @@ public class PlannedAddDialogFragment extends DialogFragment {
 
                     item_id = plannedCursor.getInt(plannedCursor.getColumnIndex("item_id"));
 
+                    nature_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.NATURE_ID));
+
                     mEVHP.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_hp")));
                     mEVAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_att")));
                     mEVDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_def")));
@@ -246,6 +249,9 @@ public class PlannedAddDialogFragment extends DialogFragment {
             }
         };
         mNatureSpinner.setAdapter(mNatureCursorAdapter);
+        if (nature_id > 0) {
+            mNatureSpinner.setSelection(nature_id -1, false);
+        }
 
         if (getShowsDialog()) {
             saveButton.setVisibility(View.GONE);
