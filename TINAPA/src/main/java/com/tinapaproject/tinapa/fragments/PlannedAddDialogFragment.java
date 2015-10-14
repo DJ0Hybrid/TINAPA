@@ -182,6 +182,13 @@ public class PlannedAddDialogFragment extends DialogFragment {
                     mEVSDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_sdef")));
                     mEVSpd.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_spd")));
 
+                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_hp")), mIVHP);
+                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_att")), mIVAtt);
+                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_def")), mIVDef);
+                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_satt")), mIVSAtt);
+                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_sdef")), mIVSDef);
+                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_spd")), mIVSpd);
+
                     // TODO Still need to fill in the rest of the stuff.
 
                     mNote.setText(plannedCursor.getString(plannedCursor.getColumnIndex("note")));
@@ -306,6 +313,25 @@ public class PlannedAddDialogFragment extends DialogFragment {
             return "31";
         } else {
             return "-1";
+        }
+    }
+
+    private static void setCorrectIVValue(String ivValue, RadioGroup radioGroup) {
+        String radioButtonTitle;
+        if (ivValue.equals("31")) {
+            radioButtonTitle = radioGroup.getContext().getString(R.string.planned_iv_max);
+        } else if (ivValue.equals("0")) {
+            radioButtonTitle = radioGroup.getContext().getString(R.string.planned_iv_min);
+        } else {
+            radioButtonTitle = radioGroup.getContext().getString(R.string.planned_iv_random);
+        }
+
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            View o = radioGroup.getChildAt(i);
+            if (o instanceof RadioButton && ((RadioButton) o).getText().toString().equals(radioButtonTitle)) {
+                ((RadioButton) o).setChecked(true);
+                return;
+            }
         }
     }
 }
