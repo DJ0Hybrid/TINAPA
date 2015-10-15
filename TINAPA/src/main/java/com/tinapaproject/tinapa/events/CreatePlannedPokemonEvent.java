@@ -1,6 +1,7 @@
 package com.tinapaproject.tinapa.events;
 
 public class CreatePlannedPokemonEvent {
+    private final String plannedId;
     private final String speciesId;
     private final String abilityId;
     private final String move1Id;
@@ -22,8 +23,10 @@ public class CreatePlannedPokemonEvent {
     private final String ivSDef;
     private final String ivSpd;
     private final String notes;
+    private final boolean newSave;
 
-    public CreatePlannedPokemonEvent(String speciesId, String abilityId, String move1Id, String move2Id, String move3Id, String move4Id, String natureId, String itemId, String evHP, String evAtt, String evDef, String evSAtt, String evSDef, String evSpd, String ivHP, String ivAtt, String ivDef, String ivSAtt, String ivSDef, String ivSpd, String notes) {
+    public CreatePlannedPokemonEvent(String plannedId, String speciesId, String abilityId, String move1Id, String move2Id, String move3Id, String move4Id, String natureId, String itemId, String evHP, String evAtt, String evDef, String evSAtt, String evSDef, String evSpd, String ivHP, String ivAtt, String ivDef, String ivSAtt, String ivSDef, String ivSpd, String notes, boolean newSave) {
+        this.plannedId = plannedId;
         this.speciesId = speciesId;
         this.abilityId = abilityId;
         this.move1Id = move1Id;
@@ -45,6 +48,11 @@ public class CreatePlannedPokemonEvent {
         this.ivSDef = ivSDef;
         this.ivSpd = ivSpd;
         this.notes = notes;
+        this.newSave = newSave;
+    }
+
+    public String getPlannedId() {
+        return plannedId;
     }
 
     public String getEvDef() {
@@ -130,5 +138,9 @@ public class CreatePlannedPokemonEvent {
 
     public String getEvSAtt() {
         return evSAtt;
+    }
+
+    public boolean isNewSave() {
+        return newSave;
     }
 }

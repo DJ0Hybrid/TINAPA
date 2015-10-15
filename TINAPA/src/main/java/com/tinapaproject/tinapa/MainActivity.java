@@ -324,8 +324,15 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         contentValues.put(PlannedKeyValues.EV_SDEF, event.getEvSDef());
         contentValues.put(PlannedKeyValues.EV_SPD, event.getEvSpd());
         contentValues.put(PlannedKeyValues.NOTE, event.getNotes());
-        Uri uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues);
-        Log.d(TAG, "Added a planned Pokemon with ID of " + uri.getLastPathSegment());
+        if (event.isNewSave()) {
+            Uri uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues);
+            Log.d(TAG, "Added a planned Pokemon with ID of " + uri.getLastPathSegment());
+        } else {
+            int columnsChanged = getContentResolver().update(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues, "planned_pokemons.id == " + event.getPlannedId(), null);
+            Log.d(TAG, "A total of " + columnsChanged + "columns changed for updating " + event.getPlannedId());
+            onBackPressed();
+        }
+
     }
 
     @Override

@@ -92,28 +92,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
-                        String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
-                        String itemId = String.valueOf(mItemSpinner.getSelectedItemId());
-                        String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
-                        String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());
-                        String move3Id = String.valueOf(mMove3Spinner.getSelectedItemId());
-                        String move4Id = String.valueOf(mMove4Spinner.getSelectedItemId());
-                        String natureId = String.valueOf(mNatureSpinner.getSelectedItemId());
-                        String evHP = mEVHP.getText().toString();
-                        String evAtt = mEVAtt.getText().toString();
-                        String evDef = mEVDef.getText().toString();
-                        String evSAtt = mEVSAtt.getText().toString();
-                        String evSDef = mEVSDef.getText().toString();
-                        String evSpd = mEVSpd.getText().toString();
-                        String ivHP = getIVValueSelected(mIVHP, getActivity());
-                        String ivAtt = getIVValueSelected(mIVAtt, getActivity());
-                        String ivDef = getIVValueSelected(mIVDef, getActivity());
-                        String ivSAtt = getIVValueSelected(mIVSAtt, getActivity());
-                        String ivSDef = getIVValueSelected(mIVSDef, getActivity());
-                        String ivSpd = getIVValueSelected(mIVSpd, getActivity());
-                        String notes = mNote.getText().toString();
-                        bus.post(new CreatePlannedPokemonEvent(speciesId, abilityId, move1Id, move2Id, move3Id, move4Id, natureId, itemId, evHP, evAtt, evDef, evSAtt, evSDef, evSpd, ivHP, ivAtt, ivDef, ivSAtt, ivSDef, ivSpd, notes));
+                        savePokemon(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
@@ -194,8 +173,6 @@ public class PlannedAddDialogFragment extends DialogFragment {
                     setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_sdef")), mIVSDef);
                     setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_spd")), mIVSpd);
 
-                    // TODO Still need to fill in the rest of the stuff.
-
                     mNote.setText(plannedCursor.getString(plannedCursor.getColumnIndex("note")));
                 }
             }
@@ -228,7 +205,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
         CursorAdapter mItemCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, itemCursor, itemFrom, itemTo, 0);
         mItemSpinner.setAdapter(mItemCursorAdapter);
         if (item_id > 0) {
-            mItemSpinner.setSelection(item_id -1, false);
+//            mItemSpinner.setSelection(item_id -1, false);
         }
 
         Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
@@ -270,10 +247,44 @@ public class PlannedAddDialogFragment extends DialogFragment {
         if (getShowsDialog()) {
             saveButton.setVisibility(View.GONE);
         } else {
-            // TODO: Set save changes button's on click listener.
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    savePokemon(false);
+                }
+            });
         }
 
         return view;
+    }
+
+    private void savePokemon(final boolean isNewSave) {
+        String plannedId = null;
+        if (getArguments() != null) {
+            plannedId = getArguments().getString(ARG_ID);
+        }
+        String speciesId = String.valueOf(mSpeciesSpinner.getSelectedItemId());
+        String abilityId = String.valueOf(mAbilitySpinner.getSelectedItemId());
+        String itemId = String.valueOf(mItemSpinner.getSelectedItemId());
+        String move1Id = String.valueOf(mMove1Spinner.getSelectedItemId());
+        String move2Id = String.valueOf(mMove2Spinner.getSelectedItemId());
+        String move3Id = String.valueOf(mMove3Spinner.getSelectedItemId());
+        String move4Id = String.valueOf(mMove4Spinner.getSelectedItemId());
+        String natureId = String.valueOf(mNatureSpinner.getSelectedItemId());
+        String evHP = mEVHP.getText().toString();
+        String evAtt = mEVAtt.getText().toString();
+        String evDef = mEVDef.getText().toString();
+        String evSAtt = mEVSAtt.getText().toString();
+        String evSDef = mEVSDef.getText().toString();
+        String evSpd = mEVSpd.getText().toString();
+        String ivHP = getIVValueSelected(mIVHP, getActivity());
+        String ivAtt = getIVValueSelected(mIVAtt, getActivity());
+        String ivDef = getIVValueSelected(mIVDef, getActivity());
+        String ivSAtt = getIVValueSelected(mIVSAtt, getActivity());
+        String ivSDef = getIVValueSelected(mIVSDef, getActivity());
+        String ivSpd = getIVValueSelected(mIVSpd, getActivity());
+        String notes = mNote.getText().toString();
+        bus.post(new CreatePlannedPokemonEvent(plannedId, speciesId, abilityId, move1Id, move2Id, move3Id, move4Id, natureId, itemId, evHP, evAtt, evDef, evSAtt, evSDef, evSpd, ivHP, ivAtt, ivDef, ivSAtt, ivSDef, ivSpd, notes, isNewSave));
     }
 
     private void loadAbilityAndMovesCursorAdapters(long pokemonId, long abilityId, long move1Id, long move2Id, long move3Id, long move4Id) {

@@ -319,6 +319,16 @@ public class TinapaContentProvider extends ContentProvider {
                     Log.w(TAG, "There was " + rowsUpdated + " rows updated, which is not 1!");
                 }
                 break;
+            case PLANNED_POKEMON:
+                if (TextUtils.isEmpty(selection)) {
+                    throw new UnsupportedOperationException("Selection cannot be empty!");
+                }
+                table = "planned_pokemons";
+                rowsUpdated = db.update(table, values, selection, null);
+                if (rowsUpdated != 1) {
+                    Log.w(TAG, "There was " + rowsUpdated + " rows updated, which is not 1!");
+                }
+                break;
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }
