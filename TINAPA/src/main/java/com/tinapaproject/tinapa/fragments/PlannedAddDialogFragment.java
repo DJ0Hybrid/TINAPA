@@ -170,8 +170,13 @@ public class PlannedAddDialogFragment extends DialogFragment {
                 Cursor plannedCursor = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_URI, null, planned_id, null, null);
                 if (plannedCursor != null && plannedCursor.moveToFirst()) {
                     species_id = plannedCursor.getInt(plannedCursor.getColumnIndex("pokemon_id"));
-
+                    ability_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.ABILITY_ID));
                     item_id = plannedCursor.getInt(plannedCursor.getColumnIndex("item_id"));
+
+                    move1_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE1_ID));
+                    move2_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE2_ID));
+                    move3_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE3_ID));
+                    move4_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE4_ID));
 
                     nature_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.NATURE_ID));
 
@@ -260,6 +265,8 @@ public class PlannedAddDialogFragment extends DialogFragment {
             mNatureSpinner.setSelection(nature_id -1, false);
         }
 
+        loadAbilityAndMovesCursorAdapters(species_id, ability_id, move1_id, move2_id, move3_id, move4_id);
+
         if (getShowsDialog()) {
             saveButton.setVisibility(View.GONE);
         } else {
@@ -275,10 +282,10 @@ public class PlannedAddDialogFragment extends DialogFragment {
         Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
         Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + pokemonId, null, null);
 
-        loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor, move1Id);
-        loadMovesCursorAdapter(getActivity(), mMove2Spinner, movesCursor, move2Id);
-        loadMovesCursorAdapter(getActivity(), mMove3Spinner, movesCursor, move3Id);
-        loadMovesCursorAdapter(getActivity(), mMove4Spinner, movesCursor, move4Id);
+        loadMovesCursorAdapter(mMove1Spinner, movesCursor, move1Id);
+        loadMovesCursorAdapter(mMove2Spinner, movesCursor, move2Id);
+        loadMovesCursorAdapter(mMove3Spinner, movesCursor, move3Id);
+        loadMovesCursorAdapter(mMove4Spinner, movesCursor, move4Id);
 
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
@@ -292,10 +299,10 @@ public class PlannedAddDialogFragment extends DialogFragment {
         }
     }
 
-    private static void loadMovesCursorAdapter(Activity activity, Spinner moveSpinner, Cursor movesCursor, long selectionId) {
+    private static void loadMovesCursorAdapter(Spinner moveSpinner, Cursor movesCursor, long selectionId) {
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
-        CursorAdapter spinnerAdapter = new SimpleCursorAdapter(activity, R.layout.cell_simple_name, movesCursor, from, to, 0);
+        CursorAdapter spinnerAdapter = new SimpleCursorAdapter(moveSpinner.getContext(), R.layout.cell_simple_name, movesCursor, from, to, 0);
         moveSpinner.setAdapter(spinnerAdapter);
         if (selectionId >= 0) {
             int selectionPosition = CursorUtils.getPositionOfRowById(selectionId, moveSpinner);
