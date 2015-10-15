@@ -1,6 +1,5 @@
 package com.tinapaproject.tinapa.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -10,6 +9,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,6 +33,7 @@ import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
 
 public class PlannedAddDialogFragment extends DialogFragment {
@@ -82,6 +85,28 @@ public class PlannedAddDialogFragment extends DialogFragment {
         // Required empty public constructor
         bus = TinapaApplication.bus;
         bus.register(this);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (getArguments() != null) {
+            inflater.inflate(R.menu.fragment_planned_detail, menu);
+        } else {
+            super.onCreateOptionsMenu(menu, inflater);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_planned_list_delete:
+                if (getArguments() != null) {
+                    bus.post(new DeletePlannedPokemonEvent(getArguments().getString(ARG_ID)));
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -184,7 +209,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
         CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
         if (species_id > 0) {
-            mSpeciesSpinner.setSelection(species_id -1, false);
+            mSpeciesSpinner.setSelection(species_id - 1, false);
         }
 
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -239,7 +264,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
         };
         mNatureSpinner.setAdapter(mNatureCursorAdapter);
         if (nature_id > 0) {
-            mNatureSpinner.setSelection(nature_id -1, false);
+            mNatureSpinner.setSelection(nature_id - 1, false);
         }
 
         loadAbilityAndMovesCursorAdapters(species_id, ability_id, move1_id, move2_id, move3_id, move4_id);

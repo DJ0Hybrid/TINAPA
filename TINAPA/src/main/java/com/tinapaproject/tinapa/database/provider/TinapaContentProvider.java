@@ -122,7 +122,26 @@ public class TinapaContentProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Implement this to handle requests to delete one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");
+        int uriType = uriMatcher.match(uri);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsUpdated = 0;
+        switch (uriType) {
+            case OWNED_POKEMON:
+                throw new UnsupportedOperationException("Not yet implemented");
+            case PLANNED_POKEMON:
+                if (selection == null) {
+                    throw new UnsupportedOperationException("Selection cannot be null!");
+                }
+                String table = "planned_pokemons";
+                rowsUpdated = db.delete(table, "id == " + selection, null);
+                if (rowsUpdated != 1) {
+                    Log.w(TAG, "There was " + rowsUpdated + " rows deleted, which is not 1!");
+                }
+                break;
+            default:
+                throw new UnsupportedOperationException("Not yet implemented");
+        }
+        return rowsUpdated;
     }
 
     @Override

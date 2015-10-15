@@ -25,6 +25,7 @@ import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -333,6 +334,13 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             onBackPressed();
         }
 
+    }
+
+    @Subscribe
+    public void deletePlannedPokemon(DeletePlannedPokemonEvent event) {
+        getContentResolver().delete(TinapaContentProvider.PLANNED_POKEMON_URI, event.getPlannedId(), null);
+        Log.d(TAG, "The column for " + event.getPlannedId() + " was deleted.");
+        onBackPressed();
     }
 
     @Override
