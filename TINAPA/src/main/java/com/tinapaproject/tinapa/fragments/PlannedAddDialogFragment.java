@@ -230,7 +230,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
         CursorAdapter mItemCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, itemCursor, itemFrom, itemTo, 0);
         mItemSpinner.setAdapter(mItemCursorAdapter);
         if (item_id > 0) {
-//            mItemSpinner.setSelection(item_id -1, false);
+            mItemSpinner.setSelection(CursorUtils.getPositionOfRowById(item_id, mItemSpinner), false);
         }
 
         Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
