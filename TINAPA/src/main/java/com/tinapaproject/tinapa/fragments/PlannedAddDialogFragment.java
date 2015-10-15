@@ -100,7 +100,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_planned_list_delete:
+            case R.id.menu_planned_detail_delete:
                 if (getArguments() != null) {
                     bus.post(new DeletePlannedPokemonEvent(getArguments().getString(ARG_ID)));
                 }

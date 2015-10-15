@@ -25,6 +25,7 @@ import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
@@ -265,6 +266,13 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         contentValues.put(OwnedKeyValues.PLAN_ID, planId);
         getContentResolver().update(TinapaContentProvider.OWNED_POKEMON_URI, contentValues, "owned_pokemons.id == " + ownedId, null);
         Log.d(TAG, "Update an owned Pokemon with ID of " + ownedId);
+        onBackPressed();
+    }
+
+    @Subscribe
+    public void deleteOwnedPokemon(DeleteOwnedPokemonEvent event) {
+        getContentResolver().delete(TinapaContentProvider.OWNED_POKEMON_URI, event.getOwnedId(), null);
+        Log.d(TAG, "The column for " + event.getOwnedId() + " was deleted.");
         onBackPressed();
     }
 
