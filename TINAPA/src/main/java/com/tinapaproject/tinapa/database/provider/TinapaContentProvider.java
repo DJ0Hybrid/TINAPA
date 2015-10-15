@@ -183,7 +183,7 @@ public class TinapaContentProvider extends ContentProvider {
                     queryBuilder.appendWhere(" AND pokemon_species_names.name LIKE '%" + selection + "%'");
                 }
 
-                orderBy = "pokemon_forms.\"order\" ASC";
+                orderBy = "pokemon.species_id ASC";
                 selectionArray = new String[]{"pokemon.id AS _id", "pokemon_species_names.name AS " + DexKeyValues.name, "pokemon.species_id AS " + DexKeyValues.number, "type1.name AS " + DexKeyValues.type1, "type2.name AS " + DexKeyValues.type2, "icon_image AS " + DexKeyValues.iconImage};
                 break;
             case POKEDEX_SEARCH_SPECIES:
