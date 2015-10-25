@@ -11,6 +11,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,11 +26,14 @@ import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
+import com.tinapaproject.tinapa.TinapaApplication;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
 
 public class OwnedAddDialogFragment extends DialogFragment {
@@ -59,6 +65,8 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mNotesText;
     private Button mSaveButton;
 
+    private Bus bus;
+
     private static final String ARG_POKEMON_ID = "ARG_POKEMON_ID";
 
     public static final String TAG = "OwnedAddDialogFragment";
@@ -80,6 +88,9 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
     public OwnedAddDialogFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
+        bus = TinapaApplication.bus;
+        bus.register(this);
     }
 
     @Override
@@ -94,6 +105,27 @@ public class OwnedAddDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (getArguments() != null) {
+            inflater.inflate(R.menu.fragment_owned_detail, menu);
+        } else {
+            super.onCreateOptionsMenu(menu, inflater);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_owned_detail_delete:
+                if (getArguments() != null) {
+                    bus.post(new DeleteOwnedPokemonEvent(getArguments().getString(ARG_POKEMON_ID)));
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

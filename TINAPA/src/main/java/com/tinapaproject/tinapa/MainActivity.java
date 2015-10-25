@@ -25,6 +25,8 @@ import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
+import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -267,6 +269,13 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         onBackPressed();
     }
 
+    @Subscribe
+    public void deleteOwnedPokemon(DeleteOwnedPokemonEvent event) {
+        getContentResolver().delete(TinapaContentProvider.OWNED_POKEMON_URI, event.getOwnedId(), null);
+        Log.d(TAG, "The column for " + event.getOwnedId() + " was deleted.");
+        onBackPressed();
+    }
+
     private void loadImage(String id, ImageView imageView, String column) {
         temp_id = id;
         temp_imageView = imageView;
@@ -285,7 +294,14 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     @Override
     public void plannedItemClicked(String id) {
-        // TODO
+        FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
+        if (fragmentView == null) {
+            fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
+        }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(fragmentView.getId(), PlannedAddDialogFragment.newInstance(id), "TAG HERE");
+        ft.addToBackStack("PlannedDetail");
+        ft.commit();
     }
 
     @Override
@@ -298,6 +314,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         ContentValues contentValues = new ContentValues();
         contentValues.put(PlannedKeyValues.POKEMON_ID, event.getSpeciesId());
         contentValues.put(PlannedKeyValues.ABILITY_ID, event.getAbilityId());
+        contentValues.put(PlannedKeyValues.ITEM_ID, event.getItemId());
         contentValues.put(PlannedKeyValues.NATURE_ID, event.getNatureId());
         contentValues.put(PlannedKeyValues.MOVE1_ID, event.getMove1Id());
         contentValues.put(PlannedKeyValues.MOVE2_ID, event.getMove2Id());
@@ -316,8 +333,22 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         contentValues.put(PlannedKeyValues.EV_SDEF, event.getEvSDef());
         contentValues.put(PlannedKeyValues.EV_SPD, event.getEvSpd());
         contentValues.put(PlannedKeyValues.NOTE, event.getNotes());
-        Uri uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues);
-        Log.d(TAG, "Added a planned Pokemon with ID of " + uri.getLastPathSegment());
+        if (event.isNewSave()) {
+            Uri uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues);
+            Log.d(TAG, "Added a planned Pokemon with ID of " + uri.getLastPathSegment());
+        } else {
+            int columnsChanged = getContentResolver().update(TinapaContentProvider.PLANNED_POKEMON_URI, contentValues, "planned_pokemons.id == " + event.getPlannedId(), null);
+            Log.d(TAG, "A total of " + columnsChanged + "columns changed for updating " + event.getPlannedId());
+            onBackPressed();
+        }
+
+    }
+
+    @Subscribe
+    public void deletePlannedPokemon(DeletePlannedPokemonEvent event) {
+        getContentResolver().delete(TinapaContentProvider.PLANNED_POKEMON_URI, event.getPlannedId(), null);
+        Log.d(TAG, "The column for " + event.getPlannedId() + " was deleted.");
+        onBackPressed();
     }
 
     @Override
