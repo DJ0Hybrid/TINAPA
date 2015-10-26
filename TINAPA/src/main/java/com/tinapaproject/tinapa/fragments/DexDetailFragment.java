@@ -53,21 +53,6 @@ public class DexDetailFragment extends Fragment {
         final String id = getArguments().getString(ARG_POKEMON_ID);
         Cursor pokemonCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_URI, null, "pokemon.id = " + id, null, null);
         if (pokemonCursor != null && pokemonCursor.moveToFirst()) {
-            // TODO: Cursor dump needs to be removed eventually.
-            TextView cursorDump = (TextView) view.findViewById(R.id.dexDetailCursorDump);
-            if (cursorDump != null) {
-                StringBuilder sb = new StringBuilder();
-                int columnCount = pokemonCursor.getColumnCount();
-                for (int i = 0; i < columnCount; i++) {
-                    sb.append(pokemonCursor.getColumnName(i));
-                    sb.append(" = ");
-                    sb.append(pokemonCursor.getString(i));
-                    sb.append("\n");
-                }
-                cursorDump.setText(sb.toString());
-            }
-            // TODO: End of Cursor dump.
-
             // Images
             ImageView normalImageView = (ImageView) view.findViewById(R.id.dexDetailNormalImage);
             String normalImagePath = pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.image));

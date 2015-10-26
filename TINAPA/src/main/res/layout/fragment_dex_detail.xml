@@ -14,12 +14,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/dexDetailCursorDump"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_blank_fragment" />
-
             <!-- Images -->
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -53,24 +47,32 @@
                     android:id="@+id/dexDetailNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="left" />
 
                 <TextView
                     android:id="@+id/dexDetailName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="center" />
 
                 <TextView
                     android:id="@+id/dexDetailType1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="right" />
 
                 <TextView
                     android:id="@+id/dexDetailType2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="right" />
 
             </LinearLayout>
