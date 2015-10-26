@@ -2,7 +2,7 @@ require 'fileutils'
 
 oldDatabasePath = "database_creation.sql"
 updatedDatabasePath = "veekun-pokedex.sql"
-newDatabasePath = "update.sql"
+newDatabasePath = "update_v2.sql"
 
 newDatabaseFile = File.new(newDatabasePath, "w")
 
@@ -52,7 +52,7 @@ begin
             currentTable.delete(currentTableName)
             currentTable.each do |key, value|
               if (!oldDatabase[currentTableName].has_key?(key))
-                newDatabaseFile.write(key)
+                newDatabaseFile.puts(key)
               end
             end
         else
@@ -60,7 +60,7 @@ begin
           FileUtils.mkdir_p 'newTables'
           File.open("newTables\\" + currentTableName + ".sql", "w") do |newTableFile|
             # newTableFile.write(currentTable.map{|k,v| "#{v}"})
-            currentTable.each {|k,v| newTableFile.write("#{v}")}
+            currentTable.each {|k,v| newTableFile.puts("#{v}")}
           end
           puts "Created file " + currentTableName
         end
