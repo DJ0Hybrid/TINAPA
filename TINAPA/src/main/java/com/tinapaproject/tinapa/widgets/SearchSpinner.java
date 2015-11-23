@@ -1,9 +1,11 @@
 package com.tinapaproject.tinapa.widgets;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
@@ -80,5 +82,15 @@ public class SearchSpinner extends LinearLayout {
             return mSpinner.getSelectedItemId();
         }
         return -1;
+    }
+
+    @Override
+    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+        super.dispatchFreezeSelfOnly(container);
+    }
+
+    @Override
+    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+        super.dispatchThawSelfOnly(container);
     }
 }
