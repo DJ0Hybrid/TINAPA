@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.tinapaproject.tinapa.widgets.SearchSpinner
+        <Spinner
             android:id="@+id/owned_add_species_spinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

@@ -34,14 +34,13 @@ import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
-import com.tinapaproject.tinapa.widgets.SearchSpinner;
 
 public class OwnedAddDialogFragment extends DialogFragment {
 
     private OwnedAddFragmentListener mListener;
 
     private EditText mNicknameEditText;
-    private SearchSpinner mSpeciesSpinner;
+    private Spinner mSpeciesSpinner;
     private Switch mShinnySwitch;
     private Spinner mAbilitySpinner;
     private Spinner mMove1Spinner;
@@ -184,7 +183,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_owned_add_dialog, container, false);
         mNicknameEditText = (EditText) view.findViewById(R.id.owned_add_nickname);
         mShinnySwitch = (Switch) view.findViewById(R.id.owned_add_shinny_switch);
-        mSpeciesSpinner = (SearchSpinner) view.findViewById(R.id.owned_add_species_spinner);
+        mSpeciesSpinner = (Spinner) view.findViewById(R.id.owned_add_species_spinner);
         mAbilitySpinner = (Spinner) view.findViewById(R.id.owned_add_ability_spinner);
         mMove1Spinner = (Spinner) view.findViewById(R.id.owned_add_move1_spinner);
         mMove2Spinner = (Spinner) view.findViewById(R.id.owned_add_move2_spinner);
