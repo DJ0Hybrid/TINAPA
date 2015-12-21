@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -25,6 +26,7 @@ import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.DatabaseCreationUpdateEvent;
 import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
@@ -360,6 +362,11 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         } else {
             Log.e(TAG, "ActionBar is null for some reason.");
         }
+    }
+
+    @Subscribe
+    public void databaseBeingCreated(DatabaseCreationUpdateEvent event) {
+        Toast.makeText(this, "Currently creating the db, please wait.", Toast.LENGTH_SHORT).show();
     }
 
     private static class TabListener<T extends Fragment> implements ActionBar.TabListener {

@@ -9,10 +9,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
+import com.tinapaproject.tinapa.TinapaApplication;
+import com.tinapaproject.tinapa.events.DatabaseCreationUpdateEvent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -29,6 +32,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tinapa.db";
     protected Context context;
     protected ContentResolver contentResolver;
+    private boolean databaseIsReady = true;
     protected Bus bus;
 
     public static final String TAG = "TinapaDatabaseHelper";
@@ -46,16 +50,29 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
 
     private void createBus() {
         if (bus == null) {
-            bus = new Bus();
+            bus = TinapaApplication.bus;
             bus.register(this);
         }
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG, "OnCreate called.");
+        databaseIsReady = false;
         createBus();
-        executeSQLScript(db, R.raw.database_creation, "database_creation.sql");
+        AsyncTask<SQLiteDatabase, Object, Object> createDbTask = new AsyncTask<SQLiteDatabase, Object, Object>() {
+            @Override
+            protected Object doInBackground(SQLiteDatabase... params) {
+                executeSQLScript(params[0], R.raw.database_creation, "database_creation.sql");
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                databaseIsReady = true;
+            }
+        }.execute(db);
+//        executeSQLScript(db, R.raw.database_creation, "database_creation.sql");
     }
 
     @Override
@@ -75,7 +92,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         InputStream inputStream = null;
         db.beginTransaction();
         try {
-//            bus.post(new DatabaseCreationUpdateEvent());
+            bus.post(new DatabaseCreationUpdateEvent());
 
             inputStream = context.getResources().openRawResource(rawScript);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -91,7 +108,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
                 } else {
                     sqlLine.append(line + '\n');
                 }
-//                bus.post(new DatabaseCreationUpdateEvent());
+                bus.post(new DatabaseCreationUpdateEvent());
             }
             db.setTransactionSuccessful();
             bufferedReader.close();
