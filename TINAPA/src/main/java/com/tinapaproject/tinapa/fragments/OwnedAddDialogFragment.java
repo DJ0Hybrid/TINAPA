@@ -5,29 +5,34 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
+import com.tinapaproject.tinapa.TinapaApplication;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
 
 public class OwnedAddDialogFragment extends DialogFragment {
@@ -59,6 +64,8 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private EditText mNotesText;
     private Button mSaveButton;
 
+    private Bus bus;
+
     private static final String ARG_POKEMON_ID = "ARG_POKEMON_ID";
 
     public static final String TAG = "OwnedAddDialogFragment";
@@ -80,6 +87,9 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
     public OwnedAddDialogFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
+        bus = TinapaApplication.bus;
+        bus.register(this);
     }
 
     @Override
@@ -94,6 +104,27 @@ public class OwnedAddDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (getArguments() != null) {
+            inflater.inflate(R.menu.fragment_owned_detail, menu);
+        } else {
+            super.onCreateOptionsMenu(menu, inflater);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_owned_detail_delete:
+                if (getArguments() != null) {
+                    bus.post(new DeleteOwnedPokemonEvent(getArguments().getString(ARG_POKEMON_ID)));
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -228,9 +259,15 @@ public class OwnedAddDialogFragment extends DialogFragment {
         String[] from = {DexKeyValues.name};
         int[] to = {R.id.simple_cell_name};
         CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
+        mSpeciesCursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, String.valueOf(constraint), null, null);
+            }
+        });
         mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
         if (speciesId >= 0) {
-            mSpeciesSpinner.setSelection(speciesId -1, false);  // ID from SQLite starts with 1, the spinner starts with 0.
+            mSpeciesSpinner.setSelection(speciesId - 1, false);  // ID from SQLite starts with 1, the spinner starts with 0.
         }
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -275,7 +312,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
         };
         mNatureSpinner.setAdapter(mNatureCursorAdapter);
         if (natureId >= 0) {
-            mNatureSpinner.setSelection(natureId -1, false);
+            mNatureSpinner.setSelection(natureId - 1, false);
         }
 
         loadAbilityAndMovesCursorAdapters(speciesId, abilityId, move1Id, move2Id, move3Id, move4Id);
@@ -358,6 +395,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
 
     public interface OwnedAddFragmentListener {
         public void onPositiveClicked(int level, String nickname, boolean shinny, String speciesId, String abilityId, String natureId, String genderId, String move1Id, String move2Id, String move3Id, String move4Id, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, String notes, String planId);
+
         public void onUpdateClicked(String ownedId, int level, String nickname, boolean shinny, String speciesId, String abilityId, String natureId, String genderId, String move1Id, String move2Id, String move3Id, String move4Id, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, String notes, String planId);
     }
 }

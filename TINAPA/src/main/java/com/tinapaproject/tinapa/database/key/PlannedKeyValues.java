@@ -8,6 +8,7 @@ public class PlannedKeyValues {
     public static final String ABILITY_ID = "ability_id";
     public static final String NATURE_ID = "nature_id";
     public static final String GENDER_ID = "gender_id";
+    public static final String ITEM_ID = "item_id";
     public static final String MOVE1_ID = "move1_id";
     public static final String MOVE2_ID = "move2_id";
     public static final String MOVE3_ID = "move3_id";
