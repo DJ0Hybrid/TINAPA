@@ -254,15 +254,16 @@ public class TinapaContentProvider extends ContentProvider {
                 break;
             case POKEDEX_POKEMON_EVOLUTION:
                 // TODO Needs to be expanded.
-                queryBuilder.setTables("pokemon_species\n" +
-                        "LEFT OUTER JOIN pokemon ON (pokemon_species.id = pokemon.id)\n" +
+                queryBuilder.setTables("pokemon\n" +
+                        "LEFT OUTER JOIN pokemon_species ON (pokemon_species.id = pokemon.species_id)\n" +
                         "LEFT OUTER JOIN pokemon_evolution ON (pokemon_species.id = pokemon_evolution.evolved_species_id)\n" +
                         "LEFT OUTER JOIN evolution_trigger_prose ON (evolution_trigger_prose.evolution_trigger_id = pokemon_evolution.evolution_trigger_id AND evolution_trigger_prose.local_language_id = 9)\n" +
                         "LEFT OUTER JOIN item_names AS held_item_name ON (held_item_name.item_id = pokemon_evolution.held_item_id AND held_item_name.local_language_id = 9)\n" +
                         "LEFT OUTER JOIN item_names AS use_item_name ON (use_item_name.item_id = pokemon_evolution.trigger_item_id AND use_item_name.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN pokemon_forms ON (pokemon_forms.pokemon_id = pokemon.id)\n" +
                         "LEFT OUTER JOIN (select * from locations, location_names where locations.id = location_names.location_id and location_names.local_language_id = 9) AS locations ON (pokemon_evolution.location_id = locations.location_id)");
                 if (!TextUtils.isEmpty(selection)) {
-                    queryBuilder.appendWhere("(locations.region_id = 6 OR locations.region_id IS null) AND pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
+                    queryBuilder.appendWhere("(pokemon_forms.is_default = 1) AND (pokemon_forms.is_battle_only = 0) AND (locations.region_id = 6 OR locations.region_id IS null) AND pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
                 }
                 orderBy = "pokemon_species.is_baby DESC";
                 break;
