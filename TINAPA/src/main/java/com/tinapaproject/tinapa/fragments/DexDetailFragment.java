@@ -10,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.ImageUtils;
+
+import java.util.HashMap;
 
 
 public class DexDetailFragment extends Fragment {
@@ -205,7 +208,23 @@ public class DexDetailFragment extends Fragment {
             ViewGroup evolutionView = (ViewGroup) view.findViewById(R.id.dex_detail_evolution_chain);
             Cursor evolutionChainCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_EVOLUTION_URI, null, id, null, null);
             if (evolutionChainCursor != null && evolutionChainCursor.moveToFirst() && evolutionChainCursor.getCount() > 0) {
+                HashMap<Integer, ViewGroup> pokemonViewGroup = new HashMap<Integer, ViewGroup>(evolutionChainCursor.getColumnCount());
+                do {
+                    if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id"))) {
+                        ImageView baseImageView = new ImageView(getActivity());
+                        baseImageView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+                        String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_images.image_uri"));
+                        ImageUtils.loadImage(baseImageView, imagePath, true);
 
+                        ViewGroup baseViewGroup = new LinearLayout(getActivity());
+                        baseViewGroup.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                        baseViewGroup.addView(baseImageView);
+                        evolutionView.addView(baseViewGroup);
+                        pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.id")), baseViewGroup);
+                    } else {
+
+                    }
+                } while (evolutionChainCursor.moveToNext());
             } else {
                 evolutionView.setVisibility(View.GONE);
             }
