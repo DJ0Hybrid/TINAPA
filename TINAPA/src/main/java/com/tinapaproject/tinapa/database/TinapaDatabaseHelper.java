@@ -20,9 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by Ethan on 8/20/2014.
- */
 public class TinapaDatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -85,7 +82,6 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.endsWith(");") || line.endsWith("\";")) {
                     sqlLine.append(line);
-                    Log.d(TAG, sqlLine.toString());
                     db.execSQL(sqlLine.toString());
                     sqlLine = new StringBuilder();
                 } else {
