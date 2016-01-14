@@ -175,6 +175,9 @@ public class TinapaContentProvider extends ContentProvider {
             case PLANNED_POKEMON:
                 id = db.insertOrThrow("planned_pokemons", null, values);
                 return Uri.parse(PLANNED_POKEMON_TABLE + "/" + id);
+            case POKEDEX_POKEMON_IMAGE:
+                id = db.insertOrThrow("pokemon_images", null, values);
+                return Uri.parse(POKEDEX_POKEMON_IMAGE_TABLE + "/" + id);
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }
@@ -237,6 +240,12 @@ public class TinapaContentProvider extends ContentProvider {
                 }
                 selectionArray = new String[]{"id AS _id", "name AS name", "pokemon_id AS pokemon_id", "slot AS slot", "is_hidden AS is_hidden"};
                 orderBy = "slot ASC";
+                break;
+            case POKEDEX_POKEMON_IMAGE:
+                queryBuilder.setTables("pokemon_images");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere(selection);
+                }
                 break;
             case POKEDEX_POKEMON_EVOLUTION_BASE_LINK:
                 // TODO Selection array.
