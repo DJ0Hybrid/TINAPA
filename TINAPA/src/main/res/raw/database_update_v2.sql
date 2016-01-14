@@ -1,0 +1,4 @@
+ALTER TABLE "planned_teams" RENAME TO "planned_teams_orig";
+CREATE TABLE "planned_teams" ("id" INTEGER PRIMARY KEY  NOT NULL  DEFAULT (null) ,"name" TEXT,"planned_pokemon1_id" INTEGER DEFAULT (null) ,"planned_pokemon2_id" INTEGER DEFAULT (null) ,"planned_pokemon3_id" INTEGER DEFAULT (null) ,"planned_pokemon4_id" INTEGER DEFAULT (null) ,"planned_pokemon5_id" INTEGER DEFAULT (null) ,"planned_pokemon6_id" INTEGER DEFAULT (null) ,"note" TEXT);
+INSERT INTO "planned_teams" ("id", "name", "planned_pokemon1_id", "planned_pokemon2_id", "planned_pokemon3_id", "planned_pokemon4_id", "planned_pokemon5_id", "planned_pokemon6_id", "note") SELECT "id", "name", "pokemon1_id", "pokemon2_id", "pokemon3_id", "pokemon4_id", "pokemon5_id", "pokemon6_id", "note" FROM "planned_teams_orig";
+DROP TABLE "planned_teams_orig";
