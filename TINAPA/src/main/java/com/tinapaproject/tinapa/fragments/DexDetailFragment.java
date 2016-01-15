@@ -236,6 +236,7 @@ public class DexDetailFragment extends Fragment {
                     pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.species_id")), baseViewGroup);
                 } while (evolutionChainCursor.moveToNext());
                 evolutionView.invalidate();
+                evolutionChainCursor.close();
             } else {
                 evolutionView.setVisibility(View.GONE);
             }
