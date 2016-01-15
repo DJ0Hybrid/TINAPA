@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
@@ -223,6 +224,20 @@ public class DexDetailFragment extends Fragment {
                         evolutionView.addView(baseView);
                     } else {
                         // TODO Show how evolution happens
+                        ViewGroup evolutionMethodView = (ViewGroup) baseView.findViewById(R.id.evolution_chain_method);
+                        // In the future, this can be changed to something besides text.
+                        StringBuilder evolutionMethodText = new StringBuilder();
+                        evolutionMethodText.append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("evolution_trigger_prose.name")));
+                        // Level
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_evolution.minimum_level"))) {
+                            evolutionMethodText.append("\n").append(getString(R.string.evolution_level)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_evolution.minimum_level")));
+                        }
+
+                        TextView evolutionTextView = new TextView(getActivity());
+                        evolutionTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        evolutionTextView.setText(evolutionMethodText.toString());
+                        evolutionMethodView.addView(evolutionTextView);
+
 
                         ViewGroup parentViewGroup = pokemonViewGroup.get(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id")));
                         if (parentViewGroup != null) {
