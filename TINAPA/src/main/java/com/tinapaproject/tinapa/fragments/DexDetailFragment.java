@@ -210,21 +210,32 @@ public class DexDetailFragment extends Fragment {
             if (evolutionChainCursor != null && evolutionChainCursor.moveToFirst() && evolutionChainCursor.getCount() > 0) {
                 HashMap<Integer, ViewGroup> pokemonViewGroup = new HashMap<Integer, ViewGroup>(evolutionChainCursor.getColumnCount());
                 do {
-                    if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id"))) {
-                        ImageView baseImageView = new ImageView(getActivity());
-                        baseImageView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
-                        String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_images.image_uri"));
-                        ImageUtils.loadImage(baseImageView, imagePath, true);
+                    ImageView baseImageView = new ImageView(getActivity());
+                    baseImageView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+                    String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_images.image_uri"));
+                    ImageUtils.loadImage(baseImageView, imagePath, true);
 
-                        ViewGroup baseViewGroup = new LinearLayout(getActivity());
-                        baseViewGroup.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    ViewGroup baseViewGroup = new LinearLayout(getActivity());
+                    baseViewGroup.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                    if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id"))) {
+
                         baseViewGroup.addView(baseImageView);
                         evolutionView.addView(baseViewGroup);
-                        pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.id")), baseViewGroup);
                     } else {
+                        // TODO Show how evolution happens
 
+                        baseViewGroup.addView(baseImageView);
+
+                        ViewGroup parentViewGroup = pokemonViewGroup.get(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id")));
+                        if (parentViewGroup != null) {
+                            parentViewGroup.addView(baseViewGroup);
+                        }
                     }
+
+                    pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.species_id")), baseViewGroup);
                 } while (evolutionChainCursor.moveToNext());
+                evolutionView.invalidate();
             } else {
                 evolutionView.setVisibility(View.GONE);
             }
