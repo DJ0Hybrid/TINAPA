@@ -9,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
@@ -20,12 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created by Ethan on 8/20/2014.
- */
 public class TinapaDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "tinapa.db";
     protected Context context;
     protected ContentResolver contentResolver;
@@ -65,8 +63,10 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         if (newVersion > oldVersion) {
             switch (oldVersion) {
                 case 1:
+                    executeSQLScript(db, R.raw.database_update_v2, "Database Upgrade to v2");
+                case 2:
                     // This is the current version.
-                    // When the time comes, you would add an update script to go from the old version (1) to the new version (2).
+                    // When the time comes, you would add an update script to go from the old version (2) to the new version (3).
             }
         }
     }
@@ -85,13 +85,15 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.endsWith(");") || line.endsWith("\";")) {
                     sqlLine.append(line);
-                    Log.d(TAG, sqlLine.toString());
                     db.execSQL(sqlLine.toString());
                     sqlLine = new StringBuilder();
                 } else {
                     sqlLine.append(line + '\n');
                 }
 //                bus.post(new DatabaseCreationUpdateEvent());
+            }
+            if (!TextUtils.isEmpty(sqlLine.toString().trim())) {
+                db.execSQL(sqlLine.toString());
             }
             db.setTransactionSuccessful();
             bufferedReader.close();

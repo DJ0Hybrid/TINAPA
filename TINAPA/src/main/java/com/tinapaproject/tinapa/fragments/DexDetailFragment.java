@@ -64,7 +64,7 @@ public class DexDetailFragment extends Fragment {
                 @Override
                 public boolean onLongClick(final View v) {
                     if (listener != null) {
-                        listener.onDexDetailImageLongClicked(id, (ImageView) v, DexKeyValues.image);
+                        listener.onDexDetailImageLongClicked(id, (ImageView) v, true, false, false);
                         return true;
                     }
                     return false;
@@ -78,7 +78,7 @@ public class DexDetailFragment extends Fragment {
                 @Override
                 public boolean onLongClick(final View v) {
                     if (listener != null) {
-                        listener.onDexDetailImageLongClicked(id, (ImageView) v, DexKeyValues.shinnyImage);
+                        listener.onDexDetailImageLongClicked(id, (ImageView) v, false, true, false);
                         return true;
                     }
                     return false;
@@ -289,6 +289,6 @@ public class DexDetailFragment extends Fragment {
     }
 
     public interface DexDetailListener {
-        public void onDexDetailImageLongClicked(String id, ImageView imageView, String column);
+        public void onDexDetailImageLongClicked(String id, ImageView imageView, boolean isDefault, boolean isShiny, boolean isIcon);
     }
 }

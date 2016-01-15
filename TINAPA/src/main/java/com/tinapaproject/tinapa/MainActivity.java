@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +44,9 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     private String temp_id;
     private ImageView temp_imageView;
-    private String temp_column;
+    private boolean temp_isDefault;
+    private boolean temp_isShiny;
+    private boolean temp_isIcon;
 
     private Bus bus;
 
@@ -140,13 +143,28 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             temp_imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath, imageOptions));
 
             // Now store the path
-            ContentValues values = new ContentValues();
-            values.put(temp_column, picturePath);
-            getContentResolver().update(TinapaContentProvider.POKEDEX_POKEMON_IMAGE_URI, values, DexKeyValues.insertIntoImageColumnWhereCreation(temp_id), null);
+            Cursor imageQuery = null;
+            if (!TextUtils.isEmpty(temp_id)) {
+                imageQuery = getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_IMAGE_URI, null, "pokemon_id = " + temp_id + " AND is_default = " + (temp_isDefault ? 1 : 0) + " AND is_shinny = " + (temp_isShiny ? 1 : 0) + " AND is_icon = " + (temp_isIcon ? 1 : 0), null, null);
+
+                ContentValues values = new ContentValues();
+                values.put(DexKeyValues.imageUri, picturePath);
+                values.put(DexKeyValues.isDefault, temp_isDefault ? 1 : 0);
+                values.put(DexKeyValues.isShiny, temp_isShiny ? 1 : 0);
+                values.put(DexKeyValues.isIcon, temp_isIcon ? 1 : 0);
+                if (imageQuery.getCount() > 0) {
+                    getContentResolver().update(TinapaContentProvider.POKEDEX_POKEMON_IMAGE_URI, values, DexKeyValues.insertIntoImageColumnWhereCreation(temp_id), null);
+                } else {
+                    values.put("pokemon_id", temp_id);
+                    getContentResolver().insert(TinapaContentProvider.POKEDEX_POKEMON_IMAGE_URI, values);
+                }
+            }
 
             temp_id = null;
             temp_imageView = null;
-            temp_column = null;
+            temp_isDefault = false;
+            temp_isShiny = false;
+            temp_isIcon = false;
         }
     }
 
@@ -170,14 +188,14 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     // From DexCursorAdapter
     @Override
-    public void onDexImageLongClicked(String id, ImageView imageView, String column) {
-        loadImage(id, imageView, column);
+    public void onDexImageLongClicked(String id, ImageView imageView, boolean isDefault, boolean isShiny, boolean isIcon) {
+        loadImage(id, imageView, isDefault, isShiny, isIcon);
     }
 
     // From DexDetailFragment
     @Override
-    public void onDexDetailImageLongClicked(String id, ImageView imageView, String column) {
-        loadImage(id, imageView, column);
+    public void onDexDetailImageLongClicked(String id, ImageView imageView, boolean isDefault, boolean isShiny, boolean isIcon) {
+        loadImage(id, imageView, isDefault, isShiny, isIcon);
     }
 
     // From OwnedListFragment
@@ -276,10 +294,12 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         onBackPressed();
     }
 
-    private void loadImage(String id, ImageView imageView, String column) {
+    private void loadImage(String id, ImageView imageView, boolean isDefault, boolean isShiny, boolean isIcon) {
         temp_id = id;
         temp_imageView = imageView;
-        temp_column = column;
+        temp_isDefault = isDefault;
+        temp_isShiny = isShiny;
+        temp_isIcon = isIcon;
 
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //        intent.setType("image/*");
