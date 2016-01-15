@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
@@ -210,32 +209,29 @@ public class DexDetailFragment extends Fragment {
             if (evolutionChainCursor != null && evolutionChainCursor.moveToFirst() && evolutionChainCursor.getCount() > 0) {
                 HashMap<Integer, ViewGroup> pokemonViewGroup = new HashMap<Integer, ViewGroup>(evolutionChainCursor.getColumnCount());
                 do {
-                    ImageView baseImageView = new ImageView(getActivity());
-                    baseImageView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+                    View baseView = inflater.inflate(R.layout.evolution_chain, null, false);
+                    ImageView baseImageView = (ImageView) baseView.findViewById(R.id.evolution_chain_image);
                     String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_images.image_uri"));
                     ImageUtils.loadImage(baseImageView, imagePath, true);
 
-                    ViewGroup baseViewGroup = new LinearLayout(getActivity());
-                    baseViewGroup.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    ViewGroup nextEvolutionView = (ViewGroup) baseView.findViewById(R.id.evolution_chain_next_stage);
 
                     if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id"))) {
 
-                        baseViewGroup.addView(baseImageView);
-                        evolutionView.addView(baseViewGroup);
+                        View evolutionMethod = baseView.findViewById(R.id.evolution_chain_method);
+                        evolutionMethod.setVisibility(View.GONE);
+                        evolutionView.addView(baseView);
                     } else {
                         // TODO Show how evolution happens
 
-                        baseViewGroup.addView(baseImageView);
-
                         ViewGroup parentViewGroup = pokemonViewGroup.get(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id")));
                         if (parentViewGroup != null) {
-                            parentViewGroup.addView(baseViewGroup);
+                            parentViewGroup.addView(baseView);
                         }
                     }
 
-                    pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.species_id")), baseViewGroup);
+                    pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.species_id")), nextEvolutionView);
                 } while (evolutionChainCursor.moveToNext());
-                evolutionView.invalidate();
                 evolutionChainCursor.close();
             } else {
                 evolutionView.setVisibility(View.GONE);
