@@ -39,6 +39,7 @@ import com.tinapaproject.tinapa.fragments.OwnedListFragment.OwnedListListener;
 import com.tinapaproject.tinapa.fragments.PlannedAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment.PlannedListListener;
+import com.tinapaproject.tinapa.fragments.TeamListFragment;
 
 public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener, PlannedListListener {
 
@@ -83,7 +84,10 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
                 .setTabListener(new TabListener<PlannedListFragment>("Planned" /*TODO: Needs to be a field. */, new PlannedListFragment()));
         actionBar.addTab(plannedTab);
 
-        // TODO Teams
+        Tab teamTab = actionBar.newTab()
+                .setText(R.string.tab_teams)
+                .setTabListener(new TabListener<TeamListFragment>("Team" /*TODO: Needs to be a field. */, new TeamListFragment()));
+        actionBar.addTab(teamTab);
         Log.i(TAG, "All tabs have been added.");
 
         if (savedInstanceState != null) {
