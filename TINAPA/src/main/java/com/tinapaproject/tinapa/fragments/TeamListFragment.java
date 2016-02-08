@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -11,9 +14,9 @@ import android.widget.ListView;
 import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.TinapaApplication;
-import com.tinapaproject.tinapa.adapters.IndividualCursorAdapter;
 import com.tinapaproject.tinapa.adapters.TeamCursorAdapter;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.StartNewTeamEvent;
 
 public class TeamListFragment extends Fragment {
     public static final String TAG = "TeamListFragment";
@@ -30,6 +33,21 @@ public class TeamListFragment extends Fragment {
         setHasOptionsMenu(true);
 
         bus = TinapaApplication.bus;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_team_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_team_list_add:
+                bus.post(new StartNewTeamEvent());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

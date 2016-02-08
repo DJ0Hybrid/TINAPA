@@ -28,6 +28,7 @@ import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.StartNewTeamEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -39,6 +40,7 @@ import com.tinapaproject.tinapa.fragments.OwnedListFragment.OwnedListListener;
 import com.tinapaproject.tinapa.fragments.PlannedAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment.PlannedListListener;
+import com.tinapaproject.tinapa.fragments.TeamAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.TeamListFragment;
 
 public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener, PlannedListListener {
@@ -373,6 +375,11 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         getContentResolver().delete(TinapaContentProvider.PLANNED_POKEMON_URI, event.getPlannedId(), null);
         Log.d(TAG, "The column for " + event.getPlannedId() + " was deleted.");
         onBackPressed();
+    }
+
+    @Subscribe
+    public void openNewAddTeamFragment(StartNewTeamEvent event) {
+        TeamAddDialogFragment.newInstance("").show(getFragmentManager(), TeamAddDialogFragment.TAG);
     }
 
     @Override
