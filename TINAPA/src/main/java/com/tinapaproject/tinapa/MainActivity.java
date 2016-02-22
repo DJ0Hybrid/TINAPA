@@ -24,10 +24,12 @@ import com.squareup.otto.Subscribe;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
+import com.tinapaproject.tinapa.database.key.TeamKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
+import com.tinapaproject.tinapa.events.SaveTeamEvent;
 import com.tinapaproject.tinapa.events.StartNewTeamEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
@@ -380,6 +382,214 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     @Subscribe
     public void openNewAddTeamFragment(StartNewTeamEvent event) {
         TeamAddDialogFragment.newInstance("").show(getFragmentManager(), TeamAddDialogFragment.TAG);
+    }
+
+    @Subscribe
+    public void saveTeam(SaveTeamEvent event) {
+        boolean addingTeam = TextUtils.isEmpty(event.getTeamId());
+
+        ContentValues teamValues = new ContentValues();
+        teamValues.put(TeamKeyValues.TEAM_NAME, event.getTeamName());
+
+
+        ContentValues pokemon1Values = new ContentValues();
+        pokemon1Values.put(PlannedKeyValues.POKEMON_ID, event.getPokemon1SpeciesId());
+        pokemon1Values.put(PlannedKeyValues.ABILITY_ID, event.getPokemon1AbilityId());
+        pokemon1Values.put(PlannedKeyValues.ITEM_ID, event.getPokemon1ItemId());
+        pokemon1Values.put(PlannedKeyValues.NATURE_ID, event.getPokemon1NatureId());
+        pokemon1Values.put(PlannedKeyValues.MOVE1_ID, event.getPokemon1Move1Id());
+        pokemon1Values.put(PlannedKeyValues.MOVE2_ID, event.getPokemon1Move2Id());
+        pokemon1Values.put(PlannedKeyValues.MOVE3_ID, event.getPokemon1Move3Id());
+        pokemon1Values.put(PlannedKeyValues.MOVE4_ID, event.getPokemon1Move4Id());
+        pokemon1Values.put(PlannedKeyValues.IV_HP, event.getPokemon1IvHp());
+        pokemon1Values.put(PlannedKeyValues.IV_ATT, event.getPokemon1IvAtt());
+        pokemon1Values.put(PlannedKeyValues.IV_DEF, event.getPokemon1IvDef());
+        pokemon1Values.put(PlannedKeyValues.IV_SATT, event.getPokemon1IvSAtt());
+        pokemon1Values.put(PlannedKeyValues.IV_SDEF, event.getPokemon1IvSDef());
+        pokemon1Values.put(PlannedKeyValues.IV_SPD, event.getPokemon1IvSpd());
+        pokemon1Values.put(PlannedKeyValues.EV_HP, event.getPokemon1EvHp());
+        pokemon1Values.put(PlannedKeyValues.EV_ATT, event.getPokemon1EvAtt());
+        pokemon1Values.put(PlannedKeyValues.EV_DEF, event.getPokemon1EvDef());
+        pokemon1Values.put(PlannedKeyValues.EV_SATT, event.getPokemon1EvSAtt());
+        pokemon1Values.put(PlannedKeyValues.EV_SDEF, event.getPokemon1EvSDef());
+        pokemon1Values.put(PlannedKeyValues.EV_SPD, event.getPokemon1EvSpd());
+        pokemon1Values.put(PlannedKeyValues.NOTE, event.getPokemon1Notes());
+        Uri pokemon1Uri;
+        String pokemon1Id = "";
+        if (addingTeam) {
+            pokemon1Uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, pokemon1Values);
+            pokemon1Id = pokemon1Uri.getLastPathSegment();
+        } else {
+            // TODO
+        }
+
+        ContentValues pokemon2Values = new ContentValues();
+        pokemon2Values.put(PlannedKeyValues.POKEMON_ID, event.getPokemon2SpeciesId());
+        pokemon2Values.put(PlannedKeyValues.ABILITY_ID, event.getPokemon2AbilityId());
+        pokemon2Values.put(PlannedKeyValues.ITEM_ID, event.getPokemon2ItemId());
+        pokemon2Values.put(PlannedKeyValues.NATURE_ID, event.getPokemon2NatureId());
+        pokemon2Values.put(PlannedKeyValues.MOVE1_ID, event.getPokemon2Move1Id());
+        pokemon2Values.put(PlannedKeyValues.MOVE2_ID, event.getPokemon2Move2Id());
+        pokemon2Values.put(PlannedKeyValues.MOVE3_ID, event.getPokemon2Move3Id());
+        pokemon2Values.put(PlannedKeyValues.MOVE4_ID, event.getPokemon2Move4Id());
+        pokemon2Values.put(PlannedKeyValues.IV_HP, event.getPokemon2IvHp());
+        pokemon2Values.put(PlannedKeyValues.IV_ATT, event.getPokemon2IvAtt());
+        pokemon2Values.put(PlannedKeyValues.IV_DEF, event.getPokemon2IvDef());
+        pokemon2Values.put(PlannedKeyValues.IV_SATT, event.getPokemon2IvSAtt());
+        pokemon2Values.put(PlannedKeyValues.IV_SDEF, event.getPokemon2IvSDef());
+        pokemon2Values.put(PlannedKeyValues.IV_SPD, event.getPokemon2IvSpd());
+        pokemon2Values.put(PlannedKeyValues.EV_HP, event.getPokemon2EvHp());
+        pokemon2Values.put(PlannedKeyValues.EV_ATT, event.getPokemon2EvAtt());
+        pokemon2Values.put(PlannedKeyValues.EV_DEF, event.getPokemon2EvDef());
+        pokemon2Values.put(PlannedKeyValues.EV_SATT, event.getPokemon2EvSAtt());
+        pokemon2Values.put(PlannedKeyValues.EV_SDEF, event.getPokemon2EvSDef());
+        pokemon2Values.put(PlannedKeyValues.EV_SPD, event.getPokemon2EvSpd());
+        pokemon2Values.put(PlannedKeyValues.NOTE, event.getPokemon2Notes());
+        Uri pokemon2Uri;
+        String pokemon2Id = "";
+        if (addingTeam) {
+            pokemon2Uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, pokemon2Values);
+            pokemon2Id = pokemon2Uri.getLastPathSegment();
+        } else {
+            // TODO
+        }
+
+        ContentValues pokemon3Values = new ContentValues();
+        pokemon3Values.put(PlannedKeyValues.POKEMON_ID, event.getPokemon3SpeciesId());
+        pokemon3Values.put(PlannedKeyValues.ABILITY_ID, event.getPokemon3AbilityId());
+        pokemon3Values.put(PlannedKeyValues.ITEM_ID, event.getPokemon3ItemId());
+        pokemon3Values.put(PlannedKeyValues.NATURE_ID, event.getPokemon3NatureId());
+        pokemon3Values.put(PlannedKeyValues.MOVE1_ID, event.getPokemon3Move1Id());
+        pokemon3Values.put(PlannedKeyValues.MOVE2_ID, event.getPokemon3Move2Id());
+        pokemon3Values.put(PlannedKeyValues.MOVE3_ID, event.getPokemon3Move3Id());
+        pokemon3Values.put(PlannedKeyValues.MOVE4_ID, event.getPokemon3Move4Id());
+        pokemon3Values.put(PlannedKeyValues.IV_HP, event.getPokemon3IvHp());
+        pokemon3Values.put(PlannedKeyValues.IV_ATT, event.getPokemon3IvAtt());
+        pokemon3Values.put(PlannedKeyValues.IV_DEF, event.getPokemon3IvDef());
+        pokemon3Values.put(PlannedKeyValues.IV_SATT, event.getPokemon3IvSAtt());
+        pokemon3Values.put(PlannedKeyValues.IV_SDEF, event.getPokemon3IvSDef());
+        pokemon3Values.put(PlannedKeyValues.IV_SPD, event.getPokemon3IvSpd());
+        pokemon3Values.put(PlannedKeyValues.EV_HP, event.getPokemon3EvHp());
+        pokemon3Values.put(PlannedKeyValues.EV_ATT, event.getPokemon3EvAtt());
+        pokemon3Values.put(PlannedKeyValues.EV_DEF, event.getPokemon3EvDef());
+        pokemon3Values.put(PlannedKeyValues.EV_SATT, event.getPokemon3EvSAtt());
+        pokemon3Values.put(PlannedKeyValues.EV_SDEF, event.getPokemon3EvSDef());
+        pokemon3Values.put(PlannedKeyValues.EV_SPD, event.getPokemon3EvSpd());
+        pokemon3Values.put(PlannedKeyValues.NOTE, event.getPokemon3Notes());
+        Uri pokemon3Uri;
+        String pokemon3Id = "";
+        if (addingTeam) {
+            pokemon3Uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, pokemon3Values);
+            pokemon3Id = pokemon3Uri.getLastPathSegment();
+        } else {
+            // TODO
+        }
+
+        ContentValues pokemon4Values = new ContentValues();
+        pokemon4Values.put(PlannedKeyValues.POKEMON_ID, event.getPokemon4SpeciesId());
+        pokemon4Values.put(PlannedKeyValues.ABILITY_ID, event.getPokemon4AbilityId());
+        pokemon4Values.put(PlannedKeyValues.ITEM_ID, event.getPokemon4ItemId());
+        pokemon4Values.put(PlannedKeyValues.NATURE_ID, event.getPokemon4NatureId());
+        pokemon4Values.put(PlannedKeyValues.MOVE1_ID, event.getPokemon4Move1Id());
+        pokemon4Values.put(PlannedKeyValues.MOVE2_ID, event.getPokemon4Move2Id());
+        pokemon4Values.put(PlannedKeyValues.MOVE3_ID, event.getPokemon4Move3Id());
+        pokemon4Values.put(PlannedKeyValues.MOVE4_ID, event.getPokemon4Move4Id());
+        pokemon4Values.put(PlannedKeyValues.IV_HP, event.getPokemon4IvHp());
+        pokemon4Values.put(PlannedKeyValues.IV_ATT, event.getPokemon4IvAtt());
+        pokemon4Values.put(PlannedKeyValues.IV_DEF, event.getPokemon4IvDef());
+        pokemon4Values.put(PlannedKeyValues.IV_SATT, event.getPokemon4IvSAtt());
+        pokemon4Values.put(PlannedKeyValues.IV_SDEF, event.getPokemon4IvSDef());
+        pokemon4Values.put(PlannedKeyValues.IV_SPD, event.getPokemon4IvSpd());
+        pokemon4Values.put(PlannedKeyValues.EV_HP, event.getPokemon4EvHp());
+        pokemon4Values.put(PlannedKeyValues.EV_ATT, event.getPokemon4EvAtt());
+        pokemon4Values.put(PlannedKeyValues.EV_DEF, event.getPokemon4EvDef());
+        pokemon4Values.put(PlannedKeyValues.EV_SATT, event.getPokemon4EvSAtt());
+        pokemon4Values.put(PlannedKeyValues.EV_SDEF, event.getPokemon4EvSDef());
+        pokemon4Values.put(PlannedKeyValues.EV_SPD, event.getPokemon4EvSpd());
+        pokemon4Values.put(PlannedKeyValues.NOTE, event.getPokemon4Notes());
+        Uri pokemon4Uri;
+        String pokemon4Id = "";
+        if (addingTeam) {
+            pokemon4Uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, pokemon4Values);
+            pokemon4Id = pokemon4Uri.getLastPathSegment();
+        } else {
+            // TODO
+        }
+
+        ContentValues pokemon5Values = new ContentValues();
+        pokemon5Values.put(PlannedKeyValues.POKEMON_ID, event.getPokemon5SpeciesId());
+        pokemon5Values.put(PlannedKeyValues.ABILITY_ID, event.getPokemon5AbilityId());
+        pokemon5Values.put(PlannedKeyValues.ITEM_ID, event.getPokemon5ItemId());
+        pokemon5Values.put(PlannedKeyValues.NATURE_ID, event.getPokemon5NatureId());
+        pokemon5Values.put(PlannedKeyValues.MOVE1_ID, event.getPokemon5Move1Id());
+        pokemon5Values.put(PlannedKeyValues.MOVE2_ID, event.getPokemon5Move2Id());
+        pokemon5Values.put(PlannedKeyValues.MOVE3_ID, event.getPokemon5Move3Id());
+        pokemon5Values.put(PlannedKeyValues.MOVE4_ID, event.getPokemon5Move4Id());
+        pokemon5Values.put(PlannedKeyValues.IV_HP, event.getPokemon5IvHp());
+        pokemon5Values.put(PlannedKeyValues.IV_ATT, event.getPokemon5IvAtt());
+        pokemon5Values.put(PlannedKeyValues.IV_DEF, event.getPokemon5IvDef());
+        pokemon5Values.put(PlannedKeyValues.IV_SATT, event.getPokemon5IvSAtt());
+        pokemon5Values.put(PlannedKeyValues.IV_SDEF, event.getPokemon5IvSDef());
+        pokemon5Values.put(PlannedKeyValues.IV_SPD, event.getPokemon5IvSpd());
+        pokemon5Values.put(PlannedKeyValues.EV_HP, event.getPokemon5EvHp());
+        pokemon5Values.put(PlannedKeyValues.EV_ATT, event.getPokemon5EvAtt());
+        pokemon5Values.put(PlannedKeyValues.EV_DEF, event.getPokemon5EvDef());
+        pokemon5Values.put(PlannedKeyValues.EV_SATT, event.getPokemon5EvSAtt());
+        pokemon5Values.put(PlannedKeyValues.EV_SDEF, event.getPokemon5EvSDef());
+        pokemon5Values.put(PlannedKeyValues.EV_SPD, event.getPokemon5EvSpd());
+        pokemon5Values.put(PlannedKeyValues.NOTE, event.getPokemon5Notes());
+        Uri pokemon5Uri;
+        String pokemon5Id = "";
+        if (addingTeam) {
+            pokemon5Uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, pokemon5Values);
+            pokemon5Id = pokemon5Uri.getLastPathSegment();
+        } else {
+            // TODO
+        }
+
+        ContentValues pokemon6Values = new ContentValues();
+        pokemon6Values.put(PlannedKeyValues.POKEMON_ID, event.getPokemon6SpeciesId());
+        pokemon6Values.put(PlannedKeyValues.ABILITY_ID, event.getPokemon6AbilityId());
+        pokemon6Values.put(PlannedKeyValues.ITEM_ID, event.getPokemon6ItemId());
+        pokemon6Values.put(PlannedKeyValues.NATURE_ID, event.getPokemon6NatureId());
+        pokemon6Values.put(PlannedKeyValues.MOVE1_ID, event.getPokemon6Move1Id());
+        pokemon6Values.put(PlannedKeyValues.MOVE2_ID, event.getPokemon6Move2Id());
+        pokemon6Values.put(PlannedKeyValues.MOVE3_ID, event.getPokemon6Move3Id());
+        pokemon6Values.put(PlannedKeyValues.MOVE4_ID, event.getPokemon6Move4Id());
+        pokemon6Values.put(PlannedKeyValues.IV_HP, event.getPokemon6IvHp());
+        pokemon6Values.put(PlannedKeyValues.IV_ATT, event.getPokemon6IvAtt());
+        pokemon6Values.put(PlannedKeyValues.IV_DEF, event.getPokemon6IvDef());
+        pokemon6Values.put(PlannedKeyValues.IV_SATT, event.getPokemon6IvSAtt());
+        pokemon6Values.put(PlannedKeyValues.IV_SDEF, event.getPokemon6IvSDef());
+        pokemon6Values.put(PlannedKeyValues.IV_SPD, event.getPokemon6IvSpd());
+        pokemon6Values.put(PlannedKeyValues.EV_HP, event.getPokemon6EvHp());
+        pokemon6Values.put(PlannedKeyValues.EV_ATT, event.getPokemon6EvAtt());
+        pokemon6Values.put(PlannedKeyValues.EV_DEF, event.getPokemon6EvDef());
+        pokemon6Values.put(PlannedKeyValues.EV_SATT, event.getPokemon6EvSAtt());
+        pokemon6Values.put(PlannedKeyValues.EV_SDEF, event.getPokemon6EvSDef());
+        pokemon6Values.put(PlannedKeyValues.EV_SPD, event.getPokemon6EvSpd());
+        pokemon6Values.put(PlannedKeyValues.NOTE, event.getPokemon6Notes());
+        Uri pokemon6Uri;
+        String pokemon6Id = "";
+        if (addingTeam) {
+            pokemon6Uri = getContentResolver().insert(TinapaContentProvider.PLANNED_POKEMON_URI, pokemon6Values);
+            pokemon6Id = pokemon6Uri.getLastPathSegment();
+        } else {
+            // TODO
+        }
+
+        teamValues.put(TeamKeyValues.POKEMON1_PLANNED_ID, pokemon1Id);
+        teamValues.put(TeamKeyValues.POKEMON2_PLANNED_ID, pokemon2Id);
+        teamValues.put(TeamKeyValues.POKEMON3_PLANNED_ID, pokemon3Id);
+        teamValues.put(TeamKeyValues.POKEMON4_PLANNED_ID, pokemon4Id);
+        teamValues.put(TeamKeyValues.POKEMON5_PLANNED_ID, pokemon5Id);
+        teamValues.put(TeamKeyValues.POKEMON6_PLANNED_ID, pokemon6Id);
+
+        if (addingTeam) {
+            getContentResolver().insert(TinapaContentProvider.PLANNED_TEAM_URI, teamValues);
+        } else {
+            // TODO Update
+        }
     }
 
     @Override

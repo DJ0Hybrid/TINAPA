@@ -3,7 +3,6 @@ package com.tinapaproject.tinapa.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -35,6 +33,7 @@ import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
+import com.tinapaproject.tinapa.utils.IVRadioGroupUtils;
 
 public class PlannedAddDialogFragment extends DialogFragment {
 
@@ -191,12 +190,12 @@ public class PlannedAddDialogFragment extends DialogFragment {
                     mEVSDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_sdef")));
                     mEVSpd.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_spd")));
 
-                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_hp")), mIVHP);
-                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_att")), mIVAtt);
-                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_def")), mIVDef);
-                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_satt")), mIVSAtt);
-                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_sdef")), mIVSDef);
-                    setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_spd")), mIVSpd);
+                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_hp")), mIVHP);
+                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_att")), mIVAtt);
+                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_def")), mIVDef);
+                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_satt")), mIVSAtt);
+                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_sdef")), mIVSDef);
+                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_spd")), mIVSpd);
 
                     mNote.setText(plannedCursor.getString(plannedCursor.getColumnIndex("note")));
                 }
@@ -302,12 +301,12 @@ public class PlannedAddDialogFragment extends DialogFragment {
         String evSAtt = mEVSAtt.getText().toString();
         String evSDef = mEVSDef.getText().toString();
         String evSpd = mEVSpd.getText().toString();
-        String ivHP = getIVValueSelected(mIVHP, getActivity());
-        String ivAtt = getIVValueSelected(mIVAtt, getActivity());
-        String ivDef = getIVValueSelected(mIVDef, getActivity());
-        String ivSAtt = getIVValueSelected(mIVSAtt, getActivity());
-        String ivSDef = getIVValueSelected(mIVSDef, getActivity());
-        String ivSpd = getIVValueSelected(mIVSpd, getActivity());
+        String ivHP = IVRadioGroupUtils.getIVValueSelected(mIVHP, getActivity());
+        String ivAtt = IVRadioGroupUtils.getIVValueSelected(mIVAtt, getActivity());
+        String ivDef = IVRadioGroupUtils.getIVValueSelected(mIVDef, getActivity());
+        String ivSAtt = IVRadioGroupUtils.getIVValueSelected(mIVSAtt, getActivity());
+        String ivSDef = IVRadioGroupUtils.getIVValueSelected(mIVSDef, getActivity());
+        String ivSpd = IVRadioGroupUtils.getIVValueSelected(mIVSpd, getActivity());
         String notes = mNote.getText().toString();
         bus.post(new CreatePlannedPokemonEvent(plannedId, speciesId, abilityId, move1Id, move2Id, move3Id, move4Id, natureId, itemId, evHP, evAtt, evDef, evSAtt, evSDef, evSpd, ivHP, ivAtt, ivDef, ivSAtt, ivSDef, ivSpd, notes, isNewSave));
     }
@@ -344,36 +343,6 @@ public class PlannedAddDialogFragment extends DialogFragment {
             int selectionPosition = CursorUtils.getPositionOfRowById(selectionId, moveSpinner);
             if (selectionPosition >= 0) {
                 moveSpinner.setSelection(selectionPosition);
-            }
-        }
-    }
-
-    private static String getIVValueSelected(RadioGroup radioGroup, Context context) {
-        RadioButton selectedButton = (RadioButton) radioGroup.findViewById(radioGroup.getCheckedRadioButtonId());
-        if (selectedButton.getText().equals(context.getString(R.string.planned_iv_min))) {
-            return "0";
-        } else if (selectedButton.getText().equals(context.getString(R.string.planned_iv_max))) {
-            return "31";
-        } else {
-            return "-1";
-        }
-    }
-
-    private static void setCorrectIVValue(String ivValue, RadioGroup radioGroup) {
-        String radioButtonTitle;
-        if (ivValue.equals("31")) {
-            radioButtonTitle = radioGroup.getContext().getString(R.string.planned_iv_max);
-        } else if (ivValue.equals("0")) {
-            radioButtonTitle = radioGroup.getContext().getString(R.string.planned_iv_min);
-        } else {
-            radioButtonTitle = radioGroup.getContext().getString(R.string.planned_iv_random);
-        }
-
-        for (int i = 0; i < radioGroup.getChildCount(); i++) {
-            View o = radioGroup.getChildAt(i);
-            if (o instanceof RadioButton && ((RadioButton) o).getText().toString().equals(radioButtonTitle)) {
-                ((RadioButton) o).setChecked(true);
-                return;
             }
         }
     }
