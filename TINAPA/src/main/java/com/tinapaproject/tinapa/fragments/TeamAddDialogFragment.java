@@ -1,13 +1,16 @@
 package com.tinapaproject.tinapa.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -17,6 +20,7 @@ import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.TinapaApplication;
 import com.tinapaproject.tinapa.events.SaveTeamEvent;
 import com.tinapaproject.tinapa.utils.IVRadioGroupUtils;
+import com.tinapaproject.tinapa.utils.PlannedPokemonUtils;
 
 public class TeamAddDialogFragment extends DialogFragment {
     private Bus bus = TinapaApplication.bus;
@@ -138,6 +142,13 @@ public class TeamAddDialogFragment extends DialogFragment {
         pokemonSection5.findViewById(R.id.planned_saved_button).setVisibility(View.GONE);
         pokemonSection6.findViewById(R.id.planned_saved_button).setVisibility(View.GONE);
 
+        loadPokemonSpinnerSectionWithData(pokemonSection1, getActivity());
+        loadPokemonSpinnerSectionWithData(pokemonSection2, getActivity());
+        loadPokemonSpinnerSectionWithData(pokemonSection3, getActivity());
+        loadPokemonSpinnerSectionWithData(pokemonSection4, getActivity());
+        loadPokemonSpinnerSectionWithData(pokemonSection5, getActivity());
+        loadPokemonSpinnerSectionWithData(pokemonSection6, getActivity());
+
         return view;
     }
 
@@ -156,6 +167,42 @@ public class TeamAddDialogFragment extends DialogFragment {
         } else {
             view.setVisibility(View.VISIBLE);
         }
+    }
+
+    private static void loadPokemonSpinnerSectionWithData(View section, final Activity activity) {
+        Spinner pokemonSpeciesSpinner = (Spinner) section.findViewById(R.id.planned_add_species_spinner);
+        Spinner pokemonAbilitySpinner = (Spinner) section.findViewById(R.id.planned_add_ability_spinner);
+        Spinner pokemonItemSpinner = (Spinner) section.findViewById(R.id.planned_add_item_spinner);
+        Spinner pokemonMove1Spinner = (Spinner) section.findViewById(R.id.planned_add_move1_spinner);
+        Spinner pokemonMove2Spinner = (Spinner) section.findViewById(R.id.planned_add_move2_spinner);
+        Spinner pokemonMove3Spinner = (Spinner) section.findViewById(R.id.planned_add_move3_spinner);
+        Spinner pokemonMove4Spinner = (Spinner) section.findViewById(R.id.planned_add_move4_spinner);
+        Spinner pokemonNatureSpinner = (Spinner) section.findViewById(R.id.planned_add_nature_spinner);
+
+        PlannedPokemonUtils.setupSpeciesSpinners(activity, pokemonSpeciesSpinner, -1);
+        PlannedPokemonUtils.setupNatureSpinner(activity, pokemonNatureSpinner, -1);
+        PlannedPokemonUtils.setupItemSpinner(activity, pokemonItemSpinner, -1);
+        PlannedPokemonUtils.setupAbilityForPokemon(activity, pokemonAbilitySpinner, -1, -1);
+        PlannedPokemonUtils.setupAllMovesForPokemon(activity, pokemonMove1Spinner, pokemonMove2Spinner, pokemonMove3Spinner, pokemonMove4Spinner, -1, -1, -1, -1, -1);
+
+        final Spinner finalAbilitySpinner = pokemonAbilitySpinner;
+        final Spinner finalMove1Spinner = pokemonMove1Spinner;
+        final Spinner finalMove2Spinner = pokemonMove2Spinner;
+        final Spinner finalMove3Spinner = pokemonMove3Spinner;
+        final Spinner finalMove4Spinner = pokemonMove4Spinner;
+
+        pokemonSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PlannedPokemonUtils.setupAbilityForPokemon(activity, finalAbilitySpinner, (int) id, -1);
+                PlannedPokemonUtils.setupAllMovesForPokemon(activity, finalMove1Spinner, finalMove2Spinner, finalMove3Spinner, finalMove4Spinner, (int) id, -1, -1, -1, -1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing!
+            }
+        });
     }
 
     private SaveTeamEvent generateSaveTeamEvent() {

@@ -34,6 +34,7 @@ import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.utils.CursorUtils;
 import com.tinapaproject.tinapa.utils.IVRadioGroupUtils;
+import com.tinapaproject.tinapa.utils.PlannedPokemonUtils;
 
 public class PlannedAddDialogFragment extends DialogFragment {
 
@@ -202,19 +203,12 @@ public class PlannedAddDialogFragment extends DialogFragment {
             }
         }
 
-        Cursor speciesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_ALL_SHORT_URI, null, null, null, null);
-        String[] from = {DexKeyValues.name};
-        int[] to = {R.id.simple_cell_name};
-        CursorAdapter mSpeciesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, speciesCursor, from, to, 0);
-        mSpeciesSpinner.setAdapter(mSpeciesCursorAdapter);
-        if (species_id > 0) {
-            mSpeciesSpinner.setSelection(species_id - 1, false);
-        }
+        PlannedPokemonUtils.setupSpeciesSpinners(getActivity(), mSpeciesSpinner, species_id);
 
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                loadAbilityAndMovesCursorAdapters(id, -1, -1, -1, -1, -1);
+                loadAbilityAndMovesCursorAdapters((int) id, -1, -1, -1, -1, -1);
             }
 
             @Override
@@ -223,48 +217,9 @@ public class PlannedAddDialogFragment extends DialogFragment {
             }
         });
 
-        Cursor itemCursor = getActivity().getContentResolver().query(TinapaContentProvider.ITEM_BATTLE_URI, null, null, null, null);
-        String[] itemFrom = {ItemKeyValues.name};
-        int[] itemTo = {R.id.simple_cell_name};
-        CursorAdapter mItemCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, itemCursor, itemFrom, itemTo, 0);
-        mItemSpinner.setAdapter(mItemCursorAdapter);
-        if (item_id > 0) {
-            mItemSpinner.setSelection(CursorUtils.getPositionOfRowById(item_id, mItemSpinner), false);
-        }
+        PlannedPokemonUtils.setupItemSpinner(getActivity(), mItemSpinner, item_id);
 
-        Cursor natureCursor = getActivity().getContentResolver().query(TinapaContentProvider.NATURE_URI, null, null, null, null);
-        String[] natureFrom = {NatureKeyValues.NATURE_NAME};
-        int[] natureTo = {R.id.simple_cell_name};
-        CursorAdapter mNatureCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, natureCursor, natureFrom, natureTo, 0) {
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(getActivity()).inflate(R.layout.cell_simple_name, parent, false);
-                }
-                this.getCursor().moveToPosition(position);
-                String natureName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.NATURE_NAME));
-                String increasedStatName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.INCREASED_STAT_NAME));
-                String decreasedStatName = this.getCursor().getString(this.getCursor().getColumnIndex(NatureKeyValues.DECREASED_STAT_NAME));
-
-                StringBuilder builder = new StringBuilder(natureName);
-
-                if (!TextUtils.isEmpty(increasedStatName) && !TextUtils.isEmpty(decreasedStatName) && !increasedStatName.equalsIgnoreCase(decreasedStatName)) {
-                    builder.append(" / + " + increasedStatName);
-                    builder.append(" / - " + decreasedStatName);
-                } else {
-                    builder.append(" / = / =");
-                }
-
-                TextView textView = (TextView) convertView.findViewById(R.id.simple_cell_name);
-                textView.setText(builder.toString());
-
-                return convertView;
-            }
-        };
-        mNatureSpinner.setAdapter(mNatureCursorAdapter);
-        if (nature_id > 0) {
-            mNatureSpinner.setSelection(nature_id - 1, false);
-        }
+        PlannedPokemonUtils.setupNatureSpinner(getActivity(), mNatureSpinner, nature_id);
 
         loadAbilityAndMovesCursorAdapters(species_id, ability_id, move1_id, move2_id, move3_id, move4_id);
 
@@ -311,39 +266,8 @@ public class PlannedAddDialogFragment extends DialogFragment {
         bus.post(new CreatePlannedPokemonEvent(plannedId, speciesId, abilityId, move1Id, move2Id, move3Id, move4Id, natureId, itemId, evHP, evAtt, evDef, evSAtt, evSDef, evSpd, ivHP, ivAtt, ivDef, ivSAtt, ivSDef, ivSpd, notes, isNewSave));
     }
 
-    private void loadAbilityAndMovesCursorAdapters(long pokemonId, long abilityId, long move1Id, long move2Id, long move3Id, long move4Id) {
-        // Load up all the other spinners.
-        // It is assumed that this will go off automatically.
-        Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
-        Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + pokemonId, null, null);
-
-        loadMovesCursorAdapter(mMove1Spinner, movesCursor, move1Id);
-        loadMovesCursorAdapter(mMove2Spinner, movesCursor, move2Id);
-        loadMovesCursorAdapter(mMove3Spinner, movesCursor, move3Id);
-        loadMovesCursorAdapter(mMove4Spinner, movesCursor, move4Id);
-
-        String[] from = {"name"};
-        int[] to = {R.id.simple_cell_name};
-        CursorAdapter abilitiesCursorAdapter = new SimpleCursorAdapter(getActivity(), R.layout.cell_simple_name, abilitiesCursor, from, to, 0);
-        mAbilitySpinner.setAdapter(abilitiesCursorAdapter);
-        if (abilityId >= 0) {
-            int abilityPosition = CursorUtils.getPositionOfRowById(abilityId, mAbilitySpinner);
-            if (abilityPosition >= 0) {
-                mAbilitySpinner.setSelection(abilityPosition);
-            }
-        }
-    }
-
-    private static void loadMovesCursorAdapter(Spinner moveSpinner, Cursor movesCursor, long selectionId) {
-        String[] from = {"name"};
-        int[] to = {R.id.simple_cell_name};
-        CursorAdapter spinnerAdapter = new SimpleCursorAdapter(moveSpinner.getContext(), R.layout.cell_simple_name, movesCursor, from, to, 0);
-        moveSpinner.setAdapter(spinnerAdapter);
-        if (selectionId >= 0) {
-            int selectionPosition = CursorUtils.getPositionOfRowById(selectionId, moveSpinner);
-            if (selectionPosition >= 0) {
-                moveSpinner.setSelection(selectionPosition);
-            }
-        }
+    private void loadAbilityAndMovesCursorAdapters(int pokemonId, int abilityId, int move1Id, int move2Id, int move3Id, int move4Id) {
+        PlannedPokemonUtils.setupAbilityForPokemon(getActivity(), mAbilitySpinner, pokemonId, abilityId);
+        PlannedPokemonUtils.setupAllMovesForPokemon(getActivity(), mMove1Spinner, mMove2Spinner, mMove3Spinner, mMove4Spinner, pokemonId, move1Id, move2Id, move3Id, move4Id);
     }
 }
