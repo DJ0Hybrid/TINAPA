@@ -183,6 +183,9 @@ public class TinapaContentProvider extends ContentProvider {
             case POKEDEX_POKEMON_IMAGE:
                 id = db.insertOrThrow("pokemon_images", null, values);
                 return Uri.parse(POKEDEX_POKEMON_IMAGE_TABLE + "/" + id);
+            case PLANNED_TEAM:
+                id = db.insertOrThrow("planned_teams", null, values);
+                return Uri.parse(PLANNED_TEAM_TABLE + "/" + id);
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }
