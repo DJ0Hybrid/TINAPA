@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.EvolutionKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.ImageUtils;
 
@@ -212,12 +213,12 @@ public class DexDetailFragment extends Fragment {
                 do {
                     View baseView = inflater.inflate(R.layout.evolution_chain, null, false);
                     ImageView baseImageView = (ImageView) baseView.findViewById(R.id.evolution_chain_image);
-                    String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_images.image_uri"));
+                    String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.POKEMON_IMAGE_URI));
                     ImageUtils.loadImage(baseImageView, imagePath, true);
 
                     ViewGroup nextEvolutionView = (ViewGroup) baseView.findViewById(R.id.evolution_chain_next_stage);
 
-                    if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id"))) {
+                    if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID))) {
 
                         View evolutionMethod = baseView.findViewById(R.id.evolution_chain_method);
                         evolutionMethod.setVisibility(View.GONE);
@@ -227,11 +228,12 @@ public class DexDetailFragment extends Fragment {
                         ViewGroup evolutionMethodView = (ViewGroup) baseView.findViewById(R.id.evolution_chain_method);
                         // In the future, this can be changed to something besides text.
                         StringBuilder evolutionMethodText = new StringBuilder();
-                        evolutionMethodText.append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("evolution_trigger_prose.name")));
+                        evolutionMethodText.append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_METHOD_PROSE)));
                         // Level
-                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex("pokemon_evolution.minimum_level"))) {
-                            evolutionMethodText.append("\n").append(getString(R.string.evolution_level)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex("pokemon_evolution.minimum_level")));
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MIN_LEVEL))) {
+                            evolutionMethodText.append("\n").append(getString(R.string.evolution_level)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MIN_LEVEL)));
                         }
+                        // TODO All the other methods
 
                         TextView evolutionTextView = new TextView(getActivity());
                         evolutionTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -239,13 +241,13 @@ public class DexDetailFragment extends Fragment {
                         evolutionMethodView.addView(evolutionTextView);
 
 
-                        ViewGroup parentViewGroup = pokemonViewGroup.get(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon_species.evolves_from_species_id")));
+                        ViewGroup parentViewGroup = pokemonViewGroup.get(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID)));
                         if (parentViewGroup != null) {
                             parentViewGroup.addView(baseView);
                         }
                     }
 
-                    pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex("pokemon.species_id")), nextEvolutionView);
+                    pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.SPECIES_ID)), nextEvolutionView);
                 } while (evolutionChainCursor.moveToNext());
                 evolutionChainCursor.close();
             } else {

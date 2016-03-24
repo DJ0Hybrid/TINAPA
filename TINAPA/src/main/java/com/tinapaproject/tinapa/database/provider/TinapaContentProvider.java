@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.EvolutionKeyValues;
 import com.tinapaproject.tinapa.database.key.ItemKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
@@ -284,6 +285,7 @@ public class TinapaContentProvider extends ContentProvider {
                     queryBuilder.appendWhere("(pokemon_forms.is_default = 1) AND (pokemon_forms.is_battle_only = 0) AND (locations.region_id = 6 OR locations.region_id IS null) AND pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
                 }
                 orderBy = "pokemon_species.is_baby DESC";
+                selectionArray = new String[]{"pokemon.species_id AS " + EvolutionKeyValues.SPECIES_ID, "pokemon_species.evolves_from_species_id AS " + EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID, "evolution_trigger_prose.name AS " + EvolutionKeyValues.EVOLUTION_METHOD_PROSE, "pokemon_evolution.minimum_level AS " + EvolutionKeyValues.EVOLUTION_MIN_LEVEL, "pokemon_images.image_uri AS " + EvolutionKeyValues.POKEMON_IMAGE_URI};
                 break;
             case PLANNED_POKEMON:
                 // TODO Needs possible work.
