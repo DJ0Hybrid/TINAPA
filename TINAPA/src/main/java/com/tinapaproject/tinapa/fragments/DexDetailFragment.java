@@ -245,6 +245,10 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_HAPPINESS))) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_happiness)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_HAPPINESS)));
                         }
+                        // Location
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_LOCATION_NAME))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_location)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_LOCATION_NAME)));
+                        }
                         // TODO All the other methods
 
                         TextView evolutionTextView = new TextView(getActivity());

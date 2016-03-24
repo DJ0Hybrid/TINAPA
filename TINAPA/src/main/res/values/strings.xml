@@ -34,7 +34,7 @@
     <string name="evolution_level">Level: </string>
     <string name="evolution_use_item">Use: </string>
     <string name="evolution_gender">Gender: </string>
-    <string name="evolution_location">Location: </string>
+    <string name="evolution_location">At </string>
     <string name="evolution_held_item">Hold: </string>
     <string name="evolution_time">During the </string>
     <string name="evolution_trade">Trade</string>

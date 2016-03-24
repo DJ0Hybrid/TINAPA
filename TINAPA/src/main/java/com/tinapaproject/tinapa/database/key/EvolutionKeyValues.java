@@ -9,6 +9,7 @@ public class EvolutionKeyValues {
     public static final String EVOLUTION_USE_ITEM_NAME = "use_item_name";
     public static final String EVOLUTION_TIME_OF_DAY = "time_of_day";
     public static final String EVOLUTION_MINIMUM_HAPPINESS = "pokemon_evolution_minimum_happiness";
+    public static final String EVOLUTION_LOCATION_NAME = "location_name";
 
     public static final String POKEMON_IMAGE_URI = "pokemon_images_image_uri";
 
