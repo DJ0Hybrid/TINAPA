@@ -233,6 +233,10 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MIN_LEVEL))) {
                             evolutionMethodText.append("\n").append(getString(R.string.evolution_level)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MIN_LEVEL)));
                         }
+                        // Use Item
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME))) {
+                            evolutionMethodText.append('\n').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME)));
+                        }
                         // TODO All the other methods
 
                         TextView evolutionTextView = new TextView(getActivity());
