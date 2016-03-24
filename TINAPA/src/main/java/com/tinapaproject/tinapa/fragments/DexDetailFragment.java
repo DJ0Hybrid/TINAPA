@@ -257,6 +257,10 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE_TYPE))) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_move_type)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE_TYPE)));
                         }
+                        // Held Item
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_held_item)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME)));
+                        }
                         // TODO All the other methods
 
                         TextView evolutionTextView = new TextView(getActivity());
