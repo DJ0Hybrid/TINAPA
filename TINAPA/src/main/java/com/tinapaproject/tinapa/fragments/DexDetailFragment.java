@@ -237,6 +237,10 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME))) {
                             evolutionMethodText.append('\n').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME)));
                         }
+                        // Time of Day
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_TIME_OF_DAY))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_time)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_TIME_OF_DAY)));
+                        }
                         // TODO All the other methods
 
                         TextView evolutionTextView = new TextView(getActivity());

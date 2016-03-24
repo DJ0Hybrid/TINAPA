@@ -36,7 +36,7 @@
     <string name="evolution_gender">Gender: </string>
     <string name="evolution_location">Location: </string>
     <string name="evolution_held_item">Hold: </string>
-    <string name="evolution_time">Time: </string>
+    <string name="evolution_time">During the </string>
     <string name="evolution_trade">Trade</string>
     <string name="evolution_move">Known Move: </string>
     <string name="evolution_move_type">Known Move Type: </string>
