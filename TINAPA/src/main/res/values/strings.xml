@@ -32,5 +32,11 @@
 
     <!-- Generated stuff that has not been sorted (you lazy bum.) Don't put anything past here. -->
     <string name="hello_world">Hello world!</string>
+    <string name="team_pokemon_1_banner_text">Pokemon #1</string>
+    <string name="team_pokemon_2_banner_text">Pokemon #2</string>
+    <string name="team_pokemon_3_banner_text">Pokemon #3</string>
+    <string name="team_pokemon_4_banner_text">Pokemon #4</string>
+    <string name="team_pokemon_5_banner_text">Pokemon #5</string>
+    <string name="team_pokemon_6_banner_text">Pokemon #6</string>
 
 </resources>
