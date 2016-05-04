@@ -5,9 +5,6 @@ import android.widget.ImageView;
 
 import com.tinapaproject.tinapa.R;
 
-/**
- * Created by Ethan on 12/6/2014.
- */
 public class ImageUtils {
     public static void loadImage(ImageView imageView, String imagePath, boolean altUseDefaultImage) {
         if (imagePath != null && !imagePath.isEmpty()) {

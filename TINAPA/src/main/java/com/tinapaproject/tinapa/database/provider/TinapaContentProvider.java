@@ -12,10 +12,12 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.EvolutionKeyValues;
 import com.tinapaproject.tinapa.database.key.ItemKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
+import com.tinapaproject.tinapa.database.key.TeamKeyValues;
 
 // http://www.techotopia.com/index.php/An_Android_Content_Provider_Tutorial
 public class TinapaContentProvider extends ContentProvider {
@@ -71,6 +73,9 @@ public class TinapaContentProvider extends ContentProvider {
     private static final String PLANNED_TEAM_TABLE = "plannedTeam";
     public static final Uri PLANNED_TEAM_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_TEAM_TABLE);
     public static final int PLANNED_TEAM = 400; // Everything.
+    private static final String PLANNED_TEAM_LIST_TABLE = PLANNED_TEAM_TABLE + "/list";
+    public static final Uri PLANNED_TEAM_LIST_URI = Uri.parse("content://" + AUTHORITY + "/" + PLANNED_TEAM_LIST_TABLE);
+    public static final int PLANNED_TEAM_LIST = 401; // For a list, giving basic details about of the Pokemon.
 
     private static final String NATURE_TABLE = "nature";
     public static final Uri NATURE_URI = Uri.parse("content://" + AUTHORITY + "/" + NATURE_TABLE);
@@ -105,6 +110,7 @@ public class TinapaContentProvider extends ContentProvider {
         uriMatcher.addURI(AUTHORITY, OWNED_POKEMON_SEARCH_GENERAL_TABLE, OWNED_POKEMON_SEARCH_GENERAL);
 
         uriMatcher.addURI(AUTHORITY, PLANNED_TEAM_TABLE, PLANNED_TEAM);
+        uriMatcher.addURI(AUTHORITY, PLANNED_TEAM_LIST_TABLE, PLANNED_TEAM_LIST);
 
         uriMatcher.addURI(AUTHORITY, NATURE_TABLE, NATURE);
 
@@ -175,6 +181,12 @@ public class TinapaContentProvider extends ContentProvider {
             case PLANNED_POKEMON:
                 id = db.insertOrThrow("planned_pokemons", null, values);
                 return Uri.parse(PLANNED_POKEMON_TABLE + "/" + id);
+            case POKEDEX_POKEMON_IMAGE:
+                id = db.insertOrThrow("pokemon_images", null, values);
+                return Uri.parse(POKEDEX_POKEMON_IMAGE_TABLE + "/" + id);
+            case PLANNED_TEAM:
+                id = db.insertOrThrow("planned_teams", null, values);
+                return Uri.parse(PLANNED_TEAM_TABLE + "/" + id);
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }
@@ -238,6 +250,12 @@ public class TinapaContentProvider extends ContentProvider {
                 selectionArray = new String[]{"id AS _id", "name AS name", "pokemon_id AS pokemon_id", "slot AS slot", "is_hidden AS is_hidden"};
                 orderBy = "slot ASC";
                 break;
+            case POKEDEX_POKEMON_IMAGE:
+                queryBuilder.setTables("pokemon_images");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere(selection);
+                }
+                break;
             case POKEDEX_POKEMON_EVOLUTION_BASE_LINK:
                 // TODO Selection array.
                 queryBuilder.setTables("pokemon_evolution JOIN pokemon_species AS evolved_species ON pokemon_evolution.evolved_species_id = evolved_species.id JOIN pokemon_species AS base_species ON base_species.id = evolved_species.evolves_from_species_id JOIN evolution_trigger_prose ON (pokemon_evolution.evolution_trigger_id = evolution_trigger_prose.evolution_trigger_id AND evolution_trigger_prose.local_language_id = 9)");
@@ -254,8 +272,23 @@ public class TinapaContentProvider extends ContentProvider {
                 break;
             case POKEDEX_POKEMON_EVOLUTION:
                 // TODO Needs to be expanded.
-                queryBuilder.setTables("pokemon_species");
-                queryBuilder.appendWhere("pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
+                queryBuilder.setTables("pokemon\n" +
+                        "LEFT OUTER JOIN pokemon_species ON (pokemon_species.id = pokemon.species_id)\n" +
+                        "LEFT OUTER JOIN pokemon_evolution ON (pokemon_species.id = pokemon_evolution.evolved_species_id)\n" +
+                        "LEFT OUTER JOIN evolution_trigger_prose ON (evolution_trigger_prose.evolution_trigger_id = pokemon_evolution.evolution_trigger_id AND evolution_trigger_prose.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN item_names AS held_item_name ON (held_item_name.item_id = pokemon_evolution.held_item_id AND held_item_name.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN item_names AS use_item_name ON (use_item_name.item_id = pokemon_evolution.trigger_item_id AND use_item_name.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN pokemon_forms ON (pokemon_forms.pokemon_id = pokemon.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images ON (pokemon.id = pokemon_images.pokemon_id AND (pokemon_images.is_shinny = null OR pokemon_images.is_shinny = 0) AND (pokemon_images.is_icon = null OR pokemon_images.is_icon = 0))\n" +
+                        "LEFT OUTER JOIN (select * from locations, location_names where locations.id = location_names.location_id and location_names.local_language_id = 9) AS locations ON (pokemon_evolution.location_id = locations.location_id)" +
+                        "LEFT OUTER JOIN type_names ON (type_names.local_language_id = 9 AND pokemon_evolution.known_move_type_id = type_names.type_id)\n" +
+                        "LEFT OUTER JOIN move_names ON (move_names.local_language_id = 9 AND move_names.move_id = known_move_id)\n" +
+                        "LEFT OUTER JOIN genders ON (genders.id = pokemon_evolution.gender_id)");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere("(pokemon_forms.is_default = 1) AND (pokemon_forms.is_battle_only = 0) AND (locations.region_id = 6 OR locations.region_id IS null) AND pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
+                }
+                orderBy = "pokemon_species.is_baby DESC";
+                selectionArray = new String[]{"pokemon.species_id AS " + EvolutionKeyValues.SPECIES_ID, "pokemon_species.evolves_from_species_id AS " + EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID, "evolution_trigger_prose.name AS " + EvolutionKeyValues.EVOLUTION_METHOD_PROSE, "pokemon_evolution.minimum_level AS " + EvolutionKeyValues.EVOLUTION_MIN_LEVEL, "use_item_name.name AS " + EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME, "pokemon_evolution.time_of_day AS " + EvolutionKeyValues.EVOLUTION_TIME_OF_DAY, "pokemon_evolution.minimum_happiness AS " + EvolutionKeyValues.EVOLUTION_MINIMUM_HAPPINESS, "locations.name AS " + EvolutionKeyValues.EVOLUTION_LOCATION_NAME, "type_names.name AS " + EvolutionKeyValues.EVOLUTION_KNOWN_MOVE_TYPE, "pokemon_evolution.minimum_affection AS " + EvolutionKeyValues.EVOLUTION_MINIMUM_AFFECTION, "held_item_name.name AS " + EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME, "move_names.name AS " + EvolutionKeyValues.EVOLUTION_KNOWN_MOVE, "pokemon_evolution.minimum_beauty AS " + EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY, "pokemon_evolution.needs_overworld_rain AS " + EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN, "pokemon_evolution.turn_upside_down AS " + EvolutionKeyValues.EVOLUTION_UPSIDE_DOWN, "genders.identifier AS " + EvolutionKeyValues.EVOLUTION_GENDER, "pokemon_images.image_uri AS " + EvolutionKeyValues.POKEMON_IMAGE_URI};
                 break;
             case PLANNED_POKEMON:
                 // TODO Needs possible work.
@@ -294,7 +327,25 @@ public class TinapaContentProvider extends ContentProvider {
                 selectionArray = new String[]{"owned_pokemons.id AS _id", "owned_pokemons.nickname AS " + OwnedKeyValues.NICKNAME, "pokemon_species_names.name AS name", "pokemon.species_id AS " + OwnedKeyValues.POKEMON_ID, "icon_image.image_uri AS image"};
                 break;
             case PLANNED_TEAM:
+                // TODO
+                break;
+            case PLANNED_TEAM_LIST:
+                queryBuilder.setTables("planned_teams\n" +
+                        "LEFT OUTER JOIN planned_pokemons AS pokemon1 ON (planned_teams.planned_pokemon1_id = pokemon1.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images AS pokemon1_image ON (pokemon1.pokemon_id = pokemon1_image.pokemon_id AND pokemon1_image.is_icon)\n" +
+                        "LEFT OUTER JOIN planned_pokemons AS pokemon2 ON (planned_teams.planned_pokemon2_id = pokemon2.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images AS pokemon2_image ON (pokemon2.pokemon_id = pokemon2_image.pokemon_id AND pokemon2_image.is_icon)\n" +
+                        "LEFT OUTER JOIN planned_pokemons AS pokemon3 ON (planned_teams.planned_pokemon3_id = pokemon3.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images AS pokemon3_image ON (pokemon3.pokemon_id = pokemon3_image.pokemon_id AND pokemon3_image.is_icon)\n" +
+                        "LEFT OUTER JOIN planned_pokemons AS pokemon4 ON (planned_teams.planned_pokemon4_id = pokemon4.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images AS pokemon4_image ON (pokemon4.pokemon_id = pokemon4_image.pokemon_id AND pokemon4_image.is_icon)\n" +
+                        "LEFT OUTER JOIN planned_pokemons AS pokemon5 ON (planned_teams.planned_pokemon5_id = pokemon5.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images AS pokemon5_image ON (pokemon5.pokemon_id = pokemon5_image.pokemon_id AND pokemon5_image.is_icon)\n" +
+                        "LEFT OUTER JOIN planned_pokemons AS pokemon6 ON (planned_teams.planned_pokemon6_id = pokemon6.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images AS pokemon6_image ON (pokemon6.pokemon_id = pokemon6_image.pokemon_id AND pokemon6_image.is_icon)");
 
+                selectionArray = new String[]{"planned_teams.id AS _id", "pokemon1_image.image_uri AS " + TeamKeyValues.POKEMON1_ICON, "pokemon2_image.image_uri AS " + TeamKeyValues.POKEMON2_ICON, "pokemon3_image.image_uri AS " + TeamKeyValues.POKEMON3_ICON,
+                        "pokemon4_image.image_uri AS " + TeamKeyValues.POKEMON4_ICON, "pokemon5_image.image_uri AS " + TeamKeyValues.POKEMON5_ICON, "pokemon6_image.image_uri AS " + TeamKeyValues.POKEMON6_ICON};
                 break;
             case NATURE:
                 queryBuilder.setTables("nature_names LEFT OUTER JOIN natures ON (nature_names.nature_id = natures.id) LEFT OUTER JOIN stat_names AS increased_stat ON (natures.increased_stat_id = increased_stat.stat_id AND increased_stat.local_language_id = 9) LEFT OUTER JOIN stat_names AS decreased_stat ON (natures.decreased_stat_id = decreased_stat.stat_id AND decreased_stat.local_language_id = 9)");

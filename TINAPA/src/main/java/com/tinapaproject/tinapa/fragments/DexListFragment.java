@@ -74,7 +74,7 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mListener.onDexImageLongClicked(String.valueOf(id), (ImageView) view.findViewById(R.id.cell_individual_image), DexKeyValues.iconImage);
+                mListener.onDexImageLongClicked(String.valueOf(id), (ImageView) view.findViewById(R.id.cell_individual_image), false, false, true);
                 return true;
             }
         });
@@ -130,6 +130,6 @@ public class DexListFragment extends Fragment implements LoaderManager.LoaderCal
     public interface DexListListener {
         public void onDexItemClicked(String id);
 
-        public void onDexImageLongClicked(String id, ImageView imageView, String column);
+        public void onDexImageLongClicked(String id, ImageView imageView, boolean isDefault, boolean isShiny, boolean isIcon);
     }
 }

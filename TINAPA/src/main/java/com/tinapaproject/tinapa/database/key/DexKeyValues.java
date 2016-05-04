@@ -17,11 +17,16 @@ public class DexKeyValues {
     public static final String baseSpecialAttack = "base_satt";
     public static final String baseSpecialDefense = "base_sdef";
     public static final String baseSpeed = "base_spd";
+
     public static final String image = "image";
     public static final String shinnyImage = "shinny_image";
     public static final String iconImage = "icon_image";
+    public static final String imageUri = "image_uri";
+    public static final String isDefault = "is_default";
+    public static final String isShiny = "is_shinny";
+    public static final String isIcon = "is_icon";
 
     public static String insertIntoImageColumnWhereCreation(String id) {
-        return String.format("pokemon.id = %s", id);
+        return String.format("pokemon_id = %s", id);
     }
 }
