@@ -261,7 +261,10 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME))) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_held_item)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME)));
                         }
-                        // TODO Gender
+                        // Gender
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_GENDER))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_gender)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_GENDER)));
+                        }
 
                         // Known Specific Move
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE))) {

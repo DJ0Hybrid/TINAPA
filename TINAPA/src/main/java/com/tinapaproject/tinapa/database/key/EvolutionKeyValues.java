@@ -17,6 +17,7 @@ public class EvolutionKeyValues {
     public static final String EVOLUTION_MINIMUM_BEAUTY = "minimum_beauty";
     public static final String EVOLUTION_OVER_WORLD_RAIN = "over_world_rain";
     public static final String EVOLUTION_UPSIDE_DOWN = "upside_down";
+    public static final String EVOLUTION_GENDER = "gender";
 
     public static final String POKEMON_IMAGE_URI = "pokemon_images_image_uri";
 
