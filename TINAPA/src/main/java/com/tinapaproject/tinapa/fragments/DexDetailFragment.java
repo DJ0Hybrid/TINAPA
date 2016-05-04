@@ -267,9 +267,13 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE))) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_move)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE)));
                         }
-                        // TODO Beauty Requirement
+                        // Beauty Requirement
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY))) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_beauty)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY)));
+                        }
+                        // TODO Over World Rain
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN)) && evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN)) == 1) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_over_world_rain));
                         }
                         // TODO Upside Down Device
 
