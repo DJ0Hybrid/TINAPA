@@ -48,7 +48,7 @@
     <string name="evolution_party_type">In Party: </string>
     <string name="evolution_trade_species">Trade for: </string>
     <string name="evolution_over_world_rain">In Rain</string>
-    <string name="evolution_upside_down">Upside Down</string>
+    <string name="evolution_upside_down">Upside Down Device</string>
 
     <!-- Generated stuff that has not been sorted (you lazy bum.) Don't put anything past here. -->
     <string name="hello_world">Hello world!</string>

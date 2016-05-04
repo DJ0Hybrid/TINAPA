@@ -271,13 +271,14 @@ public class DexDetailFragment extends Fragment {
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY))) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_beauty)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY)));
                         }
-                        // TODO Over World Rain
+                        // Over World Rain
                         if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN)) && evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN)) == 1) {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_over_world_rain));
                         }
-                        // TODO Upside Down Device
-
-                        // TODO All the other methods
+                        // Upside Down Device
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_UPSIDE_DOWN)) && evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_UPSIDE_DOWN)) == 1) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_upside_down));
+                        }
 
                         TextView evolutionTextView = new TextView(getActivity());
                         evolutionTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
