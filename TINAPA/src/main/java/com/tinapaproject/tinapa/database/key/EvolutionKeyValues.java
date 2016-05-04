@@ -14,6 +14,7 @@ public class EvolutionKeyValues {
     public static final String EVOLUTION_MINIMUM_AFFECTION = "pokemon_evolution_minimum_affection";
     public static final String EVOLUTION_HELD_ITEM_NAME = "held_item_name";
     public static final String EVOLUTION_KNOWN_MOVE = "known_move";
+    public static final String EVOLUTION_MINIMUM_BEAUTY = "minimum_beauty";
 
     public static final String POKEMON_IMAGE_URI = "pokemon_images_image_uri";
 

@@ -268,7 +268,9 @@ public class DexDetailFragment extends Fragment {
                             evolutionMethodText.append('\n').append(getString(R.string.evolution_move)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE)));
                         }
                         // TODO Beauty Requirement
-
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_beauty)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY)));
+                        }
                         // TODO Upside Down Device
 
                         // TODO All the other methods
