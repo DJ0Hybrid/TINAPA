@@ -69,8 +69,7 @@ public class TeamListFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.teamListView);
 
         Cursor teamListCursor = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_TEAM_LIST_URI, null, null, null, null);
-        // TODO: Do I really need the column names?
-        TeamCursorAdapter adapter = new TeamCursorAdapter(getActivity(), teamListCursor, new String[0], "", new String[0], TinapaContentProvider.PLANNED_TEAM_LIST_URI);
+        TeamCursorAdapter adapter = new TeamCursorAdapter(getActivity(), teamListCursor, bus, TinapaContentProvider.PLANNED_TEAM_LIST_URI);
         listView.setAdapter(adapter);
 
         return view;

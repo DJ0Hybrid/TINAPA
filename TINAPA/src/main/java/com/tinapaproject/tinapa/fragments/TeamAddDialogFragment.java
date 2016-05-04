@@ -6,7 +6,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.Spinner;
 import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.TinapaApplication;
+import com.tinapaproject.tinapa.database.key.TeamKeyValues;
+import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.SaveTeamEvent;
 import com.tinapaproject.tinapa.utils.IVRadioGroupUtils;
 import com.tinapaproject.tinapa.utils.PlannedPokemonUtils;
@@ -117,17 +121,6 @@ public class TeamAddDialogFragment extends DialogFragment {
         pokemonSection5 = view.findViewById(R.id.team_member_section5);
         pokemonSection6 = view.findViewById(R.id.team_member_section6);
 
-        if (savedInstanceState == null) {
-            pokemonSection1.setVisibility(View.GONE);
-            pokemonSection2.setVisibility(View.GONE);
-            pokemonSection3.setVisibility(View.GONE);
-            pokemonSection4.setVisibility(View.GONE);
-            pokemonSection5.setVisibility(View.GONE);
-            pokemonSection6.setVisibility(View.GONE);
-        } else {
-            // TODO need to do preserved state.
-        }
-
         setBannerToggleClickListener(pokemonBanner1, pokemonSection1);
         setBannerToggleClickListener(pokemonBanner2, pokemonSection2);
         setBannerToggleClickListener(pokemonBanner3, pokemonSection3);
@@ -142,12 +135,296 @@ public class TeamAddDialogFragment extends DialogFragment {
         pokemonSection5.findViewById(R.id.planned_saved_button).setVisibility(View.GONE);
         pokemonSection6.findViewById(R.id.planned_saved_button).setVisibility(View.GONE);
 
-        loadPokemonSpinnerSectionWithData(pokemonSection1, getActivity());
-        loadPokemonSpinnerSectionWithData(pokemonSection2, getActivity());
-        loadPokemonSpinnerSectionWithData(pokemonSection3, getActivity());
-        loadPokemonSpinnerSectionWithData(pokemonSection4, getActivity());
-        loadPokemonSpinnerSectionWithData(pokemonSection5, getActivity());
-        loadPokemonSpinnerSectionWithData(pokemonSection6, getActivity());
+        int pokemon1SpeciesId = -1;
+        int pokemon1NatureId = -1;
+        int pokemon1AbilityId = -1;
+        int pokemon1ItemId = -1;
+        int pokemon1Move1Id = -1;
+        int pokemon1Move2Id = -1;
+        int pokemon1Move3Id = -1;
+        int pokemon1Move4Id = -1;
+        int pokemon1IvHp = -1;
+        int pokemon1IvAtt = -1;
+        int pokemon1IvDef = -1;
+        int pokemon1IvSAtt = -1;
+        int pokemon1IvSDef = -1;
+        int pokemon1IvSpd = -1;
+        int pokemon1EvHp = -1;
+        int pokemon1EvAtt = -1;
+        int pokemon1EvDef = -1;
+        int pokemon1EvSAtt = -1;
+        int pokemon1EvSDef = -1;
+        int pokemon1EvSpd = -1;
+        String pokemon1Note = "";
+
+        int pokemon2SpeciesId = -1;
+        int pokemon2NatureId = -1;
+        int pokemon2AbilityId = -1;
+        int pokemon2ItemId = -1;
+        int pokemon2Move1Id = -1;
+        int pokemon2Move2Id = -1;
+        int pokemon2Move3Id = -1;
+        int pokemon2Move4Id = -1;
+        int pokemon2IvHp = -1;
+        int pokemon2IvAtt = -1;
+        int pokemon2IvDef = -1;
+        int pokemon2IvSAtt = -1;
+        int pokemon2IvSDef = -1;
+        int pokemon2IvSpd = -1;
+        int pokemon2EvHp = -1;
+        int pokemon2EvAtt = -1;
+        int pokemon2EvDef = -1;
+        int pokemon2EvSAtt = -1;
+        int pokemon2EvSDef = -1;
+        int pokemon2EvSpd = -1;
+        String pokemon2Note = "";
+
+        int pokemon3SpeciesId = -1;
+        int pokemon3NatureId = -1;
+        int pokemon3AbilityId = -1;
+        int pokemon3ItemId = -1;
+        int pokemon3Move1Id = -1;
+        int pokemon3Move2Id = -1;
+        int pokemon3Move3Id = -1;
+        int pokemon3Move4Id = -1;
+        int pokemon3IvHp = -1;
+        int pokemon3IvAtt = -1;
+        int pokemon3IvDef = -1;
+        int pokemon3IvSAtt = -1;
+        int pokemon3IvSDef = -1;
+        int pokemon3IvSpd = -1;
+        int pokemon3EvHp = -1;
+        int pokemon3EvAtt = -1;
+        int pokemon3EvDef = -1;
+        int pokemon3EvSAtt = -1;
+        int pokemon3EvSDef = -1;
+        int pokemon3EvSpd = -1;
+        String pokemon3Note = "";
+
+        int pokemon4SpeciesId = -1;
+        int pokemon4NatureId = -1;
+        int pokemon4AbilityId = -1;
+        int pokemon4ItemId = -1;
+        int pokemon4Move1Id = -1;
+        int pokemon4Move2Id = -1;
+        int pokemon4Move3Id = -1;
+        int pokemon4Move4Id = -1;
+        int pokemon4IvHp = -1;
+        int pokemon4IvAtt = -1;
+        int pokemon4IvDef = -1;
+        int pokemon4IvSAtt = -1;
+        int pokemon4IvSDef = -1;
+        int pokemon4IvSpd = -1;
+        int pokemon4EvHp = -1;
+        int pokemon4EvAtt = -1;
+        int pokemon4EvDef = -1;
+        int pokemon4EvSAtt = -1;
+        int pokemon4EvSDef = -1;
+        int pokemon4EvSpd = -1;
+        String pokemon4Note = "";
+
+        int pokemon5SpeciesId = -1;
+        int pokemon5NatureId = -1;
+        int pokemon5AbilityId = -1;
+        int pokemon5ItemId = -1;
+        int pokemon5Move1Id = -1;
+        int pokemon5Move2Id = -1;
+        int pokemon5Move3Id = -1;
+        int pokemon5Move4Id = -1;
+        int pokemon5IvHp = -1;
+        int pokemon5IvAtt = -1;
+        int pokemon5IvDef = -1;
+        int pokemon5IvSAtt = -1;
+        int pokemon5IvSDef = -1;
+        int pokemon5IvSpd = -1;
+        int pokemon5EvHp = -1;
+        int pokemon5EvAtt = -1;
+        int pokemon5EvDef = -1;
+        int pokemon5EvSAtt = -1;
+        int pokemon5EvSDef = -1;
+        int pokemon5EvSpd = -1;
+        String pokemon5Note = "";
+
+        int pokemon6SpeciesId = -1;
+        int pokemon6NatureId = -1;
+        int pokemon6AbilityId = -1;
+        int pokemon6ItemId = -1;
+        int pokemon6Move1Id = -1;
+        int pokemon6Move2Id = -1;
+        int pokemon6Move3Id = -1;
+        int pokemon6Move4Id = -1;
+        int pokemon6IvHp = -1;
+        int pokemon6IvAtt = -1;
+        int pokemon6IvDef = -1;
+        int pokemon6IvSAtt = -1;
+        int pokemon6IvSDef = -1;
+        int pokemon6IvSpd = -1;
+        int pokemon6EvHp = -1;
+        int pokemon6EvAtt = -1;
+        int pokemon6EvDef = -1;
+        int pokemon6EvSAtt = -1;
+        int pokemon6EvSDef = -1;
+        int pokemon6EvSpd = -1;
+        String pokemon6Note = "";
+
+
+        if (savedInstanceState != null) {
+            // TODO need to do preserved state.
+        } else {
+            if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(TEAM_ID_ARG))) {
+                String teamId = getArguments().getString(TEAM_ID_ARG);
+                Cursor teamCursor = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_TEAM_URI, null, teamId, null, null);
+                if (teamCursor != null && teamCursor.moveToFirst()) {
+                    // TODO Surely there is a better way to do this.
+                    pokemon1SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_ID));
+                    pokemon1NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_NATURE_ID));
+                    pokemon1AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_ABILITY_ID));
+                    pokemon1ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_ITEM_ID));
+                    pokemon1Move1Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_MOVE1_ID));
+                    pokemon1Move2Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_MOVE2_ID));
+                    pokemon1Move3Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_MOVE3_ID));
+                    pokemon1Move4Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_MOVE4_ID));
+                    pokemon1IvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_IV_HP));
+                    pokemon1IvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_IV_ATT));
+                    pokemon1IvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_IV_DEF));
+                    pokemon1IvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_IV_SATT));
+                    pokemon1IvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_IV_SPD));
+                    pokemon1IvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_IV_SPD));
+                    pokemon1EvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_EV_HP));
+                    pokemon1EvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_EV_ATT));
+                    pokemon1EvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_EV_DEF));
+                    pokemon1EvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_EV_SATT));
+                    pokemon1EvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_EV_SPD));
+                    pokemon1EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_EV_SPD));
+                    pokemon1Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON1_NOTE));
+
+                    pokemon2SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_ID));
+                    pokemon2NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_NATURE_ID));
+                    pokemon2AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_ABILITY_ID));
+                    pokemon2ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_ITEM_ID));
+                    pokemon2Move1Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_MOVE1_ID));
+                    pokemon2Move2Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_MOVE2_ID));
+                    pokemon2Move3Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_MOVE3_ID));
+                    pokemon2Move4Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_MOVE4_ID));
+                    pokemon2IvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_IV_HP));
+                    pokemon2IvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_IV_ATT));
+                    pokemon2IvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_IV_DEF));
+                    pokemon2IvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_IV_SATT));
+                    pokemon2IvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_IV_SPD));
+                    pokemon2IvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_IV_SPD));
+                    pokemon2EvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_EV_HP));
+                    pokemon2EvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_EV_ATT));
+                    pokemon2EvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_EV_DEF));
+                    pokemon2EvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_EV_SATT));
+                    pokemon2EvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_EV_SPD));
+                    pokemon2EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_EV_SPD));
+                    pokemon2Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON2_NOTE));
+
+                    pokemon3SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_ID));
+                    pokemon3NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_NATURE_ID));
+                    pokemon3AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_ABILITY_ID));
+                    pokemon3ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_ITEM_ID));
+                    pokemon3Move1Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_MOVE1_ID));
+                    pokemon3Move2Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_MOVE2_ID));
+                    pokemon3Move3Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_MOVE3_ID));
+                    pokemon3Move4Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_MOVE4_ID));
+                    pokemon3IvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_IV_HP));
+                    pokemon3IvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_IV_ATT));
+                    pokemon3IvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_IV_DEF));
+                    pokemon3IvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_IV_SATT));
+                    pokemon3IvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_IV_SPD));
+                    pokemon3IvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_IV_SPD));
+                    pokemon3EvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_EV_HP));
+                    pokemon3EvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_EV_ATT));
+                    pokemon3EvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_EV_DEF));
+                    pokemon3EvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_EV_SATT));
+                    pokemon3EvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_EV_SPD));
+                    pokemon3EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_EV_SPD));
+                    pokemon3Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON3_NOTE));
+
+                    pokemon4SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_ID));
+                    pokemon4NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_NATURE_ID));
+                    pokemon4AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_ABILITY_ID));
+                    pokemon4ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_ITEM_ID));
+                    pokemon4Move1Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_MOVE1_ID));
+                    pokemon4Move2Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_MOVE2_ID));
+                    pokemon4Move3Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_MOVE3_ID));
+                    pokemon4Move4Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_MOVE4_ID));
+                    pokemon4IvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_IV_HP));
+                    pokemon4IvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_IV_ATT));
+                    pokemon4IvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_IV_DEF));
+                    pokemon4IvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_IV_SATT));
+                    pokemon4IvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_IV_SPD));
+                    pokemon4IvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_IV_SPD));
+                    pokemon4EvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_EV_HP));
+                    pokemon4EvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_EV_ATT));
+                    pokemon4EvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_EV_DEF));
+                    pokemon4EvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_EV_SATT));
+                    pokemon4EvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_EV_SPD));
+                    pokemon4EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_EV_SPD));
+                    pokemon4Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON4_NOTE));
+
+                    pokemon5SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_ID));
+                    pokemon5NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_NATURE_ID));
+                    pokemon5AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_ABILITY_ID));
+                    pokemon5ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_ITEM_ID));
+                    pokemon5Move1Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_MOVE1_ID));
+                    pokemon5Move2Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_MOVE2_ID));
+                    pokemon5Move3Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_MOVE3_ID));
+                    pokemon5Move4Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_MOVE4_ID));
+                    pokemon5IvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_IV_HP));
+                    pokemon5IvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_IV_ATT));
+                    pokemon5IvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_IV_DEF));
+                    pokemon5IvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_IV_SATT));
+                    pokemon5IvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_IV_SPD));
+                    pokemon5IvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_IV_SPD));
+                    pokemon5EvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_HP));
+                    pokemon5EvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_ATT));
+                    pokemon5EvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_DEF));
+                    pokemon5EvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_SATT));
+                    pokemon5EvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_SPD));
+                    pokemon5EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_SPD));
+                    pokemon5Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_NOTE));
+
+                    pokemon5SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ID));
+                    pokemon6NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_NATURE_ID));
+                    pokemon6AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ABILITY_ID));
+                    pokemon6ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ITEM_ID));
+                    pokemon6Move1Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_MOVE1_ID));
+                    pokemon6Move2Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_MOVE2_ID));
+                    pokemon6Move3Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_MOVE3_ID));
+                    pokemon6Move4Id = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_MOVE4_ID));
+                    pokemon6IvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_IV_HP));
+                    pokemon6IvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_IV_ATT));
+                    pokemon6IvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_IV_DEF));
+                    pokemon6IvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_IV_SATT));
+                    pokemon6IvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_IV_SPD));
+                    pokemon6IvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_IV_SPD));
+                    pokemon6EvHp = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_EV_HP));
+                    pokemon6EvAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_EV_ATT));
+                    pokemon6EvDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_EV_DEF));
+                    pokemon6EvSAtt = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_EV_SATT));
+                    pokemon6EvSDef = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_EV_SPD));
+                    pokemon6EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_EV_SPD));
+                    pokemon6Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_NOTE));
+
+                }
+            } else {
+                pokemonSection1.setVisibility(View.GONE);
+                pokemonSection2.setVisibility(View.GONE);
+                pokemonSection3.setVisibility(View.GONE);
+                pokemonSection4.setVisibility(View.GONE);
+                pokemonSection5.setVisibility(View.GONE);
+                pokemonSection6.setVisibility(View.GONE);
+            }
+        }
+
+        loadPokemonSpinnerSectionWithData(pokemonSection1, getActivity(), pokemon1SpeciesId, pokemon1AbilityId, pokemon1ItemId, pokemon1NatureId, pokemon1Move1Id, pokemon1Move2Id, pokemon1Move3Id, pokemon1Move4Id);
+        loadPokemonSpinnerSectionWithData(pokemonSection2, getActivity(), pokemon2SpeciesId, pokemon2AbilityId, pokemon2ItemId, pokemon2NatureId, pokemon2Move1Id, pokemon2Move2Id, pokemon2Move3Id, pokemon2Move4Id);
+        loadPokemonSpinnerSectionWithData(pokemonSection3, getActivity(), pokemon3SpeciesId, pokemon3AbilityId, pokemon3ItemId, pokemon3NatureId, pokemon3Move1Id, pokemon3Move2Id, pokemon3Move3Id, pokemon3Move4Id);
+        loadPokemonSpinnerSectionWithData(pokemonSection4, getActivity(), pokemon4SpeciesId, pokemon4AbilityId, pokemon4ItemId, pokemon4NatureId, pokemon4Move1Id, pokemon4Move2Id, pokemon4Move3Id, pokemon4Move4Id);
+        loadPokemonSpinnerSectionWithData(pokemonSection5, getActivity(), pokemon5SpeciesId, pokemon5AbilityId, pokemon5ItemId, pokemon5NatureId, pokemon5Move1Id, pokemon5Move2Id, pokemon5Move3Id, pokemon5Move4Id);
+        loadPokemonSpinnerSectionWithData(pokemonSection6, getActivity(), pokemon6SpeciesId, pokemon6AbilityId, pokemon6ItemId, pokemon6NatureId, pokemon6Move1Id, pokemon6Move2Id, pokemon6Move3Id, pokemon6Move4Id);
 
         return view;
     }
@@ -169,7 +446,7 @@ public class TeamAddDialogFragment extends DialogFragment {
         }
     }
 
-    private static void loadPokemonSpinnerSectionWithData(View section, final Activity activity) {
+    private static void loadPokemonSpinnerSectionWithData(View section, final Activity activity, int pokemonSpeciesId, int pokemonAbilityId, int pokemonItemId, int pokemonNatureId, int pokemonMove1Id, int pokemonMove2Id, int pokemonMove3Id, int pokemonMove4Id) {
         Spinner pokemonSpeciesSpinner = (Spinner) section.findViewById(R.id.planned_add_species_spinner);
         Spinner pokemonAbilitySpinner = (Spinner) section.findViewById(R.id.planned_add_ability_spinner);
         Spinner pokemonItemSpinner = (Spinner) section.findViewById(R.id.planned_add_item_spinner);
@@ -179,11 +456,11 @@ public class TeamAddDialogFragment extends DialogFragment {
         Spinner pokemonMove4Spinner = (Spinner) section.findViewById(R.id.planned_add_move4_spinner);
         Spinner pokemonNatureSpinner = (Spinner) section.findViewById(R.id.planned_add_nature_spinner);
 
-        PlannedPokemonUtils.setupSpeciesSpinners(activity, pokemonSpeciesSpinner, -1);
-        PlannedPokemonUtils.setupNatureSpinner(activity, pokemonNatureSpinner, -1);
-        PlannedPokemonUtils.setupItemSpinner(activity, pokemonItemSpinner, -1);
-        PlannedPokemonUtils.setupAbilityForPokemon(activity, pokemonAbilitySpinner, -1, -1);
-        PlannedPokemonUtils.setupAllMovesForPokemon(activity, pokemonMove1Spinner, pokemonMove2Spinner, pokemonMove3Spinner, pokemonMove4Spinner, -1, -1, -1, -1, -1);
+        PlannedPokemonUtils.setupSpeciesSpinners(activity, pokemonSpeciesSpinner, pokemonSpeciesId);
+        PlannedPokemonUtils.setupNatureSpinner(activity, pokemonNatureSpinner, pokemonNatureId);
+        PlannedPokemonUtils.setupItemSpinner(activity, pokemonItemSpinner, pokemonItemId);
+        PlannedPokemonUtils.setupAbilityForPokemon(activity, pokemonAbilitySpinner, pokemonSpeciesId, pokemonAbilityId);
+        PlannedPokemonUtils.setupAllMovesForPokemon(activity, pokemonMove1Spinner, pokemonMove2Spinner, pokemonMove3Spinner, pokemonMove4Spinner, pokemonSpeciesId, pokemonMove1Id, pokemonMove2Id, pokemonMove3Id, pokemonMove4Id);
 
         final Spinner finalAbilitySpinner = pokemonAbilitySpinner;
         final Spinner finalMove1Spinner = pokemonMove1Spinner;

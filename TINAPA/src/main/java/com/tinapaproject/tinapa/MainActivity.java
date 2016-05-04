@@ -31,6 +31,7 @@ import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.SaveTeamEvent;
 import com.tinapaproject.tinapa.events.StartNewTeamEvent;
+import com.tinapaproject.tinapa.events.TeamListSelectedEvent;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -58,6 +59,8 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     public static int RESULT_LOAD_DEX_LIST_ICON = 100;
 
     public static final String SAVE_STATE_SELECTED_TAB_INDEX = "SAVE_STATE_SELECTED_TAB_INDEX";
+
+    public static final String TEAM_DETAILS_FRAGMENT = "TEAM_DETAILS_FRAGMENT";
 
     public static final String TAG = "MainActivity";
 
@@ -590,6 +593,20 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         } else {
             // TODO Update
         }
+    }
+
+    @Subscribe
+    public void teamListSelected(TeamListSelectedEvent event) {
+        String teamId = event.getTeamId();
+
+        FrameLayout fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment2);
+        if (fragmentView == null) {
+            fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
+        }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(fragmentView.getId(), TeamAddDialogFragment.newInstance(teamId), TEAM_DETAILS_FRAGMENT);
+        ft.addToBackStack("TeamDetails");
+        ft.commit();
     }
 
     @Override

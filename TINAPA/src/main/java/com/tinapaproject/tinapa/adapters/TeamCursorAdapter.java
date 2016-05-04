@@ -12,25 +12,23 @@ import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.TeamKeyValues;
+import com.tinapaproject.tinapa.events.TeamListSelectedEvent;
 import com.tinapaproject.tinapa.utils.ImageUtils;
 
 public class TeamCursorAdapter extends CursorAdapter {
-    private String[] imageColumns;
-    private String[] nameColumns;
-    private String teamNameColumn;
     private Context mContext;
+    private Bus bus;
 
     private static final int FLAGS = 0;
 
     public static final String TAG = "MultipleCursorAdapter";
 
-    public TeamCursorAdapter(Context context, Cursor c, String[] nameColumns, String teamNameColumn, String[] imageColumns, final Uri uri) {
+    public TeamCursorAdapter(Context context, Cursor c, Bus bus, final Uri uri) {
         super(context, c, FLAGS);
-        this.nameColumns = nameColumns;
-        this.teamNameColumn = teamNameColumn;
-        this.imageColumns = imageColumns;
+        this.bus = bus;
         this.mContext = context;
 
         this.setFilterQueryProvider(new FilterQueryProvider() {
@@ -69,5 +67,13 @@ public class TeamCursorAdapter extends CursorAdapter {
         ImageUtils.loadImage(image4View, image4Uri, true);
         ImageUtils.loadImage(image5View, image5Uri, true);
         ImageUtils.loadImage(image6View, image6Uri, true);
+
+        final String teamId = cursor.getString(cursor.getColumnIndex(TeamKeyValues.TEAM_ID));
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bus.post(new TeamListSelectedEvent(teamId));
+            }
+        });
     }
 }
