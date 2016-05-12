@@ -386,7 +386,7 @@ public class TeamAddDialogFragment extends DialogFragment {
                     pokemon5EvSpd = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_EV_SPD));
                     pokemon5Note = teamCursor.getString(teamCursor.getColumnIndex(TeamKeyValues.POKEMON5_NOTE));
 
-                    pokemon5SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ID));
+                    pokemon6SpeciesId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ID));
                     pokemon6NatureId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_NATURE_ID));
                     pokemon6AbilityId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ABILITY_ID));
                     pokemon6ItemId = teamCursor.getInt(teamCursor.getColumnIndex(TeamKeyValues.POKEMON6_ITEM_ID));
