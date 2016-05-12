@@ -420,11 +420,17 @@ public class TeamAddDialogFragment extends DialogFragment {
         }
 
         loadPokemonSpinnerSectionWithData(pokemonSection1, getActivity(), pokemon1SpeciesId, pokemon1AbilityId, pokemon1ItemId, pokemon1NatureId, pokemon1Move1Id, pokemon1Move2Id, pokemon1Move3Id, pokemon1Move4Id);
+        loadTextData(pokemonSection1, pokemon1EvHp, pokemon1EvAtt, pokemon1EvDef, pokemon1EvSAtt, pokemon1EvSDef, pokemon1EvSpd, pokemon1IvHp, pokemon1IvAtt, pokemon1IvDef, pokemon1IvSAtt, pokemon1IvSDef, pokemon1IvSpd, pokemon1Note);
         loadPokemonSpinnerSectionWithData(pokemonSection2, getActivity(), pokemon2SpeciesId, pokemon2AbilityId, pokemon2ItemId, pokemon2NatureId, pokemon2Move1Id, pokemon2Move2Id, pokemon2Move3Id, pokemon2Move4Id);
+        loadTextData(pokemonSection2, pokemon2EvHp, pokemon2EvAtt, pokemon2EvDef, pokemon2EvSAtt, pokemon2EvSDef, pokemon2EvSpd, pokemon2IvHp, pokemon2IvAtt, pokemon2IvDef, pokemon2IvSAtt, pokemon2IvSDef, pokemon2IvSpd, pokemon2Note);
         loadPokemonSpinnerSectionWithData(pokemonSection3, getActivity(), pokemon3SpeciesId, pokemon3AbilityId, pokemon3ItemId, pokemon3NatureId, pokemon3Move1Id, pokemon3Move2Id, pokemon3Move3Id, pokemon3Move4Id);
+        loadTextData(pokemonSection3, pokemon3EvHp, pokemon3EvAtt, pokemon3EvDef, pokemon3EvSAtt, pokemon3EvSDef, pokemon3EvSpd, pokemon3IvHp, pokemon3IvAtt, pokemon3IvDef, pokemon3IvSAtt, pokemon3IvSDef, pokemon3IvSpd, pokemon3Note);
         loadPokemonSpinnerSectionWithData(pokemonSection4, getActivity(), pokemon4SpeciesId, pokemon4AbilityId, pokemon4ItemId, pokemon4NatureId, pokemon4Move1Id, pokemon4Move2Id, pokemon4Move3Id, pokemon4Move4Id);
+        loadTextData(pokemonSection4, pokemon4EvHp, pokemon4EvAtt, pokemon4EvDef, pokemon4EvSAtt, pokemon4EvSDef, pokemon4EvSpd, pokemon4IvHp, pokemon4IvAtt, pokemon4IvDef, pokemon4IvSAtt, pokemon4IvSDef, pokemon4IvSpd, pokemon4Note);
         loadPokemonSpinnerSectionWithData(pokemonSection5, getActivity(), pokemon5SpeciesId, pokemon5AbilityId, pokemon5ItemId, pokemon5NatureId, pokemon5Move1Id, pokemon5Move2Id, pokemon5Move3Id, pokemon5Move4Id);
+        loadTextData(pokemonSection5, pokemon5EvHp, pokemon5EvAtt, pokemon5EvDef, pokemon5EvSAtt, pokemon5EvSDef, pokemon5EvSpd, pokemon5IvHp, pokemon5IvAtt, pokemon5IvDef, pokemon5IvSAtt, pokemon5IvSDef, pokemon5IvSpd, pokemon5Note);
         loadPokemonSpinnerSectionWithData(pokemonSection6, getActivity(), pokemon6SpeciesId, pokemon6AbilityId, pokemon6ItemId, pokemon6NatureId, pokemon6Move1Id, pokemon6Move2Id, pokemon6Move3Id, pokemon6Move4Id);
+        loadTextData(pokemonSection6, pokemon6EvHp, pokemon6EvAtt, pokemon6EvDef, pokemon6EvSAtt, pokemon6EvSDef, pokemon6EvSpd, pokemon6IvHp, pokemon6IvAtt, pokemon6IvDef, pokemon6IvSAtt, pokemon6IvSDef, pokemon6IvSpd, pokemon6Note);
 
         return view;
     }
@@ -480,6 +486,38 @@ public class TeamAddDialogFragment extends DialogFragment {
                 // Do nothing!
             }
         });
+    }
+
+    private static void loadTextData(View section, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, String note) {
+        EditText evHPField = (EditText) section.findViewById(R.id.planned_add_ev_hp_edit_text);
+        EditText evAttField = (EditText) section.findViewById(R.id.planned_add_ev_att_edit_text);
+        EditText evDefField = (EditText) section.findViewById(R.id.planned_add_ev_def_edit_text);
+        EditText evSAttField = (EditText) section.findViewById(R.id.planned_add_ev_satt_edit_text);
+        EditText evSDefField = (EditText) section.findViewById(R.id.planned_add_ev_sdef_edit_text);
+        EditText evSpdField = (EditText) section.findViewById(R.id.planned_add_ev_spd_edit_text);
+        RadioGroup ivHPField = (RadioGroup) section.findViewById(R.id.planned_add_iv_hp_group);
+        RadioGroup ivAttField = (RadioGroup) section.findViewById(R.id.planned_add_iv_att_group);
+        RadioGroup ivDefField = (RadioGroup) section.findViewById(R.id.planned_add_iv_def_group);
+        RadioGroup ivSAttField = (RadioGroup) section.findViewById(R.id.planned_add_iv_satt_group);
+        RadioGroup ivSDefField = (RadioGroup) section.findViewById(R.id.planned_add_iv_sdef_group);
+        RadioGroup ivSpdField = (RadioGroup) section.findViewById(R.id.planned_add_iv_spd_group);
+        EditText noteField = (EditText) section.findViewById(R.id.planned_add_notes);
+
+        evHPField.setText(Integer.toString(evHP));
+        evAttField.setText(Integer.toString(evAtt));
+        evDefField.setText(Integer.toString(evDef));
+        evSAttField.setText(Integer.toString(evSAtt));
+        evSDefField.setText(Integer.toString(evSDef));
+        evSpdField.setText(Integer.toString(evSpd));
+
+        IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivHP), ivHPField);
+        IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivAtt), ivAttField);
+        IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivDef), ivDefField);
+        IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivSAtt), ivSAttField);
+        IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivSDef), ivSDefField);
+        IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivSpd), ivSpdField);
+
+        noteField.setText(note);
     }
 
     private SaveTeamEvent generateSaveTeamEvent() {
