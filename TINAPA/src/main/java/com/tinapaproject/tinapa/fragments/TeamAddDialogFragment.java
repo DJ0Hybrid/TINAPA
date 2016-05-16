@@ -45,6 +45,29 @@ public class TeamAddDialogFragment extends DialogFragment {
 
     private static final String TEAM_ID_ARG = "TEAM_ID_ARG";
 
+    private static final String SPECIES_ID_LIST_KEY = "SPECIES_ID_LIST_KEY";
+    private static final String ABILITY_ID_LIST_KEY = "ABILITY_ID_LIST_KEY";
+    private static final String NATURE_ID_LIST_KEY = "NATURE_ID_LIST_KEY";
+    private static final String MOVE1_ID_LIST_KEY = "MOVE1_ID_LIST_KEY";
+    private static final String MOVE2_ID_LIST_KEY = "MOVE2_ID_LIST_KEY";
+    private static final String MOVE3_ID_LIST_KEY = "MOVE3_ID_LIST_KEY";
+    private static final String MOVE4_ID_LIST_KEY = "MOVE4_ID_LIST_KEY";
+    private static final String ITEM_ID_LIST_KEY = "ITEM_ID_LIST_KEY";
+    private static final String IV_HP_LIST_KEY = "IV_HP_LIST_KEY";
+    private static final String IV_ATT_LIST_KEY = "IV_ATT_LIST_KEY";
+    private static final String IV_DEF_LIST_KEY = "IV_DEF_LIST_KEY";
+    private static final String IV_SATT_LIST_KEY = "IV_SATT_LIST_KEY";
+    private static final String IV_SDEF_LIST_KEY = "IV_SDEF_LIST_KEY";
+    private static final String IV_SPD_LIST_KEY = "IV_SPD_LIST_KEY";
+    private static final String EV_HP_LIST_KEY = "EV_HP_LIST_KEY";
+    private static final String EV_ATT_LIST_KEY = "EV_ATT_LIST_KEY";
+    private static final String EV_DEF_LIST_KEY = "EV_DEF_LIST_KEY";
+    private static final String EV_SATT_LIST_KEY = "EV_SATT_LIST_KEY";
+    private static final String EV_SDEF_LIST_KEY = "EV_SDEF_LIST_KEY";
+    private static final String EV_SPD_LIST_KEY = "EV_SPD_LIST_KEY";
+    private static final String NOTES_LIST_KEY = "NOTES_LIST_KEY";
+
+
     public static final String TAG = "TeamAddDialogFragment";
 
     public TeamAddDialogFragment() {
@@ -269,7 +292,173 @@ public class TeamAddDialogFragment extends DialogFragment {
 
 
         if (savedInstanceState != null) {
-            // TODO need to do preserved state.
+            int[] speciesIds = savedInstanceState.getIntArray(SPECIES_ID_LIST_KEY);
+            pokemon1SpeciesId = speciesIds[0];
+            pokemon2SpeciesId = speciesIds[1];
+            pokemon3SpeciesId = speciesIds[2];
+            pokemon4SpeciesId = speciesIds[3];
+            pokemon5SpeciesId = speciesIds[4];
+            pokemon6SpeciesId = speciesIds[5];
+
+            int[] natureIds = savedInstanceState.getIntArray(NATURE_ID_LIST_KEY);
+            pokemon1NatureId = natureIds[0];
+            pokemon2NatureId = natureIds[1];
+            pokemon3NatureId = natureIds[2];
+            pokemon4NatureId = natureIds[3];
+            pokemon5NatureId = natureIds[4];
+            pokemon6NatureId = natureIds[5];
+
+            int[] abilityIds = savedInstanceState.getIntArray(ABILITY_ID_LIST_KEY);
+            pokemon1AbilityId = abilityIds[0];
+            pokemon2AbilityId = abilityIds[1];
+            pokemon3AbilityId = abilityIds[2];
+            pokemon4AbilityId = abilityIds[3];
+            pokemon5AbilityId = abilityIds[4];
+            pokemon6AbilityId = abilityIds[5];
+
+            int[] itemIds = savedInstanceState.getIntArray(ITEM_ID_LIST_KEY);
+            pokemon1ItemId = itemIds[0];
+            pokemon2ItemId = itemIds[1];
+            pokemon3ItemId = itemIds[2];
+            pokemon4ItemId = itemIds[3];
+            pokemon5ItemId = itemIds[4];
+            pokemon6ItemId = itemIds[5];
+
+            int[] move1Ids = savedInstanceState.getIntArray(MOVE1_ID_LIST_KEY);
+            pokemon1Move1Id = move1Ids[0];
+            pokemon2Move1Id = move1Ids[1];
+            pokemon3Move1Id = move1Ids[2];
+            pokemon4Move1Id = move1Ids[3];
+            pokemon5Move1Id = move1Ids[4];
+            pokemon6Move1Id = move1Ids[5];
+
+            int[] move2Ids = savedInstanceState.getIntArray(MOVE2_ID_LIST_KEY);
+            pokemon1Move2Id = move2Ids[0];
+            pokemon2Move2Id = move2Ids[1];
+            pokemon3Move2Id = move2Ids[2];
+            pokemon4Move2Id = move2Ids[3];
+            pokemon5Move2Id = move2Ids[4];
+            pokemon6Move2Id = move2Ids[5];
+
+            int[] move3Ids = savedInstanceState.getIntArray(MOVE3_ID_LIST_KEY);
+            pokemon1Move3Id = move3Ids[0];
+            pokemon2Move3Id = move3Ids[1];
+            pokemon3Move3Id = move3Ids[2];
+            pokemon4Move3Id = move3Ids[3];
+            pokemon5Move3Id = move3Ids[4];
+            pokemon6Move3Id = move3Ids[5];
+
+            int[] move4Ids = savedInstanceState.getIntArray(MOVE4_ID_LIST_KEY);
+            pokemon1Move4Id = move4Ids[0];
+            pokemon2Move4Id = move4Ids[1];
+            pokemon3Move4Id = move4Ids[2];
+            pokemon4Move4Id = move4Ids[3];
+            pokemon5Move4Id = move4Ids[4];
+            pokemon6Move4Id = move4Ids[5];
+
+            int[] ivHPs = savedInstanceState.getIntArray(IV_HP_LIST_KEY);
+            pokemon1IvHp = ivHPs[0];
+            pokemon2IvHp = ivHPs[1];
+            pokemon3IvHp = ivHPs[2];
+            pokemon4IvHp = ivHPs[3];
+            pokemon5IvHp = ivHPs[4];
+            pokemon6IvHp = ivHPs[5];
+
+            int[] ivAtts = savedInstanceState.getIntArray(IV_ATT_LIST_KEY);
+            pokemon1IvAtt = ivAtts[0];
+            pokemon2IvAtt = ivAtts[1];
+            pokemon3IvAtt = ivAtts[2];
+            pokemon4IvAtt = ivAtts[3];
+            pokemon5IvAtt = ivAtts[4];
+            pokemon6IvAtt = ivAtts[5];
+
+            int[] ivDefs = savedInstanceState.getIntArray(IV_DEF_LIST_KEY);
+            pokemon1IvDef = ivDefs[0];
+            pokemon2IvDef = ivDefs[1];
+            pokemon3IvDef = ivDefs[2];
+            pokemon4IvDef = ivDefs[3];
+            pokemon5IvDef = ivDefs[4];
+            pokemon6IvDef = ivDefs[5];
+
+            int[] ivSAtts = savedInstanceState.getIntArray(IV_SATT_LIST_KEY);
+            pokemon1IvSAtt = ivSAtts[0];
+            pokemon2IvSAtt = ivSAtts[1];
+            pokemon3IvSAtt = ivSAtts[2];
+            pokemon4IvSAtt = ivSAtts[3];
+            pokemon5IvSAtt = ivSAtts[4];
+            pokemon6IvSAtt = ivSAtts[5];
+
+            int[] ivSDefs = savedInstanceState.getIntArray(IV_SDEF_LIST_KEY);
+            pokemon1IvSDef = ivSDefs[0];
+            pokemon2IvSDef = ivSDefs[1];
+            pokemon3IvSDef = ivSDefs[2];
+            pokemon4IvSDef = ivSDefs[3];
+            pokemon5IvSDef = ivSDefs[4];
+            pokemon6IvSDef = ivSDefs[5];
+
+            int[] ivSpds = savedInstanceState.getIntArray(IV_SPD_LIST_KEY);
+            pokemon1IvSpd = ivSpds[0];
+            pokemon2IvSpd = ivSpds[1];
+            pokemon3IvSpd = ivSpds[2];
+            pokemon4IvSpd = ivSpds[3];
+            pokemon5IvSpd = ivSpds[4];
+            pokemon6IvSpd = ivSpds[5];
+
+            int[] evHPs = savedInstanceState.getIntArray(EV_HP_LIST_KEY);
+            pokemon1EvHp = evHPs[0];
+            pokemon2EvHp = evHPs[1];
+            pokemon3EvHp = evHPs[2];
+            pokemon4EvHp = evHPs[3];
+            pokemon5EvHp = evHPs[4];
+            pokemon6EvHp = evHPs[5];
+
+            int[] evAtts = savedInstanceState.getIntArray(EV_ATT_LIST_KEY);
+            pokemon1EvAtt = evAtts[0];
+            pokemon2EvAtt = evAtts[1];
+            pokemon3EvAtt = evAtts[2];
+            pokemon4EvAtt = evAtts[3];
+            pokemon5EvAtt = evAtts[4];
+            pokemon6EvAtt = evAtts[5];
+
+            int[] evDefs = savedInstanceState.getIntArray(EV_DEF_LIST_KEY);
+            pokemon1EvDef = evDefs[0];
+            pokemon2EvDef = evDefs[1];
+            pokemon3EvDef = evDefs[2];
+            pokemon4EvDef = evDefs[3];
+            pokemon5EvDef = evDefs[4];
+            pokemon6EvDef = evDefs[5];
+
+            int[] evSAtts = savedInstanceState.getIntArray(EV_SATT_LIST_KEY);
+            pokemon1EvSAtt = evSAtts[0];
+            pokemon2EvSAtt = evSAtts[1];
+            pokemon3EvSAtt = evSAtts[2];
+            pokemon4EvSAtt = evSAtts[3];
+            pokemon5EvSAtt = evSAtts[4];
+            pokemon6EvSAtt = evSAtts[5];
+
+            int[] evSDefs = savedInstanceState.getIntArray(EV_SDEF_LIST_KEY);
+            pokemon1EvSDef = evSDefs[0];
+            pokemon2EvSDef = evSDefs[1];
+            pokemon3EvSDef = evSDefs[2];
+            pokemon4EvSDef = evSDefs[3];
+            pokemon5EvSDef = evSDefs[4];
+            pokemon6EvSDef = evSDefs[5];
+
+            int[] evSpds = savedInstanceState.getIntArray(EV_SPD_LIST_KEY);
+            pokemon1EvSpd = evSpds[0];
+            pokemon2EvSpd = evSpds[1];
+            pokemon3EvSpd = evSpds[2];
+            pokemon4EvSpd = evSpds[3];
+            pokemon5EvSpd = evSpds[4];
+            pokemon6EvSpd = evSpds[5];
+
+            String[] notes = savedInstanceState.getStringArray(NOTES_LIST_KEY);
+            pokemon1Note = notes[0];
+            pokemon2Note = notes[1];
+            pokemon3Note = notes[2];
+            pokemon4Note = notes[3];
+            pokemon5Note = notes[4];
+            pokemon6Note = notes[5];
         } else {
             if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString(TEAM_ID_ARG))) {
                 String teamId = getArguments().getString(TEAM_ID_ARG);
@@ -433,6 +622,39 @@ public class TeamAddDialogFragment extends DialogFragment {
         loadTextData(pokemonSection6, pokemon6EvHp, pokemon6EvAtt, pokemon6EvDef, pokemon6EvSAtt, pokemon6EvSDef, pokemon6EvSpd, pokemon6IvHp, pokemon6IvAtt, pokemon6IvDef, pokemon6IvSAtt, pokemon6IvSDef, pokemon6IvSpd, pokemon6Note);
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        SaveTeamEvent event = generateSaveTeamEvent();  // This already collects everything, so let's use that.
+
+        outState.putIntArray(SPECIES_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1SpeciesId()), Integer.parseInt(event.getPokemon2SpeciesId()), Integer.parseInt(event.getPokemon3SpeciesId()), Integer.parseInt(event.getPokemon4SpeciesId()), Integer.parseInt(event.getPokemon5SpeciesId()), Integer.parseInt(event.getPokemon6SpeciesId())});
+        outState.putIntArray(ABILITY_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1AbilityId()), Integer.parseInt(event.getPokemon2AbilityId()), Integer.parseInt(event.getPokemon3AbilityId()), Integer.parseInt(event.getPokemon4AbilityId()), Integer.parseInt(event.getPokemon5AbilityId()), Integer.parseInt(event.getPokemon6AbilityId())});
+        outState.putIntArray(ITEM_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1ItemId()), Integer.parseInt(event.getPokemon2ItemId()), Integer.parseInt(event.getPokemon3ItemId()), Integer.parseInt(event.getPokemon4ItemId()), Integer.parseInt(event.getPokemon5ItemId()), Integer.parseInt(event.getPokemon6ItemId())});
+        outState.putIntArray(NATURE_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1NatureId()), Integer.parseInt(event.getPokemon2NatureId()), Integer.parseInt(event.getPokemon3NatureId()), Integer.parseInt(event.getPokemon4NatureId()), Integer.parseInt(event.getPokemon5NatureId()), Integer.parseInt(event.getPokemon6NatureId())});
+
+        outState.putIntArray(MOVE1_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1Move1Id()), Integer.parseInt(event.getPokemon2Move1Id()), Integer.parseInt(event.getPokemon3Move1Id()), Integer.parseInt(event.getPokemon4Move1Id()), Integer.parseInt(event.getPokemon5Move1Id()), Integer.parseInt(event.getPokemon6Move1Id())});
+        outState.putIntArray(MOVE2_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1Move2Id()), Integer.parseInt(event.getPokemon2Move2Id()), Integer.parseInt(event.getPokemon3Move2Id()), Integer.parseInt(event.getPokemon4Move2Id()), Integer.parseInt(event.getPokemon5Move2Id()), Integer.parseInt(event.getPokemon6Move2Id())});
+        outState.putIntArray(MOVE3_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1Move3Id()), Integer.parseInt(event.getPokemon2Move3Id()), Integer.parseInt(event.getPokemon3Move3Id()), Integer.parseInt(event.getPokemon4Move3Id()), Integer.parseInt(event.getPokemon5Move3Id()), Integer.parseInt(event.getPokemon6Move3Id())});
+        outState.putIntArray(MOVE4_ID_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1Move4Id()), Integer.parseInt(event.getPokemon2Move4Id()), Integer.parseInt(event.getPokemon3Move4Id()), Integer.parseInt(event.getPokemon4Move4Id()), Integer.parseInt(event.getPokemon5Move4Id()), Integer.parseInt(event.getPokemon6Move4Id())});
+
+        outState.putIntArray(IV_HP_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1IvHp()), Integer.parseInt(event.getPokemon2IvHp()), Integer.parseInt(event.getPokemon3IvHp()), Integer.parseInt(event.getPokemon4IvHp()), Integer.parseInt(event.getPokemon5IvHp()), Integer.parseInt(event.getPokemon6IvHp())});
+        outState.putIntArray(IV_ATT_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1IvAtt()), Integer.parseInt(event.getPokemon2IvAtt()), Integer.parseInt(event.getPokemon3IvAtt()), Integer.parseInt(event.getPokemon4IvAtt()), Integer.parseInt(event.getPokemon5IvAtt()), Integer.parseInt(event.getPokemon6IvAtt())});
+        outState.putIntArray(IV_DEF_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1IvDef()), Integer.parseInt(event.getPokemon2IvDef()), Integer.parseInt(event.getPokemon3IvDef()), Integer.parseInt(event.getPokemon4IvDef()), Integer.parseInt(event.getPokemon5IvDef()), Integer.parseInt(event.getPokemon6IvDef())});
+        outState.putIntArray(IV_SATT_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1IvSAtt()), Integer.parseInt(event.getPokemon2IvSAtt()), Integer.parseInt(event.getPokemon3IvSAtt()), Integer.parseInt(event.getPokemon4IvSAtt()), Integer.parseInt(event.getPokemon5IvSAtt()), Integer.parseInt(event.getPokemon6IvSAtt())});
+        outState.putIntArray(IV_SDEF_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1IvSDef()), Integer.parseInt(event.getPokemon2IvSDef()), Integer.parseInt(event.getPokemon3IvSDef()), Integer.parseInt(event.getPokemon4IvSDef()), Integer.parseInt(event.getPokemon5IvSDef()), Integer.parseInt(event.getPokemon6IvSDef())});
+        outState.putIntArray(IV_SPD_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1IvSpd()), Integer.parseInt(event.getPokemon2IvSpd()), Integer.parseInt(event.getPokemon3IvSpd()), Integer.parseInt(event.getPokemon4IvSpd()), Integer.parseInt(event.getPokemon5IvSpd()), Integer.parseInt(event.getPokemon6IvSpd())});
+
+        outState.putIntArray(EV_HP_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1EvHp()), Integer.parseInt(event.getPokemon2EvHp()), Integer.parseInt(event.getPokemon3EvHp()), Integer.parseInt(event.getPokemon4EvHp()), Integer.parseInt(event.getPokemon5EvHp()), Integer.parseInt(event.getPokemon6EvHp())});
+        outState.putIntArray(EV_ATT_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1EvAtt()), Integer.parseInt(event.getPokemon2EvAtt()), Integer.parseInt(event.getPokemon3EvAtt()), Integer.parseInt(event.getPokemon4EvAtt()), Integer.parseInt(event.getPokemon5EvAtt()), Integer.parseInt(event.getPokemon6EvAtt())});
+        outState.putIntArray(EV_DEF_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1EvDef()), Integer.parseInt(event.getPokemon2EvDef()), Integer.parseInt(event.getPokemon3EvDef()), Integer.parseInt(event.getPokemon4EvDef()), Integer.parseInt(event.getPokemon5EvDef()), Integer.parseInt(event.getPokemon6EvDef())});
+        outState.putIntArray(EV_SATT_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1EvSAtt()), Integer.parseInt(event.getPokemon2EvSAtt()), Integer.parseInt(event.getPokemon3EvSAtt()), Integer.parseInt(event.getPokemon4EvSAtt()), Integer.parseInt(event.getPokemon5EvSAtt()), Integer.parseInt(event.getPokemon6EvSAtt())});
+        outState.putIntArray(EV_SDEF_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1EvSDef()), Integer.parseInt(event.getPokemon2EvSDef()), Integer.parseInt(event.getPokemon3EvSDef()), Integer.parseInt(event.getPokemon4EvSDef()), Integer.parseInt(event.getPokemon5EvSDef()), Integer.parseInt(event.getPokemon6EvSDef())});
+        outState.putIntArray(EV_SPD_LIST_KEY, new int[]{Integer.parseInt(event.getPokemon1EvSpd()), Integer.parseInt(event.getPokemon2EvSpd()), Integer.parseInt(event.getPokemon3EvSpd()), Integer.parseInt(event.getPokemon4EvSpd()), Integer.parseInt(event.getPokemon5EvSpd()), Integer.parseInt(event.getPokemon6EvSpd())});
+
+        outState.putStringArray(NOTES_LIST_KEY, new String[]{event.getPokemon1Notes(), event.getPokemon2Notes(), event.getPokemon3Notes(), event.getPokemon4Notes(), event.getPokemon5Notes(), event.getPokemon6Notes()});
+
     }
 
     private static void setBannerToggleClickListener(View banner, final View toggleView) {
