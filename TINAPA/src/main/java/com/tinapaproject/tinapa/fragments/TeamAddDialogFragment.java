@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -748,21 +747,21 @@ public class TeamAddDialogFragment extends DialogFragment {
         String teamNotes = ""; // TODO;
 
         Spinner pokemon1SpeciesSpinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_species_spinner);
-        String pokemon1SpeciesId = String.valueOf(pokemon1SpeciesSpinner.getSelectedItemId());
+        String pokemon1SpeciesId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1SpeciesSpinner);
         Spinner pokemon1AbilitySpinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_ability_spinner);
-        String pokemon1AbilityId = String.valueOf(pokemon1AbilitySpinner.getSelectedItemId());
+        String pokemon1AbilityId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1AbilitySpinner);
         Spinner pokemon1ItemSpinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_item_spinner);
-        String pokemon1ItemId = String.valueOf(pokemon1ItemSpinner.getSelectedItemId());
+        String pokemon1ItemId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1ItemSpinner);
         Spinner pokemon1Move1Spinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_move1_spinner);
-        String pokemon1Move1Id = String.valueOf(pokemon1Move1Spinner.getSelectedItemId());
+        String pokemon1Move1Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1Move1Spinner);
         Spinner pokemon1Move2Spinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_move2_spinner);
-        String pokemon1Move2Id = String.valueOf(pokemon1Move2Spinner.getSelectedItemId());
+        String pokemon1Move2Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1Move2Spinner);
         Spinner pokemon1Move3Spinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_move3_spinner);
-        String pokemon1Move3Id = String.valueOf(pokemon1Move3Spinner.getSelectedItemId());
+        String pokemon1Move3Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1Move3Spinner);
         Spinner pokemon1Move4Spinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_move4_spinner);
-        String pokemon1Move4Id = String.valueOf(pokemon1Move4Spinner.getSelectedItemId());
+        String pokemon1Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1Move4Spinner);
         Spinner pokemon1NatureSpinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_nature_spinner);
-        String pokemon1NatureId = String.valueOf(pokemon1NatureSpinner.getSelectedItemId());
+        String pokemon1NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1NatureSpinner);
         String pokemon1EvHp = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
         String pokemon1EvAtt = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
         String pokemon1EvDef = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
@@ -778,21 +777,21 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon1Notes = ((EditText) pokemonSection1.findViewById(R.id.planned_add_notes)).getText().toString();
 
         Spinner pokemon2SpeciesSpinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_species_spinner);
-        String pokemon2SpeciesId = String.valueOf(pokemon2SpeciesSpinner.getSelectedItemId());
+        String pokemon2SpeciesId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2SpeciesSpinner);
         Spinner pokemon2AbilitySpinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_ability_spinner);
-        String pokemon2AbilityId = String.valueOf(pokemon2AbilitySpinner.getSelectedItemId());
+        String pokemon2AbilityId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2AbilitySpinner);
         Spinner pokemon2ItemSpinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_item_spinner);
-        String pokemon2ItemId = String.valueOf(pokemon2ItemSpinner.getSelectedItemId());
+        String pokemon2ItemId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2ItemSpinner);
         Spinner pokemon2Move1Spinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_move1_spinner);
-        String pokemon2Move1Id = String.valueOf(pokemon2Move1Spinner.getSelectedItemId());
+        String pokemon2Move1Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2Move1Spinner);
         Spinner pokemon2Move2Spinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_move2_spinner);
-        String pokemon2Move2Id = String.valueOf(pokemon2Move2Spinner.getSelectedItemId());
+        String pokemon2Move2Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2Move2Spinner);
         Spinner pokemon2Move3Spinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_move3_spinner);
-        String pokemon2Move3Id = String.valueOf(pokemon2Move3Spinner.getSelectedItemId());
+        String pokemon2Move3Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2Move3Spinner);
         Spinner pokemon2Move4Spinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_move4_spinner);
-        String pokemon2Move4Id = String.valueOf(pokemon2Move4Spinner.getSelectedItemId());
+        String pokemon2Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2Move4Spinner);
         Spinner pokemon2NatureSpinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_nature_spinner);
-        String pokemon2NatureId = String.valueOf(pokemon2NatureSpinner.getSelectedItemId());
+        String pokemon2NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2NatureSpinner);
         String pokemon2EvHp = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
         String pokemon2EvAtt = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
         String pokemon2EvDef = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
@@ -808,21 +807,21 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon2Notes = ((EditText) pokemonSection2.findViewById(R.id.planned_add_notes)).getText().toString();
 
         Spinner pokemon3SpeciesSpinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_species_spinner);
-        String pokemon3SpeciesId = String.valueOf(pokemon3SpeciesSpinner.getSelectedItemId());
+        String pokemon3SpeciesId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3SpeciesSpinner);
         Spinner pokemon3AbilitySpinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_ability_spinner);
-        String pokemon3AbilityId = String.valueOf(pokemon3AbilitySpinner.getSelectedItemId());
+        String pokemon3AbilityId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3AbilitySpinner);
         Spinner pokemon3ItemSpinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_item_spinner);
-        String pokemon3ItemId = String.valueOf(pokemon3ItemSpinner.getSelectedItemId());
+        String pokemon3ItemId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3ItemSpinner);
         Spinner pokemon3Move1Spinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_move1_spinner);
-        String pokemon3Move1Id = String.valueOf(pokemon3Move1Spinner.getSelectedItemId());
+        String pokemon3Move1Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3Move1Spinner);
         Spinner pokemon3Move2Spinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_move2_spinner);
-        String pokemon3Move2Id = String.valueOf(pokemon3Move2Spinner.getSelectedItemId());
+        String pokemon3Move2Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3Move2Spinner);
         Spinner pokemon3Move3Spinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_move3_spinner);
-        String pokemon3Move3Id = String.valueOf(pokemon3Move3Spinner.getSelectedItemId());
+        String pokemon3Move3Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3Move3Spinner);
         Spinner pokemon3Move4Spinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_move4_spinner);
-        String pokemon3Move4Id = String.valueOf(pokemon3Move4Spinner.getSelectedItemId());
+        String pokemon3Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3Move4Spinner);
         Spinner pokemon3NatureSpinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_nature_spinner);
-        String pokemon3NatureId = String.valueOf(pokemon3NatureSpinner.getSelectedItemId());
+        String pokemon3NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3NatureSpinner);
         String pokemon3EvHp = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
         String pokemon3EvAtt = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
         String pokemon3EvDef = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
@@ -838,21 +837,21 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon3Notes = ((EditText) pokemonSection3.findViewById(R.id.planned_add_notes)).getText().toString();
 
         Spinner pokemon4SpeciesSpinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_species_spinner);
-        String pokemon4SpeciesId = String.valueOf(pokemon4SpeciesSpinner.getSelectedItemId());
+        String pokemon4SpeciesId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4SpeciesSpinner);
         Spinner pokemon4AbilitySpinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_ability_spinner);
-        String pokemon4AbilityId = String.valueOf(pokemon4AbilitySpinner.getSelectedItemId());
+        String pokemon4AbilityId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4AbilitySpinner);
         Spinner pokemon4ItemSpinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_item_spinner);
-        String pokemon4ItemId = String.valueOf(pokemon4ItemSpinner.getSelectedItemId());
+        String pokemon4ItemId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4ItemSpinner);
         Spinner pokemon4Move1Spinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_move1_spinner);
-        String pokemon4Move1Id = String.valueOf(pokemon4Move1Spinner.getSelectedItemId());
+        String pokemon4Move1Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4Move1Spinner);
         Spinner pokemon4Move2Spinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_move2_spinner);
-        String pokemon4Move2Id = String.valueOf(pokemon4Move2Spinner.getSelectedItemId());
+        String pokemon4Move2Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4Move2Spinner);
         Spinner pokemon4Move3Spinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_move3_spinner);
-        String pokemon4Move3Id = String.valueOf(pokemon4Move3Spinner.getSelectedItemId());
+        String pokemon4Move3Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4Move3Spinner);
         Spinner pokemon4Move4Spinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_move4_spinner);
-        String pokemon4Move4Id = String.valueOf(pokemon4Move4Spinner.getSelectedItemId());
+        String pokemon4Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4Move4Spinner);
         Spinner pokemon4NatureSpinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_nature_spinner);
-        String pokemon4NatureId = String.valueOf(pokemon4NatureSpinner.getSelectedItemId());
+        String pokemon4NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4NatureSpinner);
         String pokemon4EvHp = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
         String pokemon4EvAtt = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
         String pokemon4EvDef = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
@@ -868,21 +867,21 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon4Notes = ((EditText) pokemonSection4.findViewById(R.id.planned_add_notes)).getText().toString();
 
         Spinner pokemon5SpeciesSpinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_species_spinner);
-        String pokemon5SpeciesId = String.valueOf(pokemon5SpeciesSpinner.getSelectedItemId());
+        String pokemon5SpeciesId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5SpeciesSpinner);
         Spinner pokemon5AbilitySpinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_ability_spinner);
-        String pokemon5AbilityId = String.valueOf(pokemon5AbilitySpinner.getSelectedItemId());
+        String pokemon5AbilityId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5AbilitySpinner);
         Spinner pokemon5ItemSpinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_item_spinner);
-        String pokemon5ItemId = String.valueOf(pokemon5ItemSpinner.getSelectedItemId());
+        String pokemon5ItemId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5ItemSpinner);
         Spinner pokemon5Move1Spinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_move1_spinner);
-        String pokemon5Move1Id = String.valueOf(pokemon5Move1Spinner.getSelectedItemId());
+        String pokemon5Move1Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5Move1Spinner);
         Spinner pokemon5Move2Spinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_move2_spinner);
-        String pokemon5Move2Id = String.valueOf(pokemon5Move2Spinner.getSelectedItemId());
+        String pokemon5Move2Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5Move2Spinner);
         Spinner pokemon5Move3Spinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_move3_spinner);
-        String pokemon5Move3Id = String.valueOf(pokemon5Move3Spinner.getSelectedItemId());
+        String pokemon5Move3Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5Move3Spinner);
         Spinner pokemon5Move4Spinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_move4_spinner);
-        String pokemon5Move4Id = String.valueOf(pokemon5Move4Spinner.getSelectedItemId());
+        String pokemon5Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5Move4Spinner);
         Spinner pokemon5NatureSpinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_nature_spinner);
-        String pokemon5NatureId = String.valueOf(pokemon5NatureSpinner.getSelectedItemId());
+        String pokemon5NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5NatureSpinner);
         String pokemon5EvHp = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
         String pokemon5EvAtt = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
         String pokemon5EvDef = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
@@ -898,21 +897,21 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon5Notes = ((EditText) pokemonSection5.findViewById(R.id.planned_add_notes)).getText().toString();
 
         Spinner pokemon6SpeciesSpinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_species_spinner);
-        String pokemon6SpeciesId = String.valueOf(pokemon6SpeciesSpinner.getSelectedItemId());
+        String pokemon6SpeciesId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6SpeciesSpinner);
         Spinner pokemon6AbilitySpinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_ability_spinner);
-        String pokemon6AbilityId = String.valueOf(pokemon6AbilitySpinner.getSelectedItemId());
+        String pokemon6AbilityId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6AbilitySpinner);
         Spinner pokemon6ItemSpinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_item_spinner);
-        String pokemon6ItemId = String.valueOf(pokemon6ItemSpinner.getSelectedItemId());
+        String pokemon6ItemId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6ItemSpinner);
         Spinner pokemon6Move1Spinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_move1_spinner);
-        String pokemon6Move1Id = String.valueOf(pokemon6Move1Spinner.getSelectedItemId());
+        String pokemon6Move1Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6Move1Spinner);
         Spinner pokemon6Move2Spinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_move2_spinner);
-        String pokemon6Move2Id = String.valueOf(pokemon6Move2Spinner.getSelectedItemId());
+        String pokemon6Move2Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6Move2Spinner);
         Spinner pokemon6Move3Spinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_move3_spinner);
-        String pokemon6Move3Id = String.valueOf(pokemon6Move3Spinner.getSelectedItemId());
+        String pokemon6Move3Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6Move3Spinner);
         Spinner pokemon6Move4Spinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_move4_spinner);
-        String pokemon6Move4Id = String.valueOf(pokemon6Move4Spinner.getSelectedItemId());
+        String pokemon6Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6Move4Spinner);
         Spinner pokemon6NatureSpinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_nature_spinner);
-        String pokemon6NatureId = String.valueOf(pokemon6NatureSpinner.getSelectedItemId());
+        String pokemon6NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6NatureSpinner);
         String pokemon6EvHp = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
         String pokemon6EvAtt = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
         String pokemon6EvDef = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
@@ -934,5 +933,12 @@ public class TeamAddDialogFragment extends DialogFragment {
                 pokemon4Id, pokemon4SpeciesId, pokemon4AbilityId, pokemon4ItemId, pokemon4Move1Id, pokemon4Move2Id, pokemon4Move3Id, pokemon4Move4Id, pokemon4NatureId, pokemon4EvHp, pokemon4EvAtt, pokemon4EvDef, pokemon4EvSAtt, pokemon4EvSDef, pokemon4EvSpd, pokemon4IvHp, pokemon4IvAtt, pokemon4IvDef, pokemon4IvSAtt, pokemon4IvSDef, pokemon4IvSpd, pokemon4Notes,
                 pokemon5Id, pokemon5SpeciesId, pokemon5AbilityId, pokemon5ItemId, pokemon5Move1Id, pokemon5Move2Id, pokemon5Move3Id, pokemon5Move4Id, pokemon5NatureId, pokemon5EvHp, pokemon5EvAtt, pokemon5EvDef, pokemon5EvSAtt, pokemon5EvSDef, pokemon5EvSpd, pokemon5IvHp, pokemon5IvAtt, pokemon5IvDef, pokemon5IvSAtt, pokemon5IvSDef, pokemon5IvSpd, pokemon5Notes,
                 pokemon6Id, pokemon6SpeciesId, pokemon6AbilityId, pokemon6ItemId, pokemon6Move1Id, pokemon6Move2Id, pokemon6Move3Id, pokemon6Move4Id, pokemon6NatureId, pokemon6EvHp, pokemon6EvAtt, pokemon6EvDef, pokemon6EvSAtt, pokemon6EvSDef, pokemon6EvSpd, pokemon6IvHp, pokemon6IvAtt, pokemon6IvDef, pokemon6IvSAtt, pokemon6IvSDef, pokemon6IvSpd, pokemon6Notes);
+    }
+
+    private static String getSelectedItemIdFromSpinner(Spinner spinner) {
+        if (spinner != null && spinner.getCount() > 0) {
+            return String.valueOf(spinner.getSelectedItemId());
+        }
+        return "-1";
     }
 }
