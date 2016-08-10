@@ -1,5 +1,6 @@
 package com.tinapaproject.tinapa.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -127,6 +128,8 @@ public class TeamAddDialogFragment extends DialogFragment {
     }
 
     private View fillView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: Apparently we are getting a case where Pokemon #6 is filling in everything before.
+
         View view = inflater.inflate(R.layout.fragment_team_add_dialog, container, false);
 
         View pokemonBanner1 = view.findViewById(R.id.team_member_click_banner1);
@@ -709,6 +712,7 @@ public class TeamAddDialogFragment extends DialogFragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private static void loadTextData(View section, int evHP, int evAtt, int evDef, int evSAtt, int evSDef, int evSpd, int ivHP, int ivAtt, int ivDef, int ivSAtt, int ivSDef, int ivSpd, String note) {
         EditText evHPField = (EditText) section.findViewById(R.id.planned_add_ev_hp_edit_text);
         EditText evAttField = (EditText) section.findViewById(R.id.planned_add_ev_att_edit_text);
@@ -724,12 +728,24 @@ public class TeamAddDialogFragment extends DialogFragment {
         RadioGroup ivSpdField = (RadioGroup) section.findViewById(R.id.planned_add_iv_spd_group);
         EditText noteField = (EditText) section.findViewById(R.id.planned_add_notes);
 
-        evHPField.setText(Integer.toString(evHP));
-        evAttField.setText(Integer.toString(evAtt));
-        evDefField.setText(Integer.toString(evDef));
-        evSAttField.setText(Integer.toString(evSAtt));
-        evSDefField.setText(Integer.toString(evSDef));
-        evSpdField.setText(Integer.toString(evSpd));
+        if (evHP >= 0) {
+            evHPField.setText(Integer.toString(evHP));
+        }
+        if (evAtt >= 0) {
+            evAttField.setText(Integer.toString(evAtt));
+        }
+        if (evDef >= 0) {
+            evDefField.setText(Integer.toString(evDef));
+        }
+        if (evSAtt >= 0) {
+            evSAttField.setText(Integer.toString(evSAtt));
+        }
+        if (evSDef >= 0) {
+            evSDefField.setText(Integer.toString(evSDef));
+        }
+        if (evSpd >= 0) {
+            evSpdField.setText(Integer.toString(evSpd));
+        }
 
         IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivHP), ivHPField);
         IVRadioGroupUtils.setCorrectIVValue(Integer.toString(ivAtt), ivAttField);
@@ -762,12 +778,12 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon1Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1Move4Spinner);
         Spinner pokemon1NatureSpinner = (Spinner) pokemonSection1.findViewById(R.id.planned_add_nature_spinner);
         String pokemon1NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon1NatureSpinner);
-        String pokemon1EvHp = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
-        String pokemon1EvAtt = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
-        String pokemon1EvDef = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
-        String pokemon1EvSAtt = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_satt_edit_text)).getText().toString();
-        String pokemon1EvSDef = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_sdef_edit_text)).getText().toString();
-        String pokemon1EvSpd = ((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_spd_edit_text)).getText().toString();
+        String pokemon1EvHp = getEffortValueFromField((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_hp_edit_text));
+        String pokemon1EvAtt = getEffortValueFromField((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_att_edit_text));
+        String pokemon1EvDef = getEffortValueFromField((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_def_edit_text));
+        String pokemon1EvSAtt = getEffortValueFromField((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_satt_edit_text));
+        String pokemon1EvSDef = getEffortValueFromField((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_sdef_edit_text));
+        String pokemon1EvSpd = getEffortValueFromField((EditText) pokemonSection1.findViewById(R.id.planned_add_ev_spd_edit_text));
         String pokemon1IvHp = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection1.findViewById(R.id.planned_add_iv_hp_group), getActivity());
         String pokemon1IvAtt = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection1.findViewById(R.id.planned_add_iv_att_group), getActivity());
         String pokemon1IvDef = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection1.findViewById(R.id.planned_add_iv_def_group), getActivity());
@@ -792,12 +808,12 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon2Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2Move4Spinner);
         Spinner pokemon2NatureSpinner = (Spinner) pokemonSection2.findViewById(R.id.planned_add_nature_spinner);
         String pokemon2NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon2NatureSpinner);
-        String pokemon2EvHp = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
-        String pokemon2EvAtt = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
-        String pokemon2EvDef = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
-        String pokemon2EvSAtt = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_satt_edit_text)).getText().toString();
-        String pokemon2EvSDef = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_sdef_edit_text)).getText().toString();
-        String pokemon2EvSpd = ((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_spd_edit_text)).getText().toString();
+        String pokemon2EvHp = getEffortValueFromField((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_hp_edit_text));
+        String pokemon2EvAtt = getEffortValueFromField((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_att_edit_text));
+        String pokemon2EvDef = getEffortValueFromField((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_def_edit_text));
+        String pokemon2EvSAtt = getEffortValueFromField((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_satt_edit_text));
+        String pokemon2EvSDef = getEffortValueFromField((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_sdef_edit_text));
+        String pokemon2EvSpd = getEffortValueFromField((EditText) pokemonSection2.findViewById(R.id.planned_add_ev_spd_edit_text));
         String pokemon2IvHp = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection2.findViewById(R.id.planned_add_iv_hp_group), getActivity());
         String pokemon2IvAtt = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection2.findViewById(R.id.planned_add_iv_att_group), getActivity());
         String pokemon2IvDef = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection2.findViewById(R.id.planned_add_iv_def_group), getActivity());
@@ -822,12 +838,12 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon3Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3Move4Spinner);
         Spinner pokemon3NatureSpinner = (Spinner) pokemonSection3.findViewById(R.id.planned_add_nature_spinner);
         String pokemon3NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon3NatureSpinner);
-        String pokemon3EvHp = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
-        String pokemon3EvAtt = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
-        String pokemon3EvDef = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
-        String pokemon3EvSAtt = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_satt_edit_text)).getText().toString();
-        String pokemon3EvSDef = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_sdef_edit_text)).getText().toString();
-        String pokemon3EvSpd = ((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_spd_edit_text)).getText().toString();
+        String pokemon3EvHp = getEffortValueFromField((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_hp_edit_text));
+        String pokemon3EvAtt = getEffortValueFromField((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_att_edit_text));
+        String pokemon3EvDef = getEffortValueFromField((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_def_edit_text));
+        String pokemon3EvSAtt = getEffortValueFromField((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_satt_edit_text));
+        String pokemon3EvSDef = getEffortValueFromField((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_sdef_edit_text));
+        String pokemon3EvSpd = getEffortValueFromField((EditText) pokemonSection3.findViewById(R.id.planned_add_ev_spd_edit_text));
         String pokemon3IvHp = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection3.findViewById(R.id.planned_add_iv_hp_group), getActivity());
         String pokemon3IvAtt = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection3.findViewById(R.id.planned_add_iv_att_group), getActivity());
         String pokemon3IvDef = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection3.findViewById(R.id.planned_add_iv_def_group), getActivity());
@@ -852,12 +868,12 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon4Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4Move4Spinner);
         Spinner pokemon4NatureSpinner = (Spinner) pokemonSection4.findViewById(R.id.planned_add_nature_spinner);
         String pokemon4NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon4NatureSpinner);
-        String pokemon4EvHp = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
-        String pokemon4EvAtt = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
-        String pokemon4EvDef = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
-        String pokemon4EvSAtt = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_satt_edit_text)).getText().toString();
-        String pokemon4EvSDef = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_sdef_edit_text)).getText().toString();
-        String pokemon4EvSpd = ((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_spd_edit_text)).getText().toString();
+        String pokemon4EvHp = getEffortValueFromField((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_hp_edit_text));
+        String pokemon4EvAtt = getEffortValueFromField((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_att_edit_text));
+        String pokemon4EvDef = getEffortValueFromField((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_def_edit_text));
+        String pokemon4EvSAtt = getEffortValueFromField((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_satt_edit_text));
+        String pokemon4EvSDef = getEffortValueFromField((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_sdef_edit_text));
+        String pokemon4EvSpd = getEffortValueFromField((EditText) pokemonSection4.findViewById(R.id.planned_add_ev_spd_edit_text));
         String pokemon4IvHp = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection4.findViewById(R.id.planned_add_iv_hp_group), getActivity());
         String pokemon4IvAtt = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection4.findViewById(R.id.planned_add_iv_att_group), getActivity());
         String pokemon4IvDef = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection4.findViewById(R.id.planned_add_iv_def_group), getActivity());
@@ -882,12 +898,12 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon5Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5Move4Spinner);
         Spinner pokemon5NatureSpinner = (Spinner) pokemonSection5.findViewById(R.id.planned_add_nature_spinner);
         String pokemon5NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon5NatureSpinner);
-        String pokemon5EvHp = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
-        String pokemon5EvAtt = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
-        String pokemon5EvDef = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
-        String pokemon5EvSAtt = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_satt_edit_text)).getText().toString();
-        String pokemon5EvSDef = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_sdef_edit_text)).getText().toString();
-        String pokemon5EvSpd = ((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_spd_edit_text)).getText().toString();
+        String pokemon5EvHp = getEffortValueFromField((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_hp_edit_text));
+        String pokemon5EvAtt = getEffortValueFromField((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_att_edit_text));
+        String pokemon5EvDef = getEffortValueFromField((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_def_edit_text));
+        String pokemon5EvSAtt = getEffortValueFromField((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_satt_edit_text));
+        String pokemon5EvSDef = getEffortValueFromField((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_sdef_edit_text));
+        String pokemon5EvSpd = getEffortValueFromField((EditText) pokemonSection5.findViewById(R.id.planned_add_ev_spd_edit_text));
         String pokemon5IvHp = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection5.findViewById(R.id.planned_add_iv_hp_group), getActivity());
         String pokemon5IvAtt = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection5.findViewById(R.id.planned_add_iv_att_group), getActivity());
         String pokemon5IvDef = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection5.findViewById(R.id.planned_add_iv_def_group), getActivity());
@@ -912,12 +928,12 @@ public class TeamAddDialogFragment extends DialogFragment {
         String pokemon6Move4Id = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6Move4Spinner);
         Spinner pokemon6NatureSpinner = (Spinner) pokemonSection6.findViewById(R.id.planned_add_nature_spinner);
         String pokemon6NatureId = TeamAddDialogFragment.getSelectedItemIdFromSpinner(pokemon6NatureSpinner);
-        String pokemon6EvHp = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_hp_edit_text)).getText().toString();
-        String pokemon6EvAtt = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_att_edit_text)).getText().toString();
-        String pokemon6EvDef = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_def_edit_text)).getText().toString();
-        String pokemon6EvSAtt = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_satt_edit_text)).getText().toString();
-        String pokemon6EvSDef = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_sdef_edit_text)).getText().toString();
-        String pokemon6EvSpd = ((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_spd_edit_text)).getText().toString();
+        String pokemon6EvHp = getEffortValueFromField((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_hp_edit_text));
+        String pokemon6EvAtt = getEffortValueFromField((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_att_edit_text));
+        String pokemon6EvDef = getEffortValueFromField((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_def_edit_text));
+        String pokemon6EvSAtt = getEffortValueFromField((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_satt_edit_text));
+        String pokemon6EvSDef = getEffortValueFromField((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_sdef_edit_text));
+        String pokemon6EvSpd = getEffortValueFromField((EditText) pokemonSection6.findViewById(R.id.planned_add_ev_spd_edit_text));
         String pokemon6IvHp = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection6.findViewById(R.id.planned_add_iv_hp_group), getActivity());
         String pokemon6IvAtt = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection6.findViewById(R.id.planned_add_iv_att_group), getActivity());
         String pokemon6IvDef = IVRadioGroupUtils.getIVValueSelected((RadioGroup) pokemonSection6.findViewById(R.id.planned_add_iv_def_group), getActivity());
@@ -940,5 +956,13 @@ public class TeamAddDialogFragment extends DialogFragment {
             return String.valueOf(spinner.getSelectedItemId());
         }
         return "-1";
+    }
+
+    private static String getEffortValueFromField(EditText field) {
+        String result = field.getText().toString();
+        if (TextUtils.isEmpty(result)) {
+            result = "-1";
+        }
+        return result;
     }
 }
