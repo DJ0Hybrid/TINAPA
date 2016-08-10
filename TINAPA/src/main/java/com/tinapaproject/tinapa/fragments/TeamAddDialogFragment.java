@@ -128,8 +128,6 @@ public class TeamAddDialogFragment extends DialogFragment {
     }
 
     private View fillView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: Apparently we are getting a case where Pokemon #6 is filling in everything before.
-
         View view = inflater.inflate(R.layout.fragment_team_add_dialog, container, false);
 
         View pokemonBanner1 = view.findViewById(R.id.team_member_click_banner1);

@@ -121,7 +121,7 @@ public class PlannedAddDialogFragment extends DialogFragment {
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .setView(fillView(LayoutInflater.from(getActivity()), null));
+                .setView(fillView(LayoutInflater.from(getActivity()), null, savedInstanceState));
         return builder.create();
     }
 
@@ -130,12 +130,14 @@ public class PlannedAddDialogFragment extends DialogFragment {
         if (getShowsDialog()) {
             return super.onCreateView(inflater, container, savedInstanceState);
         } else {
-            return fillView(inflater, container);
+            return fillView(inflater, container, savedInstanceState);
         }
     }
 
-    private View fillView(LayoutInflater inflater, ViewGroup container) {
+    private View fillView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        // TODO Need to handle saveInstanceState
+
         View view = inflater.inflate(R.layout.fragment_planned_add_dialog, container, false);
         mSpeciesSpinner = (Spinner) view.findViewById(R.id.planned_add_species_spinner);
         mAbilitySpinner = (Spinner) view.findViewById(R.id.planned_add_ability_spinner);
