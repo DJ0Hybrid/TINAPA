@@ -60,6 +60,9 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
 
     public static final String SAVE_STATE_SELECTED_TAB_INDEX = "SAVE_STATE_SELECTED_TAB_INDEX";
 
+    public static final String DEX_DETAILS_FRAGMENT = "DEX_DETAILS_FRAGMENT";
+    public static final String OWNED_DETAILS_FRAGMENT = "OWNED_DETAILS_FRAGMENT";
+    public static final String PLANNED_DETAILS_FRAGMENT = "PLANNED_DETAILS_FRAGMENT";
     public static final String TEAM_DETAILS_FRAGMENT = "TEAM_DETAILS_FRAGMENT";
 
     public static final String TAG = "MainActivity";
@@ -191,7 +194,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
         }
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(fragmentView.getId(), DexDetailFragment.newInstance(id), "TAG HERE");
+        ft.replace(fragmentView.getId(), DexDetailFragment.newInstance(id), DEX_DETAILS_FRAGMENT);
         ft.addToBackStack("DexDetail");
         ft.commit();
 
@@ -217,7 +220,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
         }
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(fragmentView.getId(), OwnedAddDialogFragment.newInstance(id), "TAG HERE");
+        ft.replace(fragmentView.getId(), OwnedAddDialogFragment.newInstance(id), OWNED_DETAILS_FRAGMENT);
         ft.addToBackStack("OwnedDetail");
         ft.commit();
     }
@@ -330,7 +333,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             fragmentView = (FrameLayout) findViewById(R.id.mainActivityFragment1);
         }
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(fragmentView.getId(), PlannedAddDialogFragment.newInstance(id), "TAG HERE");
+        ft.replace(fragmentView.getId(), PlannedAddDialogFragment.newInstance(id), PLANNED_DETAILS_FRAGMENT);
         ft.addToBackStack("PlannedDetail");
         ft.commit();
     }
