@@ -15,24 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.squareup.otto.Bus;
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.TinapaApplication;
-import com.tinapaproject.tinapa.database.key.DexKeyValues;
-import com.tinapaproject.tinapa.database.key.ItemKeyValues;
-import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
-import com.tinapaproject.tinapa.utils.CursorUtils;
 import com.tinapaproject.tinapa.utils.IVRadioGroupUtils;
 import com.tinapaproject.tinapa.utils.PlannedPokemonUtils;
 
@@ -63,6 +56,16 @@ public class PlannedAddDialogFragment extends DialogFragment {
     private Bus bus;
 
     public static final String ARG_ID = "ARG_ID";
+
+    private static final String SPECIES_ID = "SPECIES_ID";
+    private static final String ABILITY_ID = "ABILITY_ID";
+    private static final String MOVE_IDS = "MOVE_IDS";
+    private static final String NATURE_ID = "NATURE_ID";
+    private static final String ITEM_ID = "ITEM_ID";
+    private static final String EV_VALUES = "EV_VALUES";
+    private static final String IV_VALUES = "IV_VALUES";
+    private static final String NOTE_TEXT = "NOTE_TEXT";
+
     public static final String TAG = "PlannedAddDialogFragment";
 
     public static PlannedAddDialogFragment newInstance() {
@@ -136,7 +139,6 @@ public class PlannedAddDialogFragment extends DialogFragment {
 
     private View fillView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // TODO Need to handle saveInstanceState
 
         View view = inflater.inflate(R.layout.fragment_planned_add_dialog, container, false);
         mSpeciesSpinner = (Spinner) view.findViewById(R.id.planned_add_species_spinner);
@@ -162,50 +164,89 @@ public class PlannedAddDialogFragment extends DialogFragment {
         mNote = (EditText) view.findViewById(R.id.planned_add_notes);
         Button saveButton = (Button) view.findViewById(R.id.planned_saved_button);
 
-        int species_id = -1;
-        int ability_id = -1;
-        int item_id = -1;
-        int nature_id = -1;
-        int move1_id = -1;
-        int move2_id = -1;
-        int move3_id = -1;
-        int move4_id = -1;
-        if (getArguments() != null) {
+        int speciesId = -1;
+        int abilityId = -1;
+        int itemId = -1;
+        int natureId = -1;
+        int move1Id = -1;
+        int move2Id = -1;
+        int move3Id = -1;
+        int move4Id = -1;
+        String evHP = "";
+        String evAtt = "";
+        String evDef = "";
+        String evSAtt = "";
+        String evSDef = "";
+        String evSpd = "";
+        String ivHP = "";
+        String ivAtt = "";
+        String ivDef = "";
+        String ivSAtt = "";
+        String ivSDef = "";
+        String ivSpd = "";
+        String note = "";
+
+        if (savedInstanceState != null) {
+            speciesId = savedInstanceState.getInt(SPECIES_ID);
+            abilityId = savedInstanceState.getInt(ABILITY_ID);
+            itemId = savedInstanceState.getInt(ITEM_ID);
+            natureId = savedInstanceState.getInt(NATURE_ID);
+            int[] moveIds = savedInstanceState.getIntArray(MOVE_IDS);
+            move1Id = moveIds[0];
+            move2Id = moveIds[1];
+            move3Id = moveIds[2];
+            move4Id = moveIds[3];
+            String[] evValues = savedInstanceState.getStringArray(EV_VALUES);
+            evHP = evValues[0];
+            evAtt = evValues[1];
+            evDef = evValues[2];
+            evSAtt = evValues[3];
+            evSDef = evValues[4];
+            evSpd = evValues[5];
+            String[] ivValues = savedInstanceState.getStringArray(IV_VALUES);
+            ivHP = ivValues[0];
+            ivAtt = ivValues[1];
+            ivDef = ivValues[2];
+            ivSAtt = ivValues[3];
+            ivSDef = ivValues[4];
+            ivSpd = ivValues[5];
+            note = savedInstanceState.getString(NOTE_TEXT);
+        } else if (getArguments() != null) {
             String planned_id = getArguments().getString(ARG_ID);
             if (!TextUtils.isEmpty(planned_id)) {
                 Cursor plannedCursor = getActivity().getContentResolver().query(TinapaContentProvider.PLANNED_POKEMON_URI, null, planned_id, null, null);
                 if (plannedCursor != null && plannedCursor.moveToFirst()) {
-                    species_id = plannedCursor.getInt(plannedCursor.getColumnIndex("pokemon_id"));
-                    ability_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.ABILITY_ID));
-                    item_id = plannedCursor.getInt(plannedCursor.getColumnIndex("item_id"));
+                    speciesId = plannedCursor.getInt(plannedCursor.getColumnIndex("pokemon_id"));
+                    abilityId = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.ABILITY_ID));
+                    itemId = plannedCursor.getInt(plannedCursor.getColumnIndex("item_id"));
 
-                    move1_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE1_ID));
-                    move2_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE2_ID));
-                    move3_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE3_ID));
-                    move4_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE4_ID));
+                    move1Id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE1_ID));
+                    move2Id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE2_ID));
+                    move3Id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE3_ID));
+                    move4Id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.MOVE4_ID));
 
-                    nature_id = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.NATURE_ID));
+                    natureId = plannedCursor.getInt(plannedCursor.getColumnIndex(PlannedKeyValues.NATURE_ID));
 
-                    mEVHP.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_hp")));
-                    mEVAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_att")));
-                    mEVDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_def")));
-                    mEVSAtt.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_satk")));
-                    mEVSDef.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_sdef")));
-                    mEVSpd.setText(plannedCursor.getString(plannedCursor.getColumnIndex("ev_spd")));
+                    evHP = plannedCursor.getString(plannedCursor.getColumnIndex("ev_hp"));
+                    evAtt = plannedCursor.getString(plannedCursor.getColumnIndex("ev_att"));
+                    evDef = plannedCursor.getString(plannedCursor.getColumnIndex("ev_def"));
+                    evSAtt = plannedCursor.getString(plannedCursor.getColumnIndex("ev_satk"));
+                    evSDef = plannedCursor.getString(plannedCursor.getColumnIndex("ev_sdef"));
+                    evSpd = plannedCursor.getString(plannedCursor.getColumnIndex("ev_spd"));
 
-                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_hp")), mIVHP);
-                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_att")), mIVAtt);
-                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_def")), mIVDef);
-                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_satt")), mIVSAtt);
-                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_sdef")), mIVSDef);
-                    IVRadioGroupUtils.setCorrectIVValue(plannedCursor.getString(plannedCursor.getColumnIndex("iv_spd")), mIVSpd);
+                    ivHP = plannedCursor.getString(plannedCursor.getColumnIndex("iv_hp"));
+                    ivAtt = plannedCursor.getString(plannedCursor.getColumnIndex("iv_att"));
+                    ivDef = plannedCursor.getString(plannedCursor.getColumnIndex("iv_def"));
+                    ivSAtt = plannedCursor.getString(plannedCursor.getColumnIndex("iv_satt"));
+                    ivSDef = plannedCursor.getString(plannedCursor.getColumnIndex("iv_sdef"));
+                    ivSpd = plannedCursor.getString(plannedCursor.getColumnIndex("iv_spd"));
 
                     mNote.setText(plannedCursor.getString(plannedCursor.getColumnIndex("note")));
                 }
             }
         }
 
-        PlannedPokemonUtils.setupSpeciesSpinners(getActivity(), mSpeciesSpinner, species_id);
+        PlannedPokemonUtils.setupSpeciesSpinners(getActivity(), mSpeciesSpinner, speciesId);
 
         mSpeciesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -219,11 +260,27 @@ public class PlannedAddDialogFragment extends DialogFragment {
             }
         });
 
-        PlannedPokemonUtils.setupItemSpinner(getActivity(), mItemSpinner, item_id);
+        PlannedPokemonUtils.setupItemSpinner(getActivity(), mItemSpinner, itemId);
 
-        PlannedPokemonUtils.setupNatureSpinner(getActivity(), mNatureSpinner, nature_id);
+        PlannedPokemonUtils.setupNatureSpinner(getActivity(), mNatureSpinner, natureId);
 
-        loadAbilityAndMovesCursorAdapters(species_id, ability_id, move1_id, move2_id, move3_id, move4_id);
+        loadAbilityAndMovesCursorAdapters(speciesId, abilityId, move1Id, move2Id, move3Id, move4Id);
+
+        mEVHP.setText(evHP);
+        mEVAtt.setText(evAtt);
+        mEVDef.setText(evDef);
+        mEVSAtt.setText(evSAtt);
+        mEVSDef.setText(evSDef);
+        mEVSpd.setText(evSpd);
+
+        IVRadioGroupUtils.setCorrectIVValue(ivHP, mIVHP);
+        IVRadioGroupUtils.setCorrectIVValue(ivAtt, mIVAtt);
+        IVRadioGroupUtils.setCorrectIVValue(ivDef, mIVDef);
+        IVRadioGroupUtils.setCorrectIVValue(ivSAtt, mIVSAtt);
+        IVRadioGroupUtils.setCorrectIVValue(ivSDef, mIVSDef);
+        IVRadioGroupUtils.setCorrectIVValue(ivSpd, mIVSpd);
+
+        mNote.setText(note);
 
         if (getShowsDialog()) {
             saveButton.setVisibility(View.GONE);
@@ -237,6 +294,28 @@ public class PlannedAddDialogFragment extends DialogFragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(SPECIES_ID, (int) mSpeciesSpinner.getSelectedItemId());
+        outState.putInt(ABILITY_ID, (int) mAbilitySpinner.getSelectedItemId());
+        outState.putInt(ITEM_ID, (int) mItemSpinner.getSelectedItemId());
+        outState.putInt(NATURE_ID, (int) mNatureSpinner.getSelectedItemId());
+        int[] movesId = {(int) mMove1Spinner.getSelectedItemId(), (int) mMove2Spinner.getSelectedItemId(), (int) mMove3Spinner.getSelectedItemId(), (int) mMove4Spinner.getSelectedItemId()};
+        outState.putIntArray(MOVE_IDS, movesId);
+        String[] evValues = {mEVHP.getText().toString(), mEVAtt.getText().toString(), mEVDef.getText().toString(), mEVSAtt.getText().toString(), mEVSDef.getText().toString(), mEVSpd.getText().toString()};
+        outState.putStringArray(EV_VALUES, evValues);
+        String[] ivValues = {IVRadioGroupUtils.getIVValueSelected(mIVHP, mIVHP.getContext()),
+                IVRadioGroupUtils.getIVValueSelected(mIVAtt, mIVAtt.getContext()),
+                IVRadioGroupUtils.getIVValueSelected(mIVDef, mIVDef.getContext()),
+                IVRadioGroupUtils.getIVValueSelected(mIVSAtt, mIVSAtt.getContext()),
+                IVRadioGroupUtils.getIVValueSelected(mIVSDef, mIVSDef.getContext()),
+                IVRadioGroupUtils.getIVValueSelected(mIVSpd, mIVSpd.getContext())};
+        outState.putStringArray(IV_VALUES, ivValues);
+        outState.putString(NOTE_TEXT, mNote.getText().toString());
     }
 
     private void savePokemon(final boolean isNewSave) {
