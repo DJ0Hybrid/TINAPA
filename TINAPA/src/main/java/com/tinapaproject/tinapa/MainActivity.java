@@ -26,12 +26,14 @@ import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
 import com.tinapaproject.tinapa.database.key.PlannedKeyValues;
 import com.tinapaproject.tinapa.database.key.TeamKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
+import com.tinapaproject.tinapa.events.BackupFileSelectionClickedEvent;
 import com.tinapaproject.tinapa.events.CreatePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeleteOwnedPokemonEvent;
 import com.tinapaproject.tinapa.events.DeletePlannedPokemonEvent;
 import com.tinapaproject.tinapa.events.SaveTeamEvent;
 import com.tinapaproject.tinapa.events.StartNewTeamEvent;
 import com.tinapaproject.tinapa.events.TeamListSelectedEvent;
+import com.tinapaproject.tinapa.fragments.BackupRestoreFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment;
 import com.tinapaproject.tinapa.fragments.DexDetailFragment.DexDetailListener;
 import com.tinapaproject.tinapa.fragments.DexListFragment;
@@ -45,6 +47,7 @@ import com.tinapaproject.tinapa.fragments.PlannedListFragment;
 import com.tinapaproject.tinapa.fragments.PlannedListFragment.PlannedListListener;
 import com.tinapaproject.tinapa.fragments.TeamAddDialogFragment;
 import com.tinapaproject.tinapa.fragments.TeamListFragment;
+import com.tinapaproject.tinapa.utils.ExternalBackupUtils;
 
 public class MainActivity extends Activity implements DexListListener, DexDetailListener, OwnedListListener, OwnedAddFragmentListener, PlannedListListener {
 
@@ -57,6 +60,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     private Bus bus;
 
     public static int RESULT_LOAD_DEX_LIST_ICON = 100;
+    public static int RESULT_RETRIEVE_BACKUP_FOLDER_LOCATION = 200;
 
     public static final String SAVE_STATE_SELECTED_TAB_INDEX = "SAVE_STATE_SELECTED_TAB_INDEX";
 
@@ -64,6 +68,7 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
     public static final String OWNED_DETAILS_FRAGMENT = "OWNED_DETAILS_FRAGMENT";
     public static final String PLANNED_DETAILS_FRAGMENT = "PLANNED_DETAILS_FRAGMENT";
     public static final String TEAM_DETAILS_FRAGMENT = "TEAM_DETAILS_FRAGMENT";
+    public static final String BACKUP_RESTORE_DIALOG_FRAGMENT = "BACKUP_RESTORE_DIALOG_FRAGMENT";
 
     public static final String TAG = "MainActivity";
 
@@ -121,6 +126,9 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_backup_restore) {
+            BackupRestoreFragment backupRestoreFragment = BackupRestoreFragment.getInstance();
+            backupRestoreFragment.show(getFragmentManager(), BACKUP_RESTORE_DIALOG_FRAGMENT);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -179,6 +187,8 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
             temp_isDefault = false;
             temp_isShiny = false;
             temp_isIcon = false;
+        } else if (requestCode == RESULT_RETRIEVE_BACKUP_FOLDER_LOCATION && resultCode == RESULT_OK && data != null) {
+
         }
     }
 
@@ -610,6 +620,20 @@ public class MainActivity extends Activity implements DexListListener, DexDetail
         ft.replace(fragmentView.getId(), TeamAddDialogFragment.newInstance(teamId), TEAM_DETAILS_FRAGMENT);
         ft.addToBackStack("TeamDetails");
         ft.commit();
+    }
+
+    @Subscribe
+    public void backupFileSelectionClickedEvent(BackupFileSelectionClickedEvent event) {
+        ExternalBackupUtils.generateBackupFile();
+
+    }
+
+    public void restoreFromFileSelectionEvent() {
+        // TODO
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.backup)), RESULT_RETRIEVE_BACKUP_FOLDER_LOCATION);
     }
 
     @Override
