@@ -360,7 +360,7 @@ public class OwnedAddDialogFragment extends DialogFragment {
     private void loadAbilityAndMovesCursorAdapters(long pokemonId, long abilityId, long move1Id, long move2Id, long move3Id, long move4Id) {
         // Load up all the other spinners.
         // It is assumed that this will go off automatically.
-        Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
+        Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, String.valueOf(pokemonId), null, null);
         Cursor abilitiesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_ABILITIES_URI, null, "pokemon_id = " + pokemonId, null, null);
 
         loadMovesCursorAdapter(getActivity(), mMove1Spinner, movesCursor, move1Id);

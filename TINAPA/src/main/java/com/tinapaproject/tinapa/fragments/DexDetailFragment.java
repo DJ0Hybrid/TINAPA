@@ -138,7 +138,7 @@ public class DexDetailFragment extends Fragment {
             spdView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpeed)));
 
             // Level-up Moves
-            Cursor levelUpMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id + " AND pokemon_move_methods.id = 1", null, null);
+            Cursor levelUpMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
             if (levelUpMoves != null && levelUpMoves.moveToFirst() && levelUpMoves.getCount() > 0) {
                 final ViewGroup levelUpList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_level_up_list);
 
@@ -160,7 +160,7 @@ public class DexDetailFragment extends Fragment {
             }
 
             // Machine Moves
-            Cursor machineMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id + " AND pokemon_move_methods.id = 4", null, null);
+            Cursor machineMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
             if (machineMoves != null && machineMoves.moveToFirst() && machineMoves.getCount() > 0) {
                 final ViewGroup machineList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_machine_list);
 
@@ -182,7 +182,7 @@ public class DexDetailFragment extends Fragment {
             }
 
             // Egg Moves
-            Cursor eggMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + id + " AND pokemon_move_methods.id = 2", null, null);
+            Cursor eggMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
             if (eggMoves != null && eggMoves.moveToFirst() && eggMoves.getCount() > 0) {
                 final ViewGroup eggList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_egg_list);
 

@@ -236,7 +236,11 @@ public class TinapaContentProvider extends ContentProvider {
                 queryBuilder.setTables("moves LEFT OUTER JOIN pokemon_moves ON (moves.id = pokemon_moves.move_id) LEFT OUTER JOIN pokemon_move_methods ON (pokemon_move_methods.id = pokemon_moves.pokemon_move_method_id) LEFT OUTER JOIN move_names ON (moves.id = move_names.move_id AND move_names.local_language_id = 9) LEFT OUTER JOIN move_flavor_text ON (moves.id = move_flavor_text.move_id AND move_flavor_text.language_id = 9 AND move_flavor_text.version_group_id = 15) LEFT OUTER JOIN machines ON (moves.id = machines.move_id AND pokemon_move_methods.id = 4)");
                 queryBuilder.appendWhere("pokemon_moves.version_group_id = 15 AND (machines.version_group_id = 15 OR machines.version_group_id IS NULL)");
                 if (selection != null && !selection.isEmpty()) {
-                    queryBuilder.appendWhere(" AND " + selection);
+                    queryBuilder.appendWhere(" AND pokemon_id IN (SELECT id\n" +
+                            "FROM pokemon_species\n" +
+                            "WHERE evolution_chain_id = (SELECT evolution_chain_id\n" +
+                            "FROM pokemon_species\n" +
+                            "WHERE pokemon_species.id = " + selection + "))");
                 }
                 orderBy = "pokemon_moves.pokemon_id ASC, level ASC, machines.machine_number ASC, \"order\" ASC, move_names.name ASC";
                 selectionArray = new String[]{"moves.id AS _id", "name", "flavor_text", "pokemon_move_methods.identifier AS identifier"};

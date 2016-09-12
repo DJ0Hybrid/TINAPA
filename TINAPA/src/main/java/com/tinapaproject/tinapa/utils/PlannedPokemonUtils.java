@@ -103,7 +103,7 @@ public class PlannedPokemonUtils {
     }
 
     public static void setupMoveForPokemon(final Activity activity, Spinner moveSpinner, int pokemonId, int moveId) {
-        Cursor movesCursor = activity.getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, "pokemon_id = " + pokemonId, null, null);
+        Cursor movesCursor = activity.getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, String.valueOf(pokemonId), null, null);
 
         String[] from = {"name"};
         int[] to = {R.id.simple_cell_name};
