@@ -137,73 +137,88 @@ public class DexDetailFragment extends Fragment {
             sdefView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpecialDefense)));
             spdView.setText(pokemonCursor.getString(pokemonCursor.getColumnIndex(DexKeyValues.baseSpeed)));
 
-            // Level-up Moves
-            Cursor levelUpMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
-            if (levelUpMoves != null && levelUpMoves.moveToFirst() && levelUpMoves.getCount() > 0) {
-                final ViewGroup levelUpList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_level_up_list);
-
-                loadLevelUpMovesIntoTableLayout(levelUpMoves, levelUpList);
-
-                View levelUpToggle = view.findViewById(R.id.dex_detail_moves_level_up_switch);
-                levelUpToggle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (View.VISIBLE == levelUpList.getVisibility()) {
-                            levelUpList.setVisibility(View.GONE);
-                        } else if (View.GONE == levelUpList.getVisibility()) {
-                            levelUpList.setVisibility(View.VISIBLE);
-                        }
+            // Moves
+            Cursor movesCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
+            ViewGroup levelUpList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_level_up_list);
+            ViewGroup machineList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_machine_list);
+            ViewGroup eggList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_egg_list);
+            if (movesCursor != null && movesCursor.moveToFirst() && movesCursor.getCount() > 0) {
+                while (!movesCursor.isAfterLast()) {
+                    switch (movesCursor.getInt(movesCursor.getColumnIndex("identifier_id"))) {
+                        case 1:
+                            // Level-up Move
+                            View levelUpToggle = view.findViewById(R.id.dex_detail_moves_level_up_switch);
+                            if (!levelUpToggle.hasOnClickListeners()) {
+                                final ViewGroup finalLevelUpList = levelUpList;
+                                levelUpToggle.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (View.VISIBLE == finalLevelUpList.getVisibility()) {
+                                            finalLevelUpList.setVisibility(View.GONE);
+                                        } else if (View.GONE == finalLevelUpList.getVisibility()) {
+                                            finalLevelUpList.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                });
+                            }
+                            loadLevelUpMoveIntoTableLayout(movesCursor, levelUpList);
+                            break;
+                        case 2:
+                            // Egg Move
+                            View eggToggle = view.findViewById(R.id.dex_detail_moves_egg_switch);
+                            if (!eggToggle.hasOnClickListeners()) {
+                                final ViewGroup finalEggList = eggList;
+                                eggToggle.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (View.VISIBLE == finalEggList.getVisibility()) {
+                                            finalEggList.setVisibility(View.GONE);
+                                        } else if (View.GONE == finalEggList.getVisibility()) {
+                                            finalEggList.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                });
+                            }
+                            loadEggMoveIntoTableLayout(movesCursor, eggList);
+                            break;
+                        case 3:
+                            // TODO Tutor Move
+                            break;
+                        case 4:
+                            // Machine Move
+                            View machineToggle = view.findViewById(R.id.dex_detail_moves_machine_switch);
+                            if (!machineToggle.hasOnClickListeners()) {
+                                final ViewGroup finalMachineList = machineList;
+                                machineToggle.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (View.VISIBLE == finalMachineList.getVisibility()) {
+                                            finalMachineList.setVisibility(View.GONE);
+                                        } else if (View.GONE == finalMachineList.getVisibility()) {
+                                            finalMachineList.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                });
+                            }
+                            loadMachineMoveIntoTableLayout(movesCursor, machineList);
+                            break;
                     }
-                });
-            } else {
+                    // TODO Pre-evolution Move
+
+                    movesCursor.moveToNext();
+                }
+                movesCursor.close();
+            }
+
+            if (levelUpList.getChildCount() == 0) {
                 view.findViewById(R.id.dex_detail_moves_level_up_body).setVisibility(View.GONE);
             }
-
-            // Machine Moves
-            Cursor machineMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
-            if (machineMoves != null && machineMoves.moveToFirst() && machineMoves.getCount() > 0) {
-                final ViewGroup machineList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_machine_list);
-
-                loadMachineMovesIntoTableLayout(machineMoves, machineList);
-
-                View machineToggle = view.findViewById(R.id.dex_detail_moves_machine_switch);
-                machineToggle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (View.VISIBLE == machineList.getVisibility()) {
-                            machineList.setVisibility(View.GONE);
-                        } else if (View.GONE == machineList.getVisibility()) {
-                            machineList.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-            } else {
+            if (machineList.getChildCount() == 0) {
                 view.findViewById(R.id.dex_detail_moves_machine_body).setVisibility(View.GONE);
             }
-
-            // Egg Moves
-            Cursor eggMoves = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_MOVES_URI, null, id, null, null);
-            if (eggMoves != null && eggMoves.moveToFirst() && eggMoves.getCount() > 0) {
-                final ViewGroup eggList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_egg_list);
-
-                loadEggMovesIntoTableLayout(eggMoves, eggList);
-
-                View machineToggle = view.findViewById(R.id.dex_detail_moves_egg_switch);
-                machineToggle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (View.VISIBLE == eggList.getVisibility()) {
-                            eggList.setVisibility(View.GONE);
-                        } else if (View.GONE == eggList.getVisibility()) {
-                            eggList.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-            } else {
+            if (eggList.getChildCount() == 0) {
                 view.findViewById(R.id.dex_detail_moves_egg_body).setVisibility(View.GONE);
             }
-
-            // TODO: Tutor Moves
 
             // Evolution Chain
             ViewGroup evolutionView = (ViewGroup) view.findViewById(R.id.dex_detail_evolution_chain);
@@ -307,58 +322,49 @@ public class DexDetailFragment extends Fragment {
         return view;
     }
 
-    private static void loadLevelUpMovesIntoTableLayout(Cursor movesCursor, ViewGroup table) {
-        while (!movesCursor.isAfterLast()) {
-            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
-            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-            nameView.setText(name);
+    private static void loadLevelUpMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+        String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+        nameView.setText(name);
 
-            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
-            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-            flavorTextView.setText(flavorText);
+        String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+        flavorTextView.setText(flavorText);
 
-            // TODO: Can still provide more information on the moves.
+        // TODO: Can still provide more information on the moves.
 
-            table.addView(moveView);
-            movesCursor.moveToNext();
-        }
+        table.addView(moveView);
     }
 
-    private static void loadMachineMovesIntoTableLayout(Cursor movesCursor, ViewGroup table) {
-        while (!movesCursor.isAfterLast()) {
-            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
-            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-            nameView.setText(name);
+    private static void loadMachineMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+        String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+        nameView.setText(name);
 
-            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
-            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-            flavorTextView.setText(flavorText);
+        String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+        flavorTextView.setText(flavorText);
 
-            // TODO: Can still provide more information on the moves.
+        // TODO: Can still provide more information on the moves.
 
-            table.addView(moveView);
-            movesCursor.moveToNext();
-        }
+        table.addView(moveView);
     }
 
-    private static void loadEggMovesIntoTableLayout(Cursor movesCursor, ViewGroup table) {
-        while (!movesCursor.isAfterLast()) {
-            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
-            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-            nameView.setText(name);
+    private static void loadEggMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+        String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+        nameView.setText(name);
 
-            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
-            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-            flavorTextView.setText(flavorText);
+        String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+        flavorTextView.setText(flavorText);
 
-            // TODO: Can still provide more information on the moves.
+        // TODO: Can still provide more information on the moves.
 
-            table.addView(moveView);
-            movesCursor.moveToNext();
-        }
+        table.addView(moveView);
     }
 
     public interface DexDetailListener {
