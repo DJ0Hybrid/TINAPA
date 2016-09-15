@@ -242,8 +242,13 @@ public class TinapaContentProvider extends ContentProvider {
                             "FROM pokemon_species\n" +
                             "WHERE pokemon_species.id = " + selection + "))");
                 }
+
                 orderBy = "pokemon_moves.pokemon_id ASC, level ASC, machines.machine_number ASC, \"order\" ASC, move_names.name ASC";
-                selectionArray = new String[]{"moves.id AS _id", "name", "flavor_text", "pokemon_moves.pokemon_id AS pokemon_id", "pokemon_move_methods.id AS identifier_id", "pokemon_move_methods.identifier AS identifier"};
+                if (!TextUtils.isEmpty(selection)) {
+                    orderBy = "own_move DESC, " + orderBy;
+                }
+
+                selectionArray = new String[]{"moves.id AS _id", "name", "flavor_text", "pokemon_moves.pokemon_id AS pokemon_id", "pokemon_move_methods.id AS identifier_id", "pokemon_move_methods.identifier AS identifier", !TextUtils.isEmpty(selection) ? "CASE pokemon_id WHEN " + selection + " THEN 1 ELSE 0 END AS own_move" : ""};
                 break;
             case POKEDEX_POKEMON_ABILITIES:
                 queryBuilder.setTables("pokemon_abilities, abilities, ability_names");

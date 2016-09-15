@@ -162,7 +162,7 @@ public class DexDetailFragment extends Fragment {
                                     }
                                 });
                             }
-                            loadLevelUpMoveIntoTableLayout(movesCursor, levelUpList);
+                            loadLevelUpMoveIntoTableLayout(movesCursor, levelUpList, id);
                             break;
                         case 2:
                             // Egg Move
@@ -180,7 +180,7 @@ public class DexDetailFragment extends Fragment {
                                     }
                                 });
                             }
-                            loadEggMoveIntoTableLayout(movesCursor, eggList);
+                            loadEggMoveIntoTableLayout(movesCursor, eggList, id);
                             break;
                         case 3:
                             // Tutor Move
@@ -198,7 +198,7 @@ public class DexDetailFragment extends Fragment {
                                     }
                                 });
                             }
-                            loadTutorMoveIntoTableLayout(movesCursor, tutorList);
+                            loadTutorMoveIntoTableLayout(movesCursor, tutorList, id);
                             break;
                         case 4:
                             // Machine Move
@@ -216,10 +216,9 @@ public class DexDetailFragment extends Fragment {
                                     }
                                 });
                             }
-                            loadMachineMoveIntoTableLayout(movesCursor, machineList);
+                            loadMachineMoveIntoTableLayout(movesCursor, machineList, id);
                             break;
                     }
-                    // TODO Pre-evolution Move
 
                     movesCursor.moveToNext();
                 }
@@ -341,7 +340,7 @@ public class DexDetailFragment extends Fragment {
         return view;
     }
 
-    private static void loadLevelUpMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+    private static void loadLevelUpMoveIntoTableLayout(Cursor movesCursor, ViewGroup table, String sourceSpeciesID) {
         View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
         String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
         TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
@@ -351,54 +350,68 @@ public class DexDetailFragment extends Fragment {
         TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
         flavorTextView.setText(flavorText);
 
-        // TODO: Can still provide more information on the moves.
-
-        table.addView(moveView);
-    }
-
-    private static void loadMachineMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
-        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-        String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
-        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-        nameView.setText(name);
-
-        String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
-        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-        flavorTextView.setText(flavorText);
+        String moveSpeciesID = movesCursor.getString(movesCursor.getColumnIndex("pokemon_id"));
+        if (!moveSpeciesID.equalsIgnoreCase(sourceSpeciesID)) {
+            moveView.setBackgroundColor(table.getContext().getResources().getColor(android.R.color.darker_gray));
+        }
 
         // TODO: Can still provide more information on the moves.
 
         table.addView(moveView);
     }
 
-    private static void loadEggMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
-        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-        String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
-        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-        nameView.setText(name);
+    private static void loadMachineMoveIntoTableLayout(Cursor movesCursor, ViewGroup table, String sourceSpeciesID) {
+        String moveSpeciesID = movesCursor.getString(movesCursor.getColumnIndex("pokemon_id"));
+        if (moveSpeciesID.equalsIgnoreCase(sourceSpeciesID)) {
+            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+            nameView.setText(name);
 
-        String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
-        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-        flavorTextView.setText(flavorText);
+            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+            flavorTextView.setText(flavorText);
 
-        // TODO: Can still provide more information on the moves.
+            // TODO: Can still provide more information on the moves.
 
-        table.addView(moveView);
+            table.addView(moveView);
+        }
     }
 
-    private static void loadTutorMoveIntoTableLayout(Cursor moveCursor, ViewGroup table) {
-        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-        String name = moveCursor.getString(moveCursor.getColumnIndex("name"));
-        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-        nameView.setText(name);
+    private static void loadEggMoveIntoTableLayout(Cursor movesCursor, ViewGroup table, String sourceSpeciesID) {
+        String moveSpeciesID = movesCursor.getString(movesCursor.getColumnIndex("pokemon_id"));
+        if (moveSpeciesID.equalsIgnoreCase(sourceSpeciesID)) {
+            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+            nameView.setText(name);
 
-        String flavorText = moveCursor.getString(moveCursor.getColumnIndex("flavor_text"));
-        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-        flavorTextView.setText(flavorText);
+            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+            flavorTextView.setText(flavorText);
 
-        // TODO: Can still provide more information on the move.
+            // TODO: Can still provide more information on the moves.
 
-        table.addView(moveView);
+            table.addView(moveView);
+        }
+    }
+
+    private static void loadTutorMoveIntoTableLayout(Cursor moveCursor, ViewGroup table, String sourceSpeciesID) {
+        String moveSpeciesID = moveCursor.getString(moveCursor.getColumnIndex("pokemon_id"));
+        if (moveSpeciesID.equalsIgnoreCase(sourceSpeciesID)) {
+            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+            String name = moveCursor.getString(moveCursor.getColumnIndex("name"));
+            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+            nameView.setText(name);
+
+            String flavorText = moveCursor.getString(moveCursor.getColumnIndex("flavor_text"));
+            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+            flavorTextView.setText(flavorText);
+
+            // TODO: Can still provide more information on the move.
+
+            table.addView(moveView);
+        }
     }
 
     public interface DexDetailListener {
