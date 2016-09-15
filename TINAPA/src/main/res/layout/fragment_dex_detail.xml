@@ -262,6 +262,28 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/dex_detail_moves_tutor_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dex_detail_moves_tutor_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tutor Moves" />
+
+
+                <LinearLayout
+                    android:id="@+id/dex_detail_moves_tutor_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/dex_detail_evolution_chain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

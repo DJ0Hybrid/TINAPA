@@ -142,6 +142,7 @@ public class DexDetailFragment extends Fragment {
             ViewGroup levelUpList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_level_up_list);
             ViewGroup machineList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_machine_list);
             ViewGroup eggList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_egg_list);
+            ViewGroup tutorList = (ViewGroup) view.findViewById(R.id.dex_detail_moves_tutor_list);
             if (movesCursor != null && movesCursor.moveToFirst() && movesCursor.getCount() > 0) {
                 while (!movesCursor.isAfterLast()) {
                     switch (movesCursor.getInt(movesCursor.getColumnIndex("identifier_id"))) {
@@ -182,7 +183,22 @@ public class DexDetailFragment extends Fragment {
                             loadEggMoveIntoTableLayout(movesCursor, eggList);
                             break;
                         case 3:
-                            // TODO Tutor Move
+                            // Tutor Move
+                            View tutorToggle = view.findViewById(R.id.dex_detail_moves_tutor_switch);
+                            if (!tutorToggle.hasOnClickListeners()) {
+                                final ViewGroup finalTutorList = tutorList;
+                                tutorToggle.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if (View.VISIBLE == finalTutorList.getVisibility()) {
+                                            finalTutorList.setVisibility(View.GONE);
+                                        } else if (View.GONE == finalTutorList.getVisibility()) {
+                                            finalTutorList.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                });
+                            }
+                            loadTutorMoveIntoTableLayout(movesCursor, tutorList);
                             break;
                         case 4:
                             // Machine Move
@@ -218,6 +234,9 @@ public class DexDetailFragment extends Fragment {
             }
             if (eggList.getChildCount() == 0) {
                 view.findViewById(R.id.dex_detail_moves_egg_body).setVisibility(View.GONE);
+            }
+            if (tutorList.getChildCount() == 0) {
+                view.findViewById(R.id.dex_detail_moves_tutor_body).setVisibility(View.GONE);
             }
 
             // Evolution Chain
@@ -363,6 +382,21 @@ public class DexDetailFragment extends Fragment {
         flavorTextView.setText(flavorText);
 
         // TODO: Can still provide more information on the moves.
+
+        table.addView(moveView);
+    }
+
+    private static void loadTutorMoveIntoTableLayout(Cursor moveCursor, ViewGroup table) {
+        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+        String name = moveCursor.getString(moveCursor.getColumnIndex("name"));
+        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+        nameView.setText(name);
+
+        String flavorText = moveCursor.getString(moveCursor.getColumnIndex("flavor_text"));
+        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+        flavorTextView.setText(flavorText);
+
+        // TODO: Can still provide more information on the move.
 
         table.addView(moveView);
     }
