@@ -180,7 +180,7 @@ public class DexDetailFragment extends Fragment {
                                     }
                                 });
                             }
-                            loadEggMoveIntoTableLayout(movesCursor, eggList, id);
+                            loadEggMoveIntoTableLayout(movesCursor, eggList;
                             break;
                         case 3:
                             // Tutor Move
@@ -378,22 +378,19 @@ public class DexDetailFragment extends Fragment {
         }
     }
 
-    private static void loadEggMoveIntoTableLayout(Cursor movesCursor, ViewGroup table, String sourceSpeciesID) {
-        String moveSpeciesID = movesCursor.getString(movesCursor.getColumnIndex("pokemon_id"));
-        if (moveSpeciesID.equalsIgnoreCase(sourceSpeciesID)) {
-            View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
-            String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
-            TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
-            nameView.setText(name);
+    private static void loadEggMoveIntoTableLayout(Cursor movesCursor, ViewGroup table) {
+        View moveView = LayoutInflater.from(table.getContext()).inflate(R.layout.cell_move, table, false);
+        String name = movesCursor.getString(movesCursor.getColumnIndex("name"));
+        TextView nameView = (TextView) moveView.findViewById(R.id.cell_move_name);
+        nameView.setText(name);
 
-            String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
-            TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
-            flavorTextView.setText(flavorText);
+        String flavorText = movesCursor.getString(movesCursor.getColumnIndex("flavor_text"));
+        TextView flavorTextView = (TextView) moveView.findViewById(R.id.cell_move_flavor_text);
+        flavorTextView.setText(flavorText);
 
-            // TODO: Can still provide more information on the moves.
+        // TODO: Can still provide more information on the moves.
 
-            table.addView(moveView);
-        }
+        table.addView(moveView);
     }
 
     private static void loadTutorMoveIntoTableLayout(Cursor moveCursor, ViewGroup table, String sourceSpeciesID) {
