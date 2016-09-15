@@ -180,7 +180,7 @@ public class DexDetailFragment extends Fragment {
                                     }
                                 });
                             }
-                            loadEggMoveIntoTableLayout(movesCursor, eggList;
+                            loadEggMoveIntoTableLayout(movesCursor, eggList);
                             break;
                         case 3:
                             // Tutor Move
