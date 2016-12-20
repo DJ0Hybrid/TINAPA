@@ -54,6 +54,7 @@ public class TinapaDatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "OnCreate called.");
         createBus();
         executeSQLScript(db, R.raw.database_creation, "database_creation.sql");
+        onUpgrade(db, 1, DATABASE_VERSION);
     }
 
     @Override
