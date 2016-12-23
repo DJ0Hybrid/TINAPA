@@ -1,0 +1,434 @@
+﻿Normalium Z
+This is a crystallized form of Z-Power.\nIt upgrades Normal-type moves to Z-Moves.
+
+Firium Z
+This is a crystallized form of Z-Power.\nIt upgrades Fire-type moves to Z-Moves.
+
+Waterium Z
+This is a crystallized form of Z-Power.\nIt upgrades Water-type moves to Z-Moves.
+
+Electrium Z
+This is a crystallized form of Z-Power.\nIt upgrades Electric-type moves to Z-Moves.
+
+Grassium Z
+This is a crystallized form of Z-Power.\nIt upgrades Grass-type moves to Z-Moves.
+
+Icium Z
+This is a crystallized form of Z-Power.\nIt upgrades Ice-type moves to Z-Moves.
+
+Fightinium Z
+This is a crystallized form of Z-Power.\nIt upgrades Fighting-type moves to Z-Moves.
+
+Poisonium Z
+This is a crystallized form of Z-Power.\nIt upgrades Poison-type moves to Z-Moves.
+
+Groundium Z
+This is a crystallized form of Z-Power.\nIt upgrades Ground-type moves to Z-Moves.
+
+Flyinium Z
+This is a crystallized form of Z-Power.\nIt upgrades Flying-type moves to Z-Moves.
+
+Psychium Z
+This is a crystallized form of Z-Power.\nIt upgrades Psychic-type moves to Z-Moves.
+
+Buginium Z
+This is a crystallized form of Z-Power.\nIt upgrades Bug-type moves to Z-Moves.
+
+Rockium Z
+This is a crystallized form of Z-Power.\nIt upgrades Rock-type moves to Z-Moves.
+
+Ghostium Z
+This is a crystallized form of Z-Power.\nIt upgrades Ghost-type moves to Z-Moves.
+
+Dragonium Z
+This is a crystallized form of Z-Power.\nIt upgrades Dragon-type moves to Z-Moves.
+
+Darkinium Z
+This is a crystallized form of Z-Power.\nIt upgrades Dark-type moves to Z-Moves.
+
+Steelium Z
+This is a crystallized form of Z-Power.\nIt upgrades Steel-type moves to Z-Moves.
+
+Fairium Z
+This is a crystallized form of Z-Power.\nIt upgrades Fairy-type moves to Z-Moves.
+
+Pikanium Z
+This is a crystallized form of Z-Power.\nIt upgrades Pikachu’s Volt Tackle to a Z-Move.
+
+Bottle Cap
+A beautiful bottle cap that gives off a silver gleam.\nSome people are happy to receive one.
+
+Gold Bottle Cap
+A beautiful bottle cap that gives off a golden gleam.\nSome people are happy to receive one.
+
+Z-Ring
+A mysterious ring that enables Pokémon to use\nZ-Power. It requires both the willpower and\nthe physical power of the Trainer wearing it.
+
+Decidium Z
+This is a crystallized form of Z-Power.\nIt upgrades Decidueye’s Spirit Shackle to a Z-Move.
+
+Incinium Z
+This is a crystallized form of Z-Power.\nIt upgrades Incineroar’s Darkest Lariat to a Z-Move.
+
+Primarium Z
+This is a crystallized form of Z-Power.\nIt upgrades Primarina’s Sparkling Aria to a Z-Move.
+
+Tapunium Z
+This is a crystallized form of Z-Power. It upgrades\nthe tapu’s Nature’s Madness to a Z-Move.
+
+Marshadium Z
+This is a crystallized form of Z-Power.\nIt upgrades Marshadow’s Spectral Thief to\na Z-Move.
+
+Aloraichium Z
+This is a crystallized form of Z-Power. It upgrades\nAlolan Raichu’s Thunderbolt to a Z-Move.
+
+Snorlium Z
+This is a crystallized form of Z-Power.\nIt upgrades Snorlax’s Giga Impact to a Z-Move.
+
+Eevium Z
+This is a crystallized form of Z-Power.\nIt upgrades Eevee’s Last Resort to a Z-Move.
+
+Mewnium Z
+This is a crystallized form of Z-Power.\nIt upgrades Mew’s Psychic to a Z-Move.
+
+Normalium Z
+It converts Z-Power into crystals that upgrade\nNormal-type moves to Normal-type Z-Moves.
+
+Firium Z
+It converts Z-Power into crystals that upgrade\nFire-type moves to Fire-type Z-Moves.
+
+Waterium Z
+It converts Z-Power into crystals that upgrade\nWater-type moves to Water-type Z-Moves.
+
+Electrium Z
+It converts Z-Power into crystals that upgrade\nElectric-type moves to Electric-type Z-Moves.
+
+Grassium Z
+It converts Z-Power into crystals that upgrade\nGrass-type moves to Grass-type Z-Moves.
+
+Icium Z
+It converts Z-Power into crystals that upgrade\nIce-type moves to Ice-type Z-Moves.
+
+Fightinium Z
+It converts Z-Power into crystals that upgrade\nFighting-type moves to Fighting-type Z-Moves.
+
+Poisonium Z
+It converts Z-Power into crystals that upgrade\nPoison-type moves to Poison-type Z-Moves.
+
+Groundium Z
+It converts Z-Power into crystals that upgrade\nGround-type moves to Ground-type Z-Moves.
+
+Flyinium Z
+It converts Z-Power into crystals that upgrade\nFlying-type moves to Flying-type Z-Moves.
+
+Psychium Z
+It converts Z-Power into crystals that upgrade\nPsychic-type moves to Psychic-type Z-Moves.
+
+Buginium Z
+It converts Z-Power into crystals that upgrade\nBug-type moves to Bug-type Z-Moves.
+
+Rockium Z
+It converts Z-Power into crystals that upgrade\nRock-type moves to Rock-type Z-Moves.
+
+Ghostium Z
+It converts Z-Power into crystals that upgrade\nGhost-type moves to Ghost-type Z-Moves.
+
+Dragonium Z
+It converts Z-Power into crystals that upgrade\nDragon-type moves to Dragon-type Z-Moves.
+
+Darkinium Z
+It converts Z-Power into crystals that upgrade\nDark-type moves to Dark-type Z-Moves.
+
+Steelium Z
+It converts Z-Power into crystals that upgrade\nSteel-type moves to Steel-type Z-Moves.
+
+Fairium Z
+It converts Z-Power into crystals that upgrade\nFairy-type moves to Fairy-type Z-Moves.
+
+Pikanium Z
+It converts Z-Power into crystals that upgrade\nPikachu’s Volt Tackle to an exclusive Z-Move.
+
+Decidium Z
+It converts Z-Power into crystals that upgrade\nDecidueye’s Spirit Shackle to an exclusive Z-Move.
+
+Incinium Z
+It converts Z-Power into crystals that upgrade\nIncineroar’s Darkest Lariat to an exclusive Z-Move.
+
+Primarium Z
+It converts Z-Power into crystals that upgrade\nPrimarina’s Sparkling Aria to an exclusive Z-Move.
+
+Tapunium Z
+It converts Z-Power into crystals that upgrade the\ntapu’s Nature’s Madness to an exclusive Z-Move.
+
+Marshadium Z
+It converts Z-Power into crystals that upgrade\nMarshadow’s Spectral Thief to an\nexclusive Z-Move.
+
+Aloraichium Z
+It converts Z-Power into crystals that upgrade\nAlolan Raichu’s Thunderbolt to an exclusive Z-Move.
+
+Snorlium Z
+It converts Z-Power into crystals that upgrade\nSnorlax’s Giga Impact to an exclusive Z-Move.
+
+Eevium Z
+It converts Z-Power into crystals that upgrade\nEevee’s Last Resort to an exclusive Z-Move.
+
+Mewnium Z
+It converts Z-Power into crystals that upgrade\nMew’s Psychic to an exclusive Z-Move.
+
+Pikashunium Z
+It converts Z-Power into crystals that upgrade\na Thunderbolt by Pikachu in a cap to an\nexclusive Z-Move.
+
+Pikashunium Z
+This is a crystallized form of Z-Power.\nIt upgrades a Thunderbolt by Pikachu in a cap to\na Z-Move.
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+Forage Bag
+A bag to carry ingredients gathered during Mallow’s\ntrial in the jungle.
+
+Fishing Rod
+A Fishing Rod made by Captain Lana. Cast a line\nover piles of underwater rocks to fish for wild\naquatic Pokémon.
+
+Professor’s Mask
+The mask that belongs to The Masked Royal. \nThis pro wrestler apparently sews his mask on a\nmachine himself.
+
+Festival Ticket
+A ticket that allows you to host a mission in\nFestival Plaza.
+
+Sparkling Stone
+A stone entrusted by a Pokémon that has been\nvenerated as a guardian deity in the Alola region.\nThere is said to be some secret in how it sparkles.
+
+Adrenaline Orb
+Using it makes wild Pokémon more likely to call for\nhelp. If held by a Pokémon, it boosts Speed when\nintimidated. It can be used only once.
+
+Zygarde Cube
+An item to store Zygarde Cores and Cells.\nYou can also use it to teach Zygarde moves.
+
+???
+-\n-\n-
+
+Ice Stone
+A peculiar stone that can make certain species of\nPokémon evolve. It has an unmistakable\nsnowflake pattern.
+
+Ride Pager
+By entering certain numbers on this pager,\nyou can summon Ride Pokémon in an instant.
+
+Beast Ball
+A special Poké Ball designed to catch Ultra Beasts.\nIt has a low success rate for catching others.
+
+Big Malasada
+The Alola region’s local specialty—fried bread.\nIt can be used once to heal all the status conditions\nof a Pokémon.
+
+Red Nectar
+A flower nectar obtained at Ula’ula Meadow.\nIt changes the form of certain species of Pokémon.
+
+Yellow Nectar
+A flower nectar obtained at Melemele Meadow.\nIt changes the form of certain species of Pokémon.
+
+Pink Nectar
+The flower nectar obtained at the flowering shrubs\non Royal Avenue.\nIt changes the form of certain species of Pokémon.
+
+Purple Nectar
+A flower nectar obtained at Poni Meadow.\nIt changes the form of certain species of Pokémon.
+
+Sun Flute
+It is said that the tones it produces were offered\nup as an expression of gratitude to the Legendary\nPokémon of the sun.
+
+Moon Flute
+It is said that the tones it produces were offered\nup as an expression of gratitude to the Legendary\nPokémon of the moon.
+
+???
+-\n-\n-
+
+Enigmatic Card
+A mysterious card.\nWritten on it is a request for you to go to a\nguest room in an Akala motel on Route 8.
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+Terrain Extender
+An item to be held by a Pokémon. It extends the\nduration of the terrain caused by the holder’s move\nor Ability.
+
+Protective Pads
+An item to be held by a Pokémon. These pads\nprotect the holder from effects caused by\nmaking direct contact with the target.
+
+Electric Seed
+An item to be held by a Pokémon. It boosts Defense\non Electric Terrain. It can only be used once.
+
+Psychic Seed
+An item to be held by a Pokémon. It boosts Sp. Def\non Psychic Terrain. It can only be used once.
+
+Misty Seed
+An item to be held by a Pokémon. It boosts Sp. Def\non Misty Terrain. It can only be used once.
+
+Grassy Seed
+An item to be held by a Pokémon. It boosts Defense\non Grassy Terrain. It can only be used once.
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+???
+-\n-\n-
+
+Fighting Memory
+A memory disc that contains Fighting-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Flying Memory
+A memory disc that contains Flying-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Poison Memory
+A memory disc that contains Poison-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Ground Memory
+A memory disc that contains Ground-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Rock Memory
+A memory disc that contains Rock-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Bug Memory
+A memory disc that contains Bug-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Ghost Memory
+A memory disc that contains Ghost-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Steel Memory
+A memory disc that contains Steel-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Fire Memory
+A memory disc that contains Fire-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Water Memory
+A memory disc that contains Water-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Grass Memory
+A memory disc that contains Grass-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Electric Memory
+A memory disc that contains Electric-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Psychic Memory
+A memory disc that contains Psychic-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Ice Memory
+A memory disc that contains Ice-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Dragon Memory
+A memory disc that contains Dragon-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Dark Memory
+A memory disc that contains Dark-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.
+
+Fairy Memory
+A memory disc that contains Fairy-type data.\nIt changes the type of the holder if held by\na certain species of Pokémon.

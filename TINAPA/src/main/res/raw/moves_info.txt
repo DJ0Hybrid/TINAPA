@@ -1,0 +1,1894 @@
+﻿Pound
+Breakneck Blitz (100 Power)
+
+Karate Chop
+All-Out Pummeling (100 Power)
+
+Double Slap
+Breakneck Blitz (100 Power)
+
+Comet Punch
+Breakneck Blitz (100 Power)
+
+Mega Punch
+Breakneck Blitz (160 Power)
+
+Pay Day
+Breakneck Blitz (100 Power)
+
+Fire Punch
+Inferno Overdrive (140 Power)
+
+Ice Punch
+Subzero Slammer (140 Power)
+
+Thunder Punch
+Gigavolt Havoc (140 Power)
+
+Scratch (!)
+Flags 0x49
+Breakneck Blitz (100 Power)
+
+Vice Grip
+Breakneck Blitz (100 Power)
+
+Guillotine
+Breakneck Blitz (180 Power)
+
+Razor Wind
+Breakneck Blitz (160 Power)
+
+Swords Dance (!)
+Flags 0x10020
+
+Cut
+Breakneck Blitz (100 Power)
+
+Gust
+Supersonic Skystrike (100 Power)
+
+Wing Attack
+Supersonic Skystrike (120 Power)
+
+Fly
+Supersonic Skystrike (175 Power)
+
+Bind (!)
+Flags 0x49
+Breakneck Blitz (100 Power)
+
+Slam
+Breakneck Blitz (160 Power)
+
+Vine Whip
+Bloom Doom (100 Power)
+
+Stomp
+Breakneck Blitz (120 Power)
+
+Double Kick
+All-Out Pummeling (100 Power)
+
+Mega Kick
+Breakneck Blitz (190 Power)
+
+Jump Kick
+All-Out Pummeling (180 Power)
+
+Rolling Kick
+All-Out Pummeling (120 Power)
+
+Headbutt
+Breakneck Blitz (140 Power)
+
+Horn Attack
+Breakneck Blitz (120 Power)
+
+Fury Attack
+Breakneck Blitz (100 Power)
+
+Horn Drill
+Breakneck Blitz (180 Power)
+
+Tackle (!)
+40 Power
+Breakneck Blitz (100 Power)
+
+Body Slam
+Breakneck Blitz (160 Power)
+
+Wrap (!)
+Flags 0x49
+Breakneck Blitz (100 Power)
+
+Take Down
+Breakneck Blitz (175 Power)
+
+Thrash
+Breakneck Blitz (190 Power)
+
+Double-Edge
+Breakneck Blitz (190 Power)
+
+Poison Sting
+Acid Downpour (100 Power)
+
+Twineedle
+Savage Spin-Out (100 Power)
+
+Pin Missile
+Savage Spin-Out (140 Power)
+
+Bite (!)
+Flags 0x49
+Black Hole Eclipse (120 Power)
+
+Sonic Boom
+Breakneck Blitz (100 Power)
+
+Acid
+Acid Downpour (100 Power)
+
+Ember
+Inferno Overdrive (100 Power)
+
+Flamethrower
+Inferno Overdrive (175 Power)
+
+Water Gun
+Hydro Vortex (100 Power)
+
+Hydro Pump
+Hydro Vortex (185 Power)
+
+Surf
+Hydro Vortex (175 Power)
+
+Ice Beam
+Subzero Slammer (175 Power)
+
+Blizzard
+Subzero Slammer (185 Power)
+
+Psybeam
+Shattered Psyche (120 Power)
+
+Bubble Beam
+Hydro Vortex (120 Power)
+
+Aurora Beam
+Subzero Slammer (120 Power)
+
+Hyper Beam
+Breakneck Blitz (200 Power)
+
+Peck
+Supersonic Skystrike (100 Power)
+
+Drill Peck
+Supersonic Skystrike (160 Power)
+
+Submission
+All-Out Pummeling (160 Power)
+
+Low Kick
+All-Out Pummeling (160 Power)
+
+Counter
+All-Out Pummeling (100 Power)
+
+Seismic Toss
+All-Out Pummeling (100 Power)
+
+Strength
+Breakneck Blitz (160 Power)
+
+Absorb
+Bloom Doom (100 Power)
+
+Mega Drain
+Bloom Doom (120 Power)
+
+Razor Leaf
+Bloom Doom (100 Power)
+
+Solar Beam
+Bloom Doom (190 Power)
+
+Petal Dance (!)
+Flags 0x10049
+Bloom Doom (190 Power)
+
+Dragon Rage
+Devastating Drake (100 Power)
+
+Fire Spin (!)
+Flags 0x48
+Inferno Overdrive (100 Power)
+
+Thunder Shock
+Gigavolt Havoc (100 Power)
+
+Thunderbolt
+Gigavolt Havoc (175 Power)
+
+Thunder Wave (!)
+90% Accuracy
+
+Thunder
+Gigavolt Havoc (185 Power)
+
+Rock Throw
+Continental Crush (100 Power)
+
+Earthquake
+Tectonic Rage (180 Power)
+
+Fissure
+Tectonic Rage (180 Power)
+
+Dig
+Tectonic Rage (160 Power)
+
+Confusion
+Shattered Psyche (100 Power)
+
+Psychic
+Shattered Psyche (175 Power)
+
+Quick Attack (!)
+Flags 0x49
+Breakneck Blitz (100 Power)
+
+Rage
+Breakneck Blitz (100 Power)
+
+Night Shade
+Never-Ending Nightmare (100 Power)
+
+Bide
+Breakneck Blitz (100 Power)
+
+Self-Destruct
+Breakneck Blitz (200 Power)
+
+Egg Bomb
+Breakneck Blitz (180 Power)
+
+Lick
+Never-Ending Nightmare (100 Power)
+
+Smog
+Acid Downpour (100 Power)
+
+Sludge
+Acid Downpour (120 Power)
+
+Bone Club
+Tectonic Rage (120 Power)
+
+Fire Blast
+Inferno Overdrive (185 Power)
+
+Waterfall
+Hydro Vortex (160 Power)
+
+Clamp
+Hydro Vortex (100 Power)
+
+Swift
+Breakneck Blitz (120 Power)
+
+Skull Bash
+Breakneck Blitz (195 Power)
+
+Spike Cannon
+Breakneck Blitz (100 Power)
+
+Constrict
+Breakneck Blitz (100 Power)
+
+High Jump Kick
+All-Out Pummeling (195 Power)
+
+Dream Eater
+Shattered Psyche (180 Power)
+
+Barrage
+Breakneck Blitz (100 Power)
+
+Leech Life (!)
+80 Power
+10 PP
+Savage Spin-Out (160 Power)
+
+Sky Attack
+Supersonic Skystrike (200 Power)
+
+Bubble
+Hydro Vortex (100 Power)
+
+Dizzy Punch
+Breakneck Blitz (140 Power)
+
+Psywave
+Shattered Psyche (100 Power)
+
+Crabhammer
+Hydro Vortex (180 Power)
+
+Explosion
+Breakneck Blitz (200 Power)
+
+Fury Swipes (!)
+Flags 0x49
+Breakneck Blitz (100 Power)
+
+Bonemerang
+Tectonic Rage (100 Power)
+
+Rock Slide
+Continental Crush (140 Power)
+
+Hyper Fang
+Breakneck Blitz (160 Power)
+
+Tri Attack
+Breakneck Blitz (160 Power)
+
+Super Fang
+Breakneck Blitz (100 Power)
+
+Slash
+Breakneck Blitz (140 Power)
+
+Struggle
+Breakneck Blitz (1 Power)
+
+Triple Kick
+All-Out Pummeling (120 Power)
+
+Thief
+Black Hole Eclipse (120 Power)
+
+Flame Wheel
+Inferno Overdrive (120 Power)
+
+Snore
+Breakneck Blitz (100 Power)
+
+Flail
+Breakneck Blitz (160 Power)
+
+Aeroblast
+Supersonic Skystrike (180 Power)
+
+Reversal
+All-Out Pummeling (160 Power)
+
+Powder Snow
+Subzero Slammer (100 Power)
+
+Mach Punch
+All-Out Pummeling (100 Power)
+
+Feint Attack
+Black Hole Eclipse (120 Power)
+
+Sludge Bomb
+Acid Downpour (175 Power)
+
+Mud-Slap
+Tectonic Rage (100 Power)
+
+Octazooka
+Hydro Vortex (120 Power)
+
+Zap Cannon
+Gigavolt Havoc (190 Power)
+
+Icy Wind
+Subzero Slammer (100 Power)
+
+Bone Rush
+Tectonic Rage (140 Power)
+
+Outrage
+Devastating Drake (190 Power)
+
+Giga Drain
+Bloom Doom (140 Power)
+
+Rollout
+Continental Crush (100 Power)
+
+False Swipe
+Breakneck Blitz (100 Power)
+
+Swagger (!)
+85% Accuracy
+
+Spark
+Gigavolt Havoc (120 Power)
+
+Fury Cutter (!)
+Flags 0x49
+Savage Spin-Out (100 Power)
+
+Steel Wing
+Corkscrew Crash (140 Power)
+
+Return
+Breakneck Blitz (160 Power)
+
+Present
+Breakneck Blitz (100 Power)
+
+Frustration
+Breakneck Blitz (160 Power)
+
+Sacred Fire
+Inferno Overdrive (180 Power)
+
+Magnitude
+Tectonic Rage (140 Power)
+
+Dynamic Punch
+All-Out Pummeling (180 Power)
+
+Megahorn
+Savage Spin-Out (190 Power)
+
+Dragon Breath
+Devastating Drake (120 Power)
+
+Pursuit
+Black Hole Eclipse (100 Power)
+
+Rapid Spin
+Breakneck Blitz (100 Power)
+
+Iron Tail
+Corkscrew Crash (180 Power)
+
+Metal Claw (!)
+Flags 0x49
+Corkscrew Crash (100 Power)
+
+Vital Throw
+All-Out Pummeling (140 Power)
+
+Hidden Power
+Breakneck Blitz (120 Power)
+
+Cross Chop
+All-Out Pummeling (180 Power)
+
+Twister
+Devastating Drake (100 Power)
+
+Crunch
+Black Hole Eclipse (160 Power)
+
+Mirror Coat
+Shattered Psyche (100 Power)
+
+Extreme Speed
+Breakneck Blitz (160 Power)
+
+Ancient Power
+Continental Crush (120 Power)
+
+Shadow Ball
+Never-Ending Nightmare (160 Power)
+
+Future Sight
+Shattered Psyche (190 Power)
+
+Rock Smash
+All-Out Pummeling (100 Power)
+
+Whirlpool
+Hydro Vortex (100 Power)
+
+Beat Up
+Black Hole Eclipse (100 Power)
+
+Fake Out
+Breakneck Blitz (100 Power)
+
+Uproar
+Breakneck Blitz (175 Power)
+
+Spit Up
+Breakneck Blitz (100 Power)
+
+Heat Wave
+Inferno Overdrive (175 Power)
+
+Facade
+Breakneck Blitz (140 Power)
+
+Focus Punch
+All-Out Pummeling (200 Power)
+
+Smelling Salts
+Breakneck Blitz (140 Power)
+
+Superpower
+All-Out Pummeling (190 Power)
+
+Revenge
+All-Out Pummeling (120 Power)
+
+Brick Break
+All-Out Pummeling (140 Power)
+
+Knock Off
+Black Hole Eclipse (120 Power)
+
+Endeavor
+Breakneck Blitz (160 Power)
+
+Eruption
+Inferno Overdrive (200 Power)
+
+Secret Power
+Breakneck Blitz (140 Power)
+
+Dive
+Hydro Vortex (160 Power)
+
+Arm Thrust
+All-Out Pummeling (100 Power)
+
+Luster Purge
+Shattered Psyche (140 Power)
+
+Mist Ball
+Shattered Psyche (140 Power)
+
+Feather Dance (!)
+Flags 0x18058
+
+Teeter Dance (!)
+Flags 0x10048
+
+Blaze Kick
+Inferno Overdrive (160 Power)
+
+Ice Ball
+Subzero Slammer (100 Power)
+
+Needle Arm
+Bloom Doom (120 Power)
+
+Hyper Voice
+Breakneck Blitz (175 Power)
+
+Poison Fang
+Acid Downpour (100 Power)
+
+Crush Claw
+Breakneck Blitz (140 Power)
+
+Blast Burn
+Inferno Overdrive (200 Power)
+
+Hydro Cannon
+Hydro Vortex (200 Power)
+
+Meteor Mash
+Corkscrew Crash (175 Power)
+
+Astonish
+Never-Ending Nightmare (100 Power)
+
+Weather Ball
+Breakneck Blitz (160 Power)
+
+Air Cutter
+Supersonic Skystrike (120 Power)
+
+Overheat
+Inferno Overdrive (195 Power)
+
+Rock Tomb
+Continental Crush (120 Power)
+
+Silver Wind
+Savage Spin-Out (120 Power)
+
+Water Spout
+Hydro Vortex (200 Power)
+
+Signal Beam
+Savage Spin-Out (140 Power)
+
+Shadow Punch
+Never-Ending Nightmare (120 Power)
+
+Extrasensory
+Shattered Psyche (160 Power)
+
+Sky Uppercut
+All-Out Pummeling (160 Power)
+
+Sand Tomb
+Tectonic Rage (100 Power)
+
+Sheer Cold
+Subzero Slammer (180 Power)
+
+Muddy Water
+Hydro Vortex (175 Power)
+
+Bullet Seed
+Bloom Doom (140 Power)
+
+Aerial Ace
+Supersonic Skystrike (120 Power)
+
+Icicle Spear
+Subzero Slammer (140 Power)
+
+Dragon Claw
+Devastating Drake (160 Power)
+
+Frenzy Plant
+Bloom Doom (200 Power)
+
+Bounce
+Supersonic Skystrike (160 Power)
+
+Mud Shot
+Tectonic Rage (100 Power)
+
+Poison Tail
+Acid Downpour (100 Power)
+
+Covet
+Breakneck Blitz (120 Power)
+
+Volt Tackle
+Gigavolt Havoc (190 Power)
+
+Magical Leaf
+Bloom Doom (120 Power)
+
+Leaf Blade
+Bloom Doom (175 Power)
+
+Dragon Dance (!)
+Flags 0x10020
+
+Rock Blast
+Continental Crush (140 Power)
+
+Shock Wave
+Gigavolt Havoc (120 Power)
+
+Water Pulse
+Hydro Vortex (120 Power)
+
+Doom Desire
+Corkscrew Crash (200 Power)
+
+Psycho Boost
+Shattered Psyche (200 Power)
+
+Wake-Up Slap
+All-Out Pummeling (140 Power)
+
+Hammer Arm
+All-Out Pummeling (180 Power)
+
+Gyro Ball
+Corkscrew Crash (160 Power)
+
+Brine
+Hydro Vortex (120 Power)
+
+Natural Gift
+Breakneck Blitz (160 Power)
+
+Feint
+Breakneck Blitz (100 Power)
+
+Pluck
+Supersonic Skystrike (120 Power)
+
+Metal Burst
+Corkscrew Crash (100 Power)
+
+U-turn
+Savage Spin-Out (140 Power)
+
+Close Combat
+All-Out Pummeling (190 Power)
+
+Payback
+Black Hole Eclipse (100 Power)
+
+Assurance
+Black Hole Eclipse (120 Power)
+
+Fling
+Black Hole Eclipse (100 Power)
+
+Trump Card
+Breakneck Blitz (160 Power)
+
+Wring Out
+Breakneck Blitz (190 Power)
+
+Punishment
+Black Hole Eclipse (160 Power)
+
+Last Resort
+Breakneck Blitz (200 Power)
+
+Sucker Punch (!)
+70 Power
+Black Hole Eclipse (140 Power)
+
+Flare Blitz
+Inferno Overdrive (190 Power)
+
+Force Palm
+All-Out Pummeling (120 Power)
+
+Aura Sphere
+All-Out Pummeling (160 Power)
+
+Poison Jab
+Acid Downpour (160 Power)
+
+Dark Pulse
+Black Hole Eclipse (160 Power)
+
+Night Slash
+Black Hole Eclipse (140 Power)
+
+Aqua Tail
+Hydro Vortex (175 Power)
+
+Seed Bomb
+Bloom Doom (160 Power)
+
+Air Slash
+Supersonic Skystrike (140 Power)
+
+X-Scissor
+Savage Spin-Out (160 Power)
+
+Bug Buzz
+Savage Spin-Out (175 Power)
+
+Dragon Pulse
+Devastating Drake (160 Power)
+
+Dragon Rush
+Devastating Drake (180 Power)
+
+Power Gem
+Continental Crush (160 Power)
+
+Drain Punch
+All-Out Pummeling (140 Power)
+
+Vacuum Wave
+All-Out Pummeling (100 Power)
+
+Focus Blast
+All-Out Pummeling (190 Power)
+
+Energy Ball
+Bloom Doom (175 Power)
+
+Brave Bird
+Supersonic Skystrike (190 Power)
+
+Earth Power
+Tectonic Rage (175 Power)
+
+Giga Impact
+Breakneck Blitz (200 Power)
+
+Bullet Punch
+Corkscrew Crash (100 Power)
+
+Avalanche
+Subzero Slammer (120 Power)
+
+Ice Shard
+Subzero Slammer (100 Power)
+
+Shadow Claw
+Never-Ending Nightmare (140 Power)
+
+Thunder Fang
+Gigavolt Havoc (120 Power)
+
+Ice Fang
+Subzero Slammer (120 Power)
+
+Fire Fang
+Inferno Overdrive (120 Power)
+
+Shadow Sneak
+Never-Ending Nightmare (100 Power)
+
+Mud Bomb
+Tectonic Rage (120 Power)
+
+Psycho Cut
+Shattered Psyche (140 Power)
+
+Zen Headbutt
+Shattered Psyche (160 Power)
+
+Mirror Shot
+Corkscrew Crash (120 Power)
+
+Flash Cannon
+Corkscrew Crash (160 Power)
+
+Rock Climb
+Breakneck Blitz (175 Power)
+
+Draco Meteor
+Devastating Drake (195 Power)
+
+Discharge
+Gigavolt Havoc (160 Power)
+
+Lava Plume
+Inferno Overdrive (160 Power)
+
+Leaf Storm
+Bloom Doom (195 Power)
+
+Power Whip
+Bloom Doom (190 Power)
+
+Rock Wrecker
+Continental Crush (200 Power)
+
+Cross Poison
+Acid Downpour (140 Power)
+
+Gunk Shot
+Acid Downpour (190 Power)
+
+Iron Head
+Corkscrew Crash (160 Power)
+
+Magnet Bomb
+Corkscrew Crash (120 Power)
+
+Stone Edge
+Continental Crush (180 Power)
+
+Grass Knot
+Bloom Doom (160 Power)
+
+Chatter
+Supersonic Skystrike (120 Power)
+
+Judgment
+Breakneck Blitz (180 Power)
+
+Bug Bite
+Savage Spin-Out (120 Power)
+
+Charge Beam
+Gigavolt Havoc (100 Power)
+
+Wood Hammer
+Bloom Doom (190 Power)
+
+Aqua Jet
+Hydro Vortex (100 Power)
+
+Attack Order
+Savage Spin-Out (175 Power)
+
+Head Smash
+Continental Crush (200 Power)
+
+Double Hit
+Breakneck Blitz (140 Power)
+
+Roar of Time
+Devastating Drake (200 Power)
+
+Spacial Rend
+Devastating Drake (180 Power)
+
+Lunar Dance (!)
+Flags 0x11020
+
+Crush Grip
+Breakneck Blitz (190 Power)
+
+Magma Storm
+Inferno Overdrive (180 Power)
+
+Dark Void (!)
+50% Accuracy
+
+Seed Flare
+Bloom Doom (190 Power)
+
+Ominous Wind
+Never-Ending Nightmare (120 Power)
+
+Shadow Force
+Never-Ending Nightmare (190 Power)
+
+Psyshock
+Shattered Psyche (160 Power)
+
+Venoshock
+Acid Downpour (120 Power)
+
+Smack Down
+Continental Crush (100 Power)
+
+Storm Throw
+All-Out Pummeling (120 Power)
+
+Flame Burst
+Inferno Overdrive (140 Power)
+
+Sludge Wave
+Acid Downpour (175 Power)
+
+Quiver Dance (!)
+Flags 0x10020
+
+Heavy Slam
+Corkscrew Crash (160 Power)
+
+Synchronoise
+Shattered Psyche (190 Power)
+
+Electro Ball
+Gigavolt Havoc (160 Power)
+
+Flame Charge
+Inferno Overdrive (100 Power)
+
+Low Sweep
+All-Out Pummeling (120 Power)
+
+Acid Spray
+Acid Downpour (100 Power)
+
+Foul Play
+Black Hole Eclipse (175 Power)
+
+Round
+Breakneck Blitz (120 Power)
+
+Echoed Voice
+Breakneck Blitz (100 Power)
+
+Chip Away
+Breakneck Blitz (140 Power)
+
+Clear Smog
+Acid Downpour (100 Power)
+
+Stored Power
+Shattered Psyche (160 Power)
+
+Ally Switch (!)
+2 Priority
+
+Scald
+Hydro Vortex (160 Power)
+
+Hex
+Never-Ending Nightmare (160 Power)
+
+Sky Drop
+Supersonic Skystrike (120 Power)
+
+Circle Throw
+All-Out Pummeling (120 Power)
+
+Incinerate
+Inferno Overdrive (120 Power)
+
+Acrobatics
+Supersonic Skystrike (100 Power)
+
+Retaliate
+Breakneck Blitz (140 Power)
+
+Final Gambit
+All-Out Pummeling (180 Power)
+
+Inferno
+Inferno Overdrive (180 Power)
+
+Water Pledge
+Hydro Vortex (160 Power)
+
+Fire Pledge
+Inferno Overdrive (160 Power)
+
+Grass Pledge
+Bloom Doom (160 Power)
+
+Volt Switch
+Gigavolt Havoc (140 Power)
+
+Struggle Bug
+Savage Spin-Out (100 Power)
+
+Bulldoze
+Tectonic Rage (120 Power)
+
+Frost Breath
+Subzero Slammer (120 Power)
+
+Dragon Tail
+Devastating Drake (120 Power)
+
+Electroweb
+Gigavolt Havoc (100 Power)
+
+Wild Charge
+Gigavolt Havoc (175 Power)
+
+Drill Run
+Tectonic Rage (160 Power)
+
+Dual Chop
+Devastating Drake (100 Power)
+
+Heart Stamp
+Shattered Psyche (120 Power)
+
+Horn Leech
+Bloom Doom (140 Power)
+
+Sacred Sword
+All-Out Pummeling (175 Power)
+
+Razor Shell
+Hydro Vortex (140 Power)
+
+Heat Crash
+Inferno Overdrive (160 Power)
+
+Leaf Tornado
+Bloom Doom (120 Power)
+
+Steamroller
+Savage Spin-Out (120 Power)
+
+Night Daze
+Black Hole Eclipse (160 Power)
+
+Psystrike
+Shattered Psyche (180 Power)
+
+Tail Slap
+Breakneck Blitz (140 Power)
+
+Hurricane
+Supersonic Skystrike (185 Power)
+
+Head Charge
+Breakneck Blitz (190 Power)
+
+Gear Grind
+Corkscrew Crash (180 Power)
+
+Searing Shot
+Inferno Overdrive (180 Power)
+
+Techno Blast
+Breakneck Blitz (190 Power)
+
+Relic Song
+Breakneck Blitz (140 Power)
+
+Secret Sword
+All-Out Pummeling (160 Power)
+
+Glaciate
+Subzero Slammer (120 Power)
+
+Bolt Strike
+Gigavolt Havoc (195 Power)
+
+Blue Flare
+Inferno Overdrive (195 Power)
+
+Fiery Dance (!)
+Flags 0x10048
+Inferno Overdrive (160 Power)
+
+Freeze Shock
+Subzero Slammer (200 Power)
+
+Ice Burn
+Subzero Slammer (200 Power)
+
+Snarl
+Black Hole Eclipse (100 Power)
+
+Icicle Crash
+Subzero Slammer (160 Power)
+
+V-create
+Inferno Overdrive (220 Power)
+
+Fusion Flare
+Inferno Overdrive (180 Power)
+
+Fusion Bolt
+Gigavolt Havoc (180 Power)
+
+Flying Press (!)
+100 Power
+All-Out Pummeling (170 Power)
+
+Belch
+Acid Downpour (190 Power)
+
+Fell Stinger (!)
+50 Power
+Savage Spin-Out (100 Power)
+
+Phantom Force
+Never-Ending Nightmare (175 Power)
+
+Parabolic Charge (!)
+65 Power
+Gigavolt Havoc (120 Power)
+
+Petal Blizzard
+Bloom Doom (175 Power)
+
+Freeze-Dry
+Subzero Slammer (140 Power)
+
+Disarming Voice
+Twinkle Tackle (100 Power)
+
+Draining Kiss
+Twinkle Tackle (100 Power)
+
+Play Rough
+Twinkle Tackle (175 Power)
+
+Fairy Wind
+Twinkle Tackle (100 Power)
+
+Moonblast
+Twinkle Tackle (175 Power)
+
+Boomburst
+Breakneck Blitz (200 Power)
+
+Diamond Storm (!)
+50% chance for +2 Defense for the user
+Continental Crush (180 Power)
+
+Steam Eruption
+Hydro Vortex (185 Power)
+
+Hyperspace Hole
+Shattered Psyche (160 Power)
+
+Water Shuriken (!)
+Special
+Hydro Vortex (100 Power)
+
+Mystical Fire (!)
+75 Power
+Inferno Overdrive (140 Power)
+
+Eerie Impulse (!)
+Flags 0x58
+
+Dazzling Gleam
+Twinkle Tackle (160 Power)
+
+Nuzzle
+Gigavolt Havoc (100 Power)
+
+Hold Back
+Breakneck Blitz (100 Power)
+
+Infestation
+Savage Spin-Out (100 Power)
+
+Power-Up Punch
+All-Out Pummeling (100 Power)
+
+Oblivion Wing
+Supersonic Skystrike (160 Power)
+
+Thousand Arrows
+Tectonic Rage (180 Power)
+
+Thousand Waves
+Tectonic Rage (175 Power)
+
+Land’s Wrath
+Tectonic Rage (185 Power)
+
+Light of Ruin
+Twinkle Tackle (200 Power)
+
+Origin Pulse
+Hydro Vortex (185 Power)
+
+Precipice Blades
+Tectonic Rage (190 Power)
+
+Dragon Ascent
+Supersonic Skystrike (190 Power)
+
+Hyperspace Fury
+Black Hole Eclipse (180 Power)
+
+Catastropika
+The user, Pikachu, surrounds itself with the\nmaximum amount of electricity using its Z-Power\nand pounces on its target with full force.
+Electric
+Physical
+210 Power
+1 PP
+Adjacent Pokémon
+Flags 0x1
+
+Shore Up
+The user regains up to half of its max HP. It restores\nmore HP in a sandstorm.
+Ground
+Status
+10 PP
+Self
+Heals user for 50% of total HP
+Flags 0x1020
+
+First Impression
+Although this move has great power, it only works\nthe first turn the user is in battle.
+Bug
+Physical
+90 Power
+100% Accuracy
+10 PP
+2 Priority
+Adjacent Pokémon
+Effect 382
+Flags 0x49
+Savage Spin-Out (175 Power)
+
+Baneful Bunker
+In addition to protecting the user from attacks, this\nmove also poisons any attacker that makes\ndirect contact.
+Poison
+Status
+10 PP
+4 Priority
+Self
+Effect 383
+
+Spirit Shackle
+The user attacks while simultaneously stitching the\ntarget’s shadow to the ground to prevent the target\nfrom escaping.
+Ghost
+Physical
+80 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 384
+Flags 0x48
+Never-Ending Nightmare (160 Power)
+
+Darkest Lariat
+The user swings both arms and hits the target.\nThe target’s stat changes don’t affect this\nattack’s damage.
+Dark
+Physical
+85 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 303, similar to Chip Away
+Flags 0x49
+Black Hole Eclipse (160 Power)
+
+Sparkling Aria
+The user bursts into song, emitting many bubbles.\nAny Pokémon suffering from a burn will be healed\nby the touch of these bubbles.
+Water
+Special
+90 Power
+100% Accuracy
+10 PP
+All adjacent Pokémon
+Effect 385
+Flags 0x2148
+Hydro Vortex (175 Power)
+
+Ice Hammer
+The user swings and hits with its strong, heavy fist.\nIt lowers the user’s Speed, however.
+Ice
+Physical
+100 Power
+90% Accuracy
+10 PP
+Adjacent Pokémon
+-1 Speed for the user
+Flags 0xC9
+Subzero Slammer (180 Power)
+
+Floral Healing
+The user restores the target’s HP by up to half of its\nmax HP. It restores more HP when the terrain\nis grass.
+Fairy
+Status
+10 PP
+Adjacent Pokémon
+Heals user for 50% of total HP
+Flags 0x9018
+
+High Horsepower
+The user fiercely attacks the target using its\nentire body.
+Ground
+Physical
+95 Power
+95% Accuracy
+10 PP
+Adjacent Pokémon
+Flags 0x49
+Tectonic Rage (175 Power)
+
+Strength Sap
+The user restores its HP by the same amount as the\ntarget’s Attack stat. It also lowers the target’s\nAttack stat.
+Grass
+Status
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 387
+Flags 0x1058
+
+Solar Blade
+In this two-turn attack, the user gathers light and\nfills a blade with the light’s energy, attacking the\ntarget on the next turn.
+Grass
+Physical
+125 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 151, similar to Solar Beam
+Flags 0x4B
+Bloom Doom (190 Power)
+
+Leafage
+The user attacks by pelting the target with leaves.
+Grass
+Physical
+40 Power
+100% Accuracy
+40 PP
+Adjacent Pokémon
+Flags 0x48
+Bloom Doom (100 Power)
+
+Spotlight
+The user shines a spotlight on the target so that\nonly the target will be attacked during the turn.
+Normal
+Status
+15 PP
+3 Priority
+Adjacent Pokémon
+Effect 388
+Flags 0x8018
+
+Toxic Thread
+The user shoots poisonous threads to poison the\ntarget and lower the target’s Speed stat.
+Poison
+Status
+100% Accuracy
+20 PP
+Adjacent Pokémon
+Causes Poison
+-1 Speed for the target
+Flags 0x58
+
+Laser Focus
+The user concentrates intensely. The attack on the\nnext turn always results in a critical hit.
+Normal
+Status
+30 PP
+Self
+Effect 390
+Flags 0x20
+
+Gear Up
+The user engages its gears to raise the Attack and\nSp. Atk stats of ally Pokémon with the Plus or\nMinus Ability.
+Steel
+Status
+20 PP
+User's team
++1 Attack/+1 Special Attack for the target
+Flags 0x2020
+
+Throat Chop
+The user attacks the target’s throat, and the\nresultant suffering prevents the target from using\nmoves that emit sound for two turns.
+Dark
+Physical
+80 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+Causes Silence
+Flags 0x49
+Black Hole Eclipse (160 Power)
+
+Pollen Puff
+The user attacks the enemy with a pollen puff that\nexplodes. If the target is an ally, it gives the ally a\npollen puff that restores its HP instead.
+Bug
+Special
+90 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+Effect 393
+Flags 0x48
+Savage Spin-Out (175 Power)
+
+Anchor Shot
+The user entangles the target with its anchor chain\nwhile attacking. The target becomes unable to flee.
+Steel
+Physical
+80 Power
+100% Accuracy
+20 PP
+Adjacent Pokémon
+Effect 384, similar to Spirit Shackle
+Flags 0x49
+Corkscrew Crash (160 Power)
+
+Psychic Terrain
+This protects Pokémon on the ground from priority\nmoves and powers up Psychic-type moves for\nfive turns.
+Psychic
+Status
+10 PP
+Entire field
+Effect 394
+Flags 0x4000
+
+Lunge
+The user makes a lunge at the target, attacking with\nfull force. This also lowers the target’s Attack stat.
+Bug
+Physical
+80 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+-1 Attack for the target
+Flags 0x49
+Savage Spin-Out (160 Power)
+
+Fire Lash
+The user strikes the target with a burning lash. This\nalso lowers the target’s Defense stat.
+Fire
+Physical
+80 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+-1 Defense for the target
+Flags 0x49
+Inferno Overdrive (160 Power)
+
+Power Trip
+The user boasts its strength and attacks the target.\nThe more the user’s stats are raised, the greater the\nmove’s power.
+Dark
+Physical
+20 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 305, similar to Stored Power
+Flags 0x49
+Black Hole Eclipse (160 Power)
+
+Burn Up
+To inflict massive damage, the user burns itself out.\nAfter using this move, the user will no longer be\nFire type.
+Fire
+Special
+130 Power
+100% Accuracy
+5 PP
+Adjacent Pokémon
+Effect 397
+Flags 0x448
+Inferno Overdrive (195 Power)
+
+Speed Swap
+The user exchanges Speed stats with the target.
+Psychic
+Status
+10 PP
+Adjacent Pokémon
+Effect 398
+Flags 0xA048
+
+Smart Strike
+The user stabs the target with a sharp horn. This\nattack never misses.
+Steel
+Physical
+70 Power
+10 PP
+Adjacent Pokémon
+Effect 17, similar to Swift
+Flags 0x49
+Corkscrew Crash (140 Power)
+
+Purify
+The user heals the target’s status condition. If the\nmove succeeds, it also restores the user’s own HP.
+Poison
+Status
+20 PP
+Adjacent Pokémon
+Effect 399
+Flags 0x1018
+
+Revelation Dance
+The user attacks the target by dancing very hard.\nThe user’s type determines the type of this move.
+Normal
+Special
+90 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+Effect 400
+Flags 0x10048
+Breakneck Blitz (175 Power)
+
+Core Enforcer
+If the Pokémon the user has inflicted damage on\nhave already used their moves, this move eliminates\nthe effect of the target’s Ability.
+Dragon
+Special
+100 Power
+100% Accuracy
+10 PP
+All adjacent opponents
+Effect 401
+Flags 0x48
+Devastating Drake (140 Power)
+
+Trop Kick
+The user lands an intense kick of tropical origins on\nthe target. This also lowers the target’s Attack stat.
+Grass
+Physical
+70 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+-1 Attack for the target
+Flags 0x49
+Bloom Doom (140 Power)
+
+Instruct
+The user instructs the target to use the target’s last\nmove again.
+Psychic
+Status
+15 PP
+Adjacent Pokémon
+Effect 402
+Flags 0xA008
+
+Beak Blast
+The user first heats up its beak, and then it attacks\nthe target. Making direct contact with the Pokémon\nwhile it’s heating up its beak results in a burn.
+Flying
+Physical
+100 Power
+100% Accuracy
+15 PP
+-3 Priority
+Adjacent Pokémon
+Effect 403
+Flags 0x8
+Supersonic Skystrike (180 Power)
+
+Clanging Scales
+The user rubs the scales on its entire body and\nmakes a huge noise to attack the opposing Pokémon.\nThe user’s Defense stat goes down after the attack.
+Dragon
+Special
+110 Power
+100% Accuracy
+5 PP
+All adjacent opponents
+-1 Defense for the user
+Flags 0x2148
+Devastating Drake (185 Power)
+
+Dragon Hammer
+The user uses its body like a hammer to attack the\ntarget and inflict damage.
+Dragon
+Physical
+90 Power
+100% Accuracy
+15 PP
+Adjacent Pokémon
+Flags 0x49
+Devastating Drake (175 Power)
+
+Brutal Swing
+The user swings its body around violently to inflict\ndamage on everything in its vicinity.
+Dark
+Physical
+60 Power
+100% Accuracy
+20 PP
+All adjacent Pokémon
+Effect 405
+Flags 0x49
+Black Hole Eclipse (120 Power)
+
+Aurora Veil
+This move reduces damage from physical and\nspecial moves for five turns. This can be used only\nin a hailstorm.
+Ice
+Status
+20 PP
+User's side of the field
+Effect 406
+Flags 0x20
+
+Sinister Arrow Raid
+The user, Decidueye, creates countless arrows\nusing its Z-Power and shoots the target with\nfull force.
+Ghost
+Physical
+180 Power
+1 PP
+Adjacent Pokémon
+
+Malicious Moonsault
+The user, Incineroar, strengthens its body using\nits Z-Power and crashes into the target with\nfull force.
+Dark
+Physical
+180 Power
+1 PP
+Adjacent Pokémon
+Flags 0x1
+
+Oceanic Operetta
+The user, Primarina, summons a massive amount of \nwater using its Z-Power and attacks the target with \nfull force.
+Water
+Special
+195 Power
+1 PP
+Adjacent Pokémon
+
+Soul-Stealing 7-Star Strike
+After obtaining Z-Power, the user, Marshadow,\npunches and kicks the target consecutively\nwith full force.
+Ghost
+Physical
+195 Power
+1 PP
+Adjacent Pokémon
+Flags 0x1
+
+Stoked Sparksurfer
+After obtaining Z-Power, the user, Alolan Raichu,\nattacks the target with full force. This move leaves\nthe target with paralysis.
+Electric
+Special
+175 Power
+1 PP
+Adjacent Pokémon
+Causes Paralysis
+
+Pulverizing Pancake
+Z-Power brings out the true capabilities of the user,\nSnorlax. The Pokémon moves its enormous body\nenergetically and attacks the target with full force.
+Normal
+Physical
+210 Power
+1 PP
+Adjacent Pokémon
+Flags 0x1
+
+Genesis Supernova
+After obtaining Z-Power, the user, Mew, attacks\nthe target with full force. The terrain will be charged\nwith psychic energy.
+Psychic
+Special
+185 Power
+1 PP
+Adjacent Pokémon
+Effect 414
+
+Shell Trap
+The user sets a shell trap. If the user is hit by a\nphysical move, the trap will explode and inflict\ndamage on the opposing Pokémon.
+Fire
+Special
+150 Power
+100% Accuracy
+5 PP
+-3 Priority
+All adjacent opponents
+Effect 407
+Flags 0x8
+Inferno Overdrive (200 Power)
+
+Fleur Cannon
+The user unleashes a strong beam. The attack’s\nrecoil harshly lowers the user’s Sp. Atk stat.
+Fairy
+Special
+130 Power
+90% Accuracy
+5 PP
+Adjacent Pokémon
+-2 Special Attack for the user
+Flags 0x48
+Twinkle Tackle (195 Power)
+
+Psychic Fangs
+The user bites the target with its psychic\ncapabilities. This can also destroy Light Screen\nand Reflect.
+Psychic
+Physical
+85 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 186, similar to Brick Break
+Flags 0x49
+Shattered Psyche (160 Power)
+
+Stomping Tantrum
+Driven by frustration, the user attacks the target. If\nthe user’s previous move has failed, the power of\nthis move doubles.
+Ground
+Physical
+75 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 408
+Flags 0x49
+Tectonic Rage (140 Power)
+
+Shadow Bone
+The user attacks by beating the target with a\nbone that contains a spirit. This may also lower\nthe target’s Defense stat.
+Ghost
+Physical
+85 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+-1 Defense for the target
+Flags 0x48
+Never-Ending Nightmare (160 Power)
+
+Accelerock
+The user smashes into the target at high speed.\nThis move always goes first.
+Rock
+Physical
+40 Power
+100% Accuracy
+20 PP
+1 Priority
+Adjacent Pokémon
+Effect 103, similar to Quick Attack
+Flags 0x49
+Continental Crush (100 Power)
+
+Liquidation
+The user slams into the target using a full-force\nblast of water. This may also lower the target’s\nDefense stat.
+Water
+Physical
+85 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+-1 Defense for the target
+Flags 0x49
+Hydro Vortex (160 Power)
+
+Prismatic Laser
+The user shoots powerful lasers using the power of\na prism. The user can’t move on the next turn.
+Psychic
+Special
+160 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 80, similar to Hyper Beam
+Flags 0x4C
+Shattered Psyche (200 Power)
+
+Spectral Thief
+The user hides in the target’s shadow, steals\nthe target’s stat boosts, and then attacks.
+Ghost
+Physical
+90 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 409
+Flags 0x2049
+Never-Ending Nightmare (175 Power)
+
+Sunsteel Strike
+The user slams into the target with the force of a\nmeteor. This move can be used on the target \nregardless of its Abilities.
+Steel
+Physical
+100 Power
+100% Accuracy
+5 PP
+Adjacent Pokémon
+Effect 410
+Flags 0x49
+Corkscrew Crash (180 Power)
+
+Moongeist Beam
+The user emits a sinister ray to attack the target.\nThis move can be used on the target regardless of \nits Abilities.
+Ghost
+Special
+100 Power
+100% Accuracy
+5 PP
+Adjacent Pokémon
+Effect 410, similar to Sunsteel Strike
+Flags 0x48
+Never-Ending Nightmare (180 Power)
+
+Tearful Look
+The user gets teary eyed to make the target lose\nits combative spirit. This lowers the target’s\nAttack and Sp. Atk stats.
+Normal
+Status
+20 PP
+Adjacent Pokémon
+-1 Attack/-1 Special Attack for the target
+Flags 0x50
+
+Zing Zap
+A strong electric blast crashes down on the target,\ngiving it an electric shock. This may also make the\ntarget flinch.
+Electric
+Physical
+80 Power
+100% Accuracy
+10 PP
+30% chance to Flinch
+Adjacent Pokémon
+Effect 31, similar to Rolling Kick
+Flags 0x49
+Gigavolt Havoc (160 Power)
+
+Nature’s Madness
+The user hits the target with the force of nature.\nIt halves the target’s HP.
+Fairy
+Special
+90% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 40, similar to Super Fang
+Flags 0x48
+Twinkle Tackle (100 Power)
+
+Multi-Attack
+Cloaking itself in high energy, the user slams into the\ntarget. The memory held determines the move’s type.
+Normal
+Physical
+90 Power
+100% Accuracy
+10 PP
+Adjacent Pokémon
+Effect 268, similar to Judgment
+Flags 0x49
+Breakneck Blitz (185 Power)
+
+10,000,000 Volt Thunderbolt
+The user, Pikachu wearing a cap, powers up a jolt of\nelectricity using its Z-Power and unleashes it.\nCritical hits land more easily.
+Electric
+Special
+195 Power
+1 PP
++2 Critical Hit
+Adjacent Pokémon

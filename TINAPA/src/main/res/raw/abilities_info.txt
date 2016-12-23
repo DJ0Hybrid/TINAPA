@@ -1,0 +1,122 @@
+﻿Stamina
+Boosts the Defense stat when hit by an attack.
+
+Wimp Out
+The Pokémon cowardly switches out when its HP\nbecomes half or less.
+
+Emergency Exit
+The Pokémon, sensing danger, switches out when its\nHP becomes half or less.
+
+Water Compaction
+Boosts the Pokémon’s Defense stat sharply when hit\nby a Water-type move.
+
+Merciless
+The Pokémon’s attacks become critical hits if the\ntarget is poisoned.
+
+Shields Down
+When its HP becomes half or less, the Pokémon’s\nshell breaks and it becomes aggressive.
+
+Stakeout
+Doubles the damage dealt to the target’s\nreplacement if the target switches out.
+
+Water Bubble
+Lowers the power of Fire-type moves done to the\nPokémon and prevents the Pokémon from getting\na burn.
+
+Steelworker
+Powers up Steel-type moves.
+
+Berserk
+Boosts the Pokémon’s Sp. Atk stat when it takes a \nhit that causes its HP to become half or less.
+
+Slush Rush
+Boosts the Pokémon’s Speed stat in a hailstorm.
+
+Long Reach
+The Pokémon uses its moves without making contact\nwith the target.
+
+Liquid Voice
+All sound-based moves become Water-type moves.
+
+Triage
+Gives priority to a healing move.
+
+Galvanize
+Normal-type moves become Electric-type moves.\nThe power of those moves is boosted a little.
+
+Surge Surfer
+Doubles the Pokémon’s Speed stat on\nElectric Terrain.
+
+Schooling
+When it has a lot of HP, the Pokémon forms a\npowerful school. It stops schooling when its HP\nis low.
+
+Disguise
+Once per battle, the shroud that covers the\nPokémon can protect it from an attack.
+
+Battle Bond
+Defeating an opposing Pokémon strengthens the\nPokémon’s bond with its Trainer, and it becomes\nAsh-Greninja. Water Shuriken gets more powerful.
+
+Power Construct
+Other Cells gather to aid when its HP becomes\nhalf or less. Then the Pokémon changes\nits form to Complete Forme.
+
+Corrosion
+The Pokémon can poison the target even if it’s\na Steel or Poison type.
+
+Comatose
+It’s always drowsing and will never wake up.\nIt can attack without waking up.
+
+Queenly Majesty
+Its majesty pressures the opposing Pokémon,\nmaking it unable to attack using priority moves.
+
+Innards Out
+Damages the attacker landing the finishing hit\nby the amount equal to its last HP.
+
+Dancer
+When another Pokémon uses a dance move,\nit can use a dance move following it regardless\nof its Speed.
+
+Battery
+Powers up ally Pokémon’s special moves.
+
+Fluffy
+Halves the damage taken from moves that make\ndirect contact, but doubles that of Fire-type moves.
+
+Dazzling
+Surprises the opposing Pokémon, making it unable\nto attack using priority moves.
+
+Soul-Heart
+Boosts its Sp. Atk stat every time a Pokémon faints.
+
+Tangling Hair
+Contact with the Pokémon lowers the attacker’s\nSpeed stat.
+
+Receiver
+The Pokémon copies the Ability of a defeated ally.
+
+Power of Alchemy
+The Pokémon copies the Ability of a defeated ally.
+
+Beast Boost
+The Pokémon boosts its most proficient stat each\ntime it knocks out a Pokémon.
+
+RKS System
+Changes the Pokémon’s type to match the\nmemory disc it holds.
+
+Electric Surge
+Turns the ground into Electric Terrain when the\nPokémon enters a battle.
+
+Psychic Surge
+Turns the ground into Psychic Terrain when\nthe Pokémon enters a battle.
+
+Misty Surge
+Turns the ground into Misty Terrain when\nthe Pokémon enters a battle.
+
+Grassy Surge
+Turns the ground into Grassy Terrain when\nthe Pokémon enters a battle.
+
+Full Metal Body
+Prevents other Pokémon’s moves or Abilities from\nlowering the Pokémon’s stats.
+
+Shadow Shield
+Reduces the amount of damage the Pokémon takes\nwhile its HP is full.
+
+Prism Armor
+Reduces the power of supereffective attacks taken.
