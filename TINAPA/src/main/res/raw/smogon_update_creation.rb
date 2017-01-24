@@ -62,6 +62,10 @@ oldAbilities = Hash.new()
 highestAbilityId = -1
 
 oldPokemon = Hash.new()
+highestPokemonId = -1
+highestPokemonSpeciesId = -1
+
+oldSpecies = Hash.new()
 
 oldEggGroups = Hash.new()
 # oldItems = Hash.new()   # All the items are new, so don't need this.
@@ -131,6 +135,26 @@ begin
         damageTypeValues = damageTypeValues.delete "'();"
         damageTypeValuesList = damageTypeValues.split(",")
         oldMoveDamageTypes[damageTypeValuesList[1]] = damageTypeValuesList
+      elsif (currentTableName.casecmp(pokemon) == 0)
+        # int id, text identifier, int species_id, int height, int weight, int base_experience, int "order", int bool is_default
+        pokemonValues = line.split("VALUES")[1]
+        pokemonValues = pokemonValues.delete "'();"
+        pokemonValuesList = pokemonValues.split(",")
+        oldPokemon[pokemonValuesList[1]] = pokemonValuesList
+
+        if (pokemonValuesList[0].to_i > highestPokemonId)
+          highestPokemonId = pokemonValuesList[0].to_i
+        end
+      elsif (currentTableName.casecmp(pokemonSpecies) == 0)
+        # int id, text identifier, int generation id, int evolves_from_species_id, int evolution chain_id...
+        speciesValues = line.split("VALUES")[1]
+        speciesValues = speciesValues.delete "'();"
+        speciesValuesList = speciesValues.split(",")
+        oldSpecies[speciesValuesList[1]] = speciesValuesList
+
+        if (speciesValuesList[0].to_i > highestPokemonSpeciesId)
+          highestPokemonSpeciesId = speciesValuesList[0].to_i
+        end
       end
     end
   end
@@ -214,8 +238,8 @@ newMovesInsertFile.close
 
 puts "Reading in the Pokemon Moves, updating the Pokemon and Moves as needed."
 newPokemonInsertFile = File.new(newDatabaseFolder + "\\" + newPokemonPath, "w")
-
-pokemonSpecies = Hash.new()
+newPokemonInsertFile.puts("INSERT INTO \"regions\" VALUES(7, 'alola');")
+newPokemonInsertFile.puts("INSERT INTO \"generations\" VALUES(7, 7, 'generation-vii');")
 
 begin
   file = File.read(pokemonMovesPath).split("\n\n")
@@ -234,7 +258,31 @@ begin
         FileUtils.mkdir_p errorPokemonFolder
         File.open(errorPokemonFolder + "\\" + index.to_s + " " + name + ".txt", "w") { |file| file.write("This Pokemon does not have enough data.\n" + pokemonInfoAndMoves.to_s) }
       else
-        stats = pokemonInfo[1].split("/")
+        highestPokemonId = highestPokemonId + 1
+        pokemonId = highestPokemonId
+
+        pokemonIdentifier = pokemonInfo[0]
+        pokemonName = pokemonIdentifier.sub(/\-[1-9]/, '')
+
+        pokemonOrder = 1
+        pokemonIsDefault = 1
+        if (pokemonIdentifier.casecmp(pokemonName) == 0)
+          pokemonIsDefault = 0
+          pokemonOrder = pokemonIdentifier.split(/\-[1-9]/, 2)[1].to_i + 1
+        end
+
+        pokemonIdentifier = pokemonIdentifier.downcase
+
+        stats = pokemonInfo[1].split("/") # HP/Att/Def/SAtt/SDef/Spd
+
+        speciesId = -1
+        if (oldSpecies[pokemonIdentifier.sub(/\-[1-9]/, '')] == nil)
+          highestPokemonSpeciesId = highestPokemonSpeciesId + 1
+          speciesId = highestPokemonSpeciesId
+          oldSpecies[pokemonIdentifier.sub(/\-[1-9]/, '')] = [speciesId, pokemonIdentifier]
+        else
+          speciesId = oldSpecies[pokemonIdentifier.sub(/\-[1-9]/, '')][0].to_i
+        end
 
         types = pokemonInfo[2].split("/")
         typeIds = Hash.new()
@@ -250,33 +298,65 @@ begin
           normalAbilityIds[1] = oldAbilities[normalAbilities[1].downcase.gsub(" ", "-")][0]
         end
 
-        specialAbilityId = "-1"
+        specialAbilityId = -1
         if (oldAbilities[pokemonInfo[4].downcase.gsub(" ", "-")] != nil)
           specialAbilityId = oldAbilities[pokemonInfo[4].downcase.gsub(" ", "-")][0]
+        end
+
+        # Write out the Pokemon base details.
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon\" VALUES(#{pokemonId}, #{pokemonIdentifier}, #{speciesId}, 0, 0, 0, #{pokemonOrder}, #{pokemonIsDefault});")
+
+        # Write out the Pokemon species details.
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_species\" VALUES(#{speciesId}, #{pokemonIdentifier}, 7, NULL, NULL, -1, -1, NULL, -1, -1, -1, 0, -1, -1, -1, -1, #{pokemonId}, NULL);")
+
+        # Write out the Pokemon stat details.
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_stats\" VALUES(#{pokemonId}, 1, #{stats[0]}, 0);")
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_stats\" VALUES(#{pokemonId}, 2, #{stats[1]}, 0);")
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_stats\" VALUES(#{pokemonId}, 3, #{stats[2]}, 0);")
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_stats\" VALUES(#{pokemonId}, 4, #{stats[3]}, 0);")
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_stats\" VALUES(#{pokemonId}, 5, #{stats[4]}, 0);")
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_stats\" VALUES(#{pokemonId}, 6, #{stats[5]}, 0);")
+
+        # Write out the Pokemon type details.
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_types\" VALUES(#{pokemonId}, #{typeIds[0]}, 1);")
+        if (typeIds[1] != nil)
+          newPokemonInsertFile.puts("INSERT INTO \"pokemon_types\" VALUES(#{pokemonId}, #{typeIds[1]}, 2);")
+        end
+
+        # Write out the Pokemon ability details.
+        newPokemonInsertFile.puts("INSERT INTO \"pokemon_abilities\" VALUES(#{pokemonId}, #{normalAbilityIds[0]}, 0, 1);")
+        if (normalAbilityIds[1] != nil)
+          newPokemonInsertFile.puts("INSERT INTO \"pokemon_abilities\" VALUES(#{pokemonId}, #{normalAbilityIds[1]}, 0, 2);")
+        end
+        if (specialAbilityId != -1)
+          newPokemonInsertFile.puts("INSERT INTO \"pokemon_abilities\" VALUES(#{pokemonId}, #{specialAbilityId}, 1, 3);")
         end
 
       end
 
       # Pokemon Moves
-      pokemonInfoAndMoves[1].split("\n") do |moveLine|
+      pokemonInfoAndMoves[1].split("\n").each do |moveLine|
         moveData = moveLine.split("\t")
         moveName = moveData[1]
-        moveLevel = ""
-        moveTM = ""
-        moveEgg = false
+        moveLevel = "0"
+        moveMethod = ""
         if (moveData[0].start_with?("-"))
-          moveLevel = "0"
-        elif (moveData[0].start_with?("TM"))
-          moveTM = moveData[0].delete "TM"
-        elif (moveData[0].start_with?("Egg"))
-          moveEgg = true
+          moveMethod = "1"
+        elsif (moveData[0].start_with?("TM"))
+          moveMethod = "4"
+        elsif (moveData[0].start_with?("Egg"))
+          moveMethod = "2"
+        elsif (moveData[0].start_with?("Tutor"))
+          moveMethod = "3"
         else
           moveLevel = moveData[0]
+          moveMethod = "1"
         end
 
         # Write out the data for move info.
-
-
+        if (pokemonId != nil)
+          newPokemonInsertFile.puts("INSERT INTO \"pokemon_moves\" VALUES(#{pokemonId}, 7, #{moveMethod}, #{moveLevel}, NULL);")
+        end
       end
     end
   end
