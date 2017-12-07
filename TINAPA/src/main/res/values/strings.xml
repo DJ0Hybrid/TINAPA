@@ -30,6 +30,26 @@
     <string name="planned_iv_random">\?</string>
     <string name="planned_iv_min">Min</string>
 
+    <!-- Evolution Methods Text -->
+    <string name="evolution_level">Level: </string>
+    <string name="evolution_use_item">Use: </string>
+    <string name="evolution_gender">Gender: </string>
+    <string name="evolution_location">At </string>
+    <string name="evolution_held_item">Hold: </string>
+    <string name="evolution_time">During the </string>
+    <string name="evolution_trade">Trade</string>
+    <string name="evolution_move">Known Move: </string>
+    <string name="evolution_move_type">Known Move Type: </string>
+    <string name="evolution_happiness">Min. Happiness: </string>
+    <string name="evolution_beauty">Min. Beauty: </string>
+    <string name="evolution_affection">Min. Affection: </string>
+    <string name="evolution_relative_stats">Stats: </string>
+    <string name="evolution_party_species">In Party: </string>
+    <string name="evolution_party_type">In Party: </string>
+    <string name="evolution_trade_species">Trade for: </string>
+    <string name="evolution_over_world_rain">In Rain</string>
+    <string name="evolution_upside_down">Upside Down Device</string>
+
     <!-- Generated stuff that has not been sorted (you lazy bum.) Don't put anything past here. -->
     <string name="hello_world">Hello world!</string>
     <string name="team_pokemon_1_banner_text">Pokemon #1</string>

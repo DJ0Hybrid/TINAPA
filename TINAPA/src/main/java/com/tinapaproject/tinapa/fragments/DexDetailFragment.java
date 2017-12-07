@@ -10,12 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tinapaproject.tinapa.R;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.EvolutionKeyValues;
 import com.tinapaproject.tinapa.database.provider.TinapaContentProvider;
 import com.tinapaproject.tinapa.utils.ImageUtils;
+
+import java.util.HashMap;
 
 
 public class DexDetailFragment extends Fragment {
@@ -198,6 +202,106 @@ public class DexDetailFragment extends Fragment {
             } else {
                 view.findViewById(R.id.dex_detail_moves_egg_body).setVisibility(View.GONE);
             }
+
+            // TODO: Tutor Moves
+
+            // Evolution Chain
+            ViewGroup evolutionView = (ViewGroup) view.findViewById(R.id.dex_detail_evolution_chain);
+            Cursor evolutionChainCursor = getActivity().getContentResolver().query(TinapaContentProvider.POKEDEX_POKEMON_EVOLUTION_URI, null, id, null, null);
+            if (evolutionChainCursor != null && evolutionChainCursor.moveToFirst() && evolutionChainCursor.getCount() > 0) {
+                HashMap<Integer, ViewGroup> pokemonViewGroup = new HashMap<Integer, ViewGroup>(evolutionChainCursor.getColumnCount());
+                do {
+                    View baseView = inflater.inflate(R.layout.evolution_chain, null, false);
+                    ImageView baseImageView = (ImageView) baseView.findViewById(R.id.evolution_chain_image);
+                    String imagePath = evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.POKEMON_IMAGE_URI));
+                    ImageUtils.loadImage(baseImageView, imagePath, true);
+
+                    ViewGroup nextEvolutionView = (ViewGroup) baseView.findViewById(R.id.evolution_chain_next_stage);
+
+                    if (evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID))) {
+
+                        View evolutionMethod = baseView.findViewById(R.id.evolution_chain_method);
+                        evolutionMethod.setVisibility(View.GONE);
+                        evolutionView.addView(baseView);
+                    } else {
+                        // TODO Show how evolution happens
+                        ViewGroup evolutionMethodView = (ViewGroup) baseView.findViewById(R.id.evolution_chain_method);
+                        // In the future, this can be changed to something besides text.
+                        StringBuilder evolutionMethodText = new StringBuilder();
+                        evolutionMethodText.append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_METHOD_PROSE)));
+                        // Level
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MIN_LEVEL))) {
+                            evolutionMethodText.append("\n").append(getString(R.string.evolution_level)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MIN_LEVEL)));
+                        }
+                        // Use Item
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME))) {
+                            evolutionMethodText.append('\n').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME)));
+                        }
+                        // Time of Day
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_TIME_OF_DAY))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_time)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_TIME_OF_DAY)));
+                        }
+                        // Happiness
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_HAPPINESS))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_happiness)).append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_HAPPINESS)));
+                        }
+                        // Location
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_LOCATION_NAME))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_location)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_LOCATION_NAME)));
+                        }
+                        // Minimum Affection
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_AFFECTION))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_affection)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_AFFECTION)));
+                        }
+                        // Known Move Type
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE_TYPE))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_move_type)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE_TYPE)));
+                        }
+                        // Held Item
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_held_item)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME)));
+                        }
+                        // Gender
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_GENDER))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_gender)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_GENDER)));
+                        }
+
+                        // Known Specific Move
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_move)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_KNOWN_MOVE)));
+                        }
+                        // Beauty Requirement
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY))) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_beauty)).append(' ').append(evolutionChainCursor.getString(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY)));
+                        }
+                        // Over World Rain
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN)) && evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN)) == 1) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_over_world_rain));
+                        }
+                        // Upside Down Device
+                        if (!evolutionChainCursor.isNull(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_UPSIDE_DOWN)) && evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLUTION_UPSIDE_DOWN)) == 1) {
+                            evolutionMethodText.append('\n').append(getString(R.string.evolution_upside_down));
+                        }
+
+                        TextView evolutionTextView = new TextView(getActivity());
+                        evolutionTextView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        evolutionTextView.setText(evolutionMethodText.toString());
+                        evolutionMethodView.addView(evolutionTextView);
+
+
+                        ViewGroup parentViewGroup = pokemonViewGroup.get(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID)));
+                        if (parentViewGroup != null) {
+                            parentViewGroup.addView(baseView);
+                        }
+                    }
+
+                    pokemonViewGroup.put(evolutionChainCursor.getInt(evolutionChainCursor.getColumnIndex(EvolutionKeyValues.SPECIES_ID)), nextEvolutionView);
+                } while (evolutionChainCursor.moveToNext());
+                evolutionChainCursor.close();
+            } else {
+                evolutionView.setVisibility(View.GONE);
+            }
+
         }
 
         return view;

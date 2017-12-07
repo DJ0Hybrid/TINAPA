@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.tinapaproject.tinapa.database.TinapaDatabaseHelper;
 import com.tinapaproject.tinapa.database.key.DexKeyValues;
+import com.tinapaproject.tinapa.database.key.EvolutionKeyValues;
 import com.tinapaproject.tinapa.database.key.ItemKeyValues;
 import com.tinapaproject.tinapa.database.key.NatureKeyValues;
 import com.tinapaproject.tinapa.database.key.OwnedKeyValues;
@@ -271,8 +272,23 @@ public class TinapaContentProvider extends ContentProvider {
                 break;
             case POKEDEX_POKEMON_EVOLUTION:
                 // TODO Needs to be expanded.
-                queryBuilder.setTables("pokemon_species");
-                queryBuilder.appendWhere("pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
+                queryBuilder.setTables("pokemon\n" +
+                        "LEFT OUTER JOIN pokemon_species ON (pokemon_species.id = pokemon.species_id)\n" +
+                        "LEFT OUTER JOIN pokemon_evolution ON (pokemon_species.id = pokemon_evolution.evolved_species_id)\n" +
+                        "LEFT OUTER JOIN evolution_trigger_prose ON (evolution_trigger_prose.evolution_trigger_id = pokemon_evolution.evolution_trigger_id AND evolution_trigger_prose.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN item_names AS held_item_name ON (held_item_name.item_id = pokemon_evolution.held_item_id AND held_item_name.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN item_names AS use_item_name ON (use_item_name.item_id = pokemon_evolution.trigger_item_id AND use_item_name.local_language_id = 9)\n" +
+                        "LEFT OUTER JOIN pokemon_forms ON (pokemon_forms.pokemon_id = pokemon.id)\n" +
+                        "LEFT OUTER JOIN pokemon_images ON (pokemon.id = pokemon_images.pokemon_id AND (pokemon_images.is_shinny = null OR pokemon_images.is_shinny = 0) AND (pokemon_images.is_icon = null OR pokemon_images.is_icon = 0))\n" +
+                        "LEFT OUTER JOIN (select * from locations, location_names where locations.id = location_names.location_id and location_names.local_language_id = 9) AS locations ON (pokemon_evolution.location_id = locations.location_id)" +
+                        "LEFT OUTER JOIN type_names ON (type_names.local_language_id = 9 AND pokemon_evolution.known_move_type_id = type_names.type_id)\n" +
+                        "LEFT OUTER JOIN move_names ON (move_names.local_language_id = 9 AND move_names.move_id = known_move_id)\n" +
+                        "LEFT OUTER JOIN genders ON (genders.id = pokemon_evolution.gender_id)");
+                if (!TextUtils.isEmpty(selection)) {
+                    queryBuilder.appendWhere("(pokemon_forms.is_default = 1) AND (pokemon_forms.is_battle_only = 0) AND (locations.region_id = 6 OR locations.region_id IS null) AND pokemon_species.evolution_chain_id = (SELECT evolution_chain_id FROM pokemon_species WHERE id = " + selection + ")");
+                }
+                orderBy = "pokemon_species.is_baby DESC";
+                selectionArray = new String[]{"pokemon.species_id AS " + EvolutionKeyValues.SPECIES_ID, "pokemon_species.evolves_from_species_id AS " + EvolutionKeyValues.EVOLVES_FROM_SPECIES_ID, "evolution_trigger_prose.name AS " + EvolutionKeyValues.EVOLUTION_METHOD_PROSE, "pokemon_evolution.minimum_level AS " + EvolutionKeyValues.EVOLUTION_MIN_LEVEL, "use_item_name.name AS " + EvolutionKeyValues.EVOLUTION_USE_ITEM_NAME, "pokemon_evolution.time_of_day AS " + EvolutionKeyValues.EVOLUTION_TIME_OF_DAY, "pokemon_evolution.minimum_happiness AS " + EvolutionKeyValues.EVOLUTION_MINIMUM_HAPPINESS, "locations.name AS " + EvolutionKeyValues.EVOLUTION_LOCATION_NAME, "type_names.name AS " + EvolutionKeyValues.EVOLUTION_KNOWN_MOVE_TYPE, "pokemon_evolution.minimum_affection AS " + EvolutionKeyValues.EVOLUTION_MINIMUM_AFFECTION, "held_item_name.name AS " + EvolutionKeyValues.EVOLUTION_HELD_ITEM_NAME, "move_names.name AS " + EvolutionKeyValues.EVOLUTION_KNOWN_MOVE, "pokemon_evolution.minimum_beauty AS " + EvolutionKeyValues.EVOLUTION_MINIMUM_BEAUTY, "pokemon_evolution.needs_overworld_rain AS " + EvolutionKeyValues.EVOLUTION_OVER_WORLD_RAIN, "pokemon_evolution.turn_upside_down AS " + EvolutionKeyValues.EVOLUTION_UPSIDE_DOWN, "genders.identifier AS " + EvolutionKeyValues.EVOLUTION_GENDER, "pokemon_images.image_uri AS " + EvolutionKeyValues.POKEMON_IMAGE_URI};
                 break;
             case PLANNED_POKEMON:
                 // TODO Needs possible work.
