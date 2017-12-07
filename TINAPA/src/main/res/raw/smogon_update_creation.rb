@@ -254,7 +254,28 @@ begin
 
       # Pokemon Info
       pokemonInfo = pokemonInfoAndMoves[0].split("\n")
-      if (pokemonInfo.size < 10)
+      if (pokemonInfo.size <= 4)
+        pokemonIdentifier = pokemonInfo[0].downcase
+        if (oldPokemon[pokemonIdentifier] != nil)
+          pokemonId = oldPokemon[pokemonIdentifier][0]
+          if (pokemonInfo.size > 1)
+            index = 1
+            until index >= pokemonInfo.size do
+              if (pokemonInfo[index].index(/[0-9]\// != nil)
+                # Looking for stat changes.
+              elsif (pokemonInfo[index].index(/[a-z]\// != nil)
+                # Abilities
+              elsif (oldAbilities[pokemonInfo[index].downcase.gsub(" ", "-")] != nil)
+                # Ability
+              end
+              index += 1
+            end
+          end
+        else
+          FileUtils.mkdir_p errorPokemonFolder
+          File.open(errorPokemonFolder + "\\" + index.to_s + " " + name + ".txt", "w") { |file| file.write("This Pokemon is not in the old species list.\n" + pokemonInfoAndMoves.to_s) }
+        end
+      elsif (pokemonInfo.size < 10)
         FileUtils.mkdir_p errorPokemonFolder
         File.open(errorPokemonFolder + "\\" + index.to_s + " " + name + ".txt", "w") { |file| file.write("This Pokemon does not have enough data.\n" + pokemonInfoAndMoves.to_s) }
       else
@@ -262,7 +283,7 @@ begin
         pokemonId = highestPokemonId
 
         pokemonIdentifier = pokemonInfo[0]
-        pokemonName = pokemonIdentifier.sub(/\-[1-9]/, '')
+        pokemonName = pokemonIdentifier.sub(/\-[1-9]/, '')  # Note that this is only doing this because the file likes to put -1, -2, etc. which are not part of the original names. Remember: Porygon-Z.
 
         pokemonOrder = 1
         pokemonIsDefault = 1
